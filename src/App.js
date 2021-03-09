@@ -1,5 +1,5 @@
 import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
-import Jobs from './Components/Jobs';
+import JobList from './Components/JobList';
 import {JobsProvider} from './Contexts/JobsContext';
 
 const App = props => {
@@ -7,7 +7,7 @@ const App = props => {
     <JobsProvider>
       <Router>
           <Switch>
-          <Route exact path='/jobs' render={(props) => <Jobs {...props}/>}></Route>
+          <Route exact path='/jobs' render={(props) => <JobList {...props}/>}></Route>
         </Switch>
       </Router>
     </JobsProvider>
