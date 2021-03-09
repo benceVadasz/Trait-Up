@@ -17,6 +17,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {Grid } from "@material-ui/core";
 import {JobsContext} from '../Contexts/JobsContext';
 import React, {useContext} from 'react';
+import DetailsIcon from '@material-ui/icons/Details';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -66,8 +68,8 @@ const JobCard = ({jobId}) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
+            <IconButton aria-label="detail">
+              <DetailsIcon />
             </IconButton>
           }
           title =  {`${title}`}
@@ -86,8 +88,8 @@ const JobCard = ({jobId}) => {
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
+          <IconButton aria-label="apply">
+            <AddCircleOutlineIcon />
           </IconButton>
         </CardActions>
       </Card>
