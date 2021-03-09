@@ -1,10 +1,14 @@
-import './App.css';
+import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
+import Jobs from './Components/Jobs';
 
-function App() {
+const App = props => {
   return (
-    <div className="App">
-      <h1>Hello</h1>
-    </div>
+    <Router>
+        <Switch>
+        <Route exact path='/jobs' render={(props) => <Jobs {...props}/>}></Route>
+      </Switch>
+    </Router>
+
   );
 }
 
