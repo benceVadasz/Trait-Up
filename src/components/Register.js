@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import {
   Grid,
   Paper,
@@ -34,15 +34,16 @@ function Register() {
   const button = { backgroundColor: "#859DF4" };
 
   const [user, setUser] = useState([]);
-  const form = useRef(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [password, setPassword] = useState("");
 
   const submit = (e) => {
-    e.preventDefault();
-    const data = new FormData(form.current);
-    fetch("/api", { method: "POST", body: data })
-      .then((res) => res.json())
-      .then((json) => setUser(json.user));
+    setUser({name, email, gender, password});
+    
   };
+
   console.log(user);
 
   return (
@@ -59,11 +60,22 @@ function Register() {
             </Typography>
           </Grid>
           <form style={formStyle} onSubmit={submit}>
-            <TextField fullWidth label="Name" placeholder="Enter your name" />
-            <TextField fullWidth label="Email" placeholder="Enter your email" />
+            <TextField
+              onChange={(e) => setName(e.target.value)}
+              fullWidth
+              label="Name"
+              placeholder="Enter your name"
+            />
+            <TextField
+              onChange={(e) => setEmail(e.target.value)}
+              fullWidth
+              label="Email"
+              placeholder="Enter your email"
+            />
             <FormControl component="fieldset" style={marginTop}>
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
+                onChange={(e) => setGender(e.target.value)}
                 aria-label="gender"
                 name="gender"
                 style={{ display: "initial" }}
@@ -81,6 +93,7 @@ function Register() {
               </RadioGroup>
             </FormControl>
             <TextField
+              onChange={(e) => setPassword(e.target.value)}
               fullWidth
               label="Password"
               placeholder="Enter your password"
