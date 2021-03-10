@@ -4,7 +4,6 @@ import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/style
 import {teal, orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
 import batman from '../images/batman.jpg';
-import AccountBoxOutlinedIcon from '@material-ui/icons/AccountBoxOutlined';
 import PersonIcon from '@material-ui/icons/Person';
 import StarIcon from '@material-ui/icons/Star';
 import DescriptionIcon from '@material-ui/icons/Description';
@@ -36,6 +35,11 @@ const classes = {
     button: {
         width: "100%",
         fontSize: "18px",
+    },
+    avatar: {
+        width: "150px",
+        height: "150px",
+        margin: "5px",
     }
 }
 
@@ -51,7 +55,7 @@ const theme = createMuiTheme({
         },
         h3: {
             fontSize: 24,
-            margin: "10px",
+            margin: "5px",
         }
     },
     palette: {
@@ -120,11 +124,15 @@ const ProfilePage = () => {
 
                         <Grid item xs={3}>
                             <Paper elevation={3} style={classes.paper}>
-                                <Typography variant="h3" color="primary" align="center">Profile Menu</Typography>
-                                
                                 <Grid container spacing={2} direction="column">
+                                    <Grid item xs align="center">
+                                        <Avatar src={user.photo} alt="pic" variant="circle" style={classes.avatar} />
+                                    </Grid>
                                     <Grid item xs>
-                                        <Divider orientation="horizontal" style={{ margin: "10px" }} />
+                                        <Typography variant="h3" color="primary" align="center">Profile Menu</Typography>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Divider orientation="horizontal" style={{ margin: "5px 0 10px 0" }} />
                                     </Grid>
                                     <Grid item xs>
                                         <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<PersonIcon fontSize="large" />}>Profile Info</Button>
@@ -148,14 +156,11 @@ const ProfilePage = () => {
                             <Paper elevation={3} style={classes.paper}>
                                 <Grid container spacing={3} direction="column">
                                     <Grid item justify="center">
-                                        {/* <TemporaryDrawer /> */}
-                                        {/* <ProfileDropDownMenu /> */}
                                         <Typography variant="h2" color="primary" align="center">Personal information</Typography>  
                                     </Grid>
                                     <Grid item container spacing={3} direction="row">
                                         <Grid item xs={4}>
-                                            {/* <ProfileMiniDrawer /> */}
-                                            <Avatar src={user.photo} alt="pic" variant="square" style={{width: "350px", height: "400px"}}/>
+                                            <Avatar src={user.photo} alt="pic" variant="square" style={{margin: "10px", width: "350px", height: "400px"}}/>
                                         </Grid>
                                         
                                         <Grid item xs={8} container direction="row" spacing={2} align="center">
