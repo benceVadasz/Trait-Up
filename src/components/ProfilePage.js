@@ -8,6 +8,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import StarIcon from '@material-ui/icons/Star';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import EditIcon from '@material-ui/icons/Edit';
 // import ProfileMiniDrawer from './ProfileMiniDrawer';
 // import TemporaryDrawer from './TemporaryProfileDrawer';
 // import ProfileDropDownMenu from './ProfileDropDownMenu';
@@ -32,6 +33,10 @@ const classes = {
         display: "flex", 
         flexFlow: "column"
     },
+    paperEdu: {
+        padding: "20px",
+        margin: "15px",
+    },
     button: {
         width: "100%",
         fontSize: "18px",
@@ -40,7 +45,11 @@ const classes = {
         width: "150px",
         height: "150px",
         margin: "5px",
+    },
+    eduText: {
+        marginBottom: "5px",
     }
+
 }
 
 const theme = createMuiTheme({
@@ -56,6 +65,9 @@ const theme = createMuiTheme({
         h3: {
             fontSize: 24,
             margin: "5px",
+        },
+        h4: {
+            fontSize: 20,
         }
     },
     palette: {
@@ -73,6 +85,7 @@ const ProfilePage = () => {
     const [user, setUser] = useState({
         name: "Sherlock Holmes",
         email: "sherlock@holmes.com",
+        password: "1234",
         address: "221B Baker Street, London",
         location: "London",
         phone: "+36/20-111-2233",
@@ -84,16 +97,16 @@ const ProfilePage = () => {
                 school: "Oxford University",
                 degree: "Forensic science",
                 level: "Msc",
-                startDate: "1880-09-01",
-                finishDate: "1882-06-01"
+                from: "1880-09-01",
+                to: "1882-06-01"
             },
             {
                 type: "university",
                 school: "Cambridge University",
                 degree: "Psychology",
                 level: "PhD",
-                startDate: "1882-09-01",
-                finishDate: "1884-06-01"
+                from: "1882-09-01",
+                to: "1884-06-01"
             }
         ],
         experience: [
@@ -122,11 +135,12 @@ const ProfilePage = () => {
 
                     <Grid container spacing={4} direction="row">
 
+                        {/* Profile menu */}
                         <Grid item xs={3}>
                             <Paper elevation={3} style={classes.paper}>
                                 <Grid container spacing={2} direction="column">
                                     <Grid item xs align="center">
-                                        <Avatar src={user.photo} alt="pic" variant="circle" style={classes.avatar} />
+                                        <Avatar src={user.photo} alt="pic" variant="circular" style={classes.avatar} />
                                     </Grid>
                                     <Grid item xs>
                                         <Typography variant="h3" color="primary" align="center">Profile Menu</Typography>
@@ -151,79 +165,102 @@ const ProfilePage = () => {
                         </Grid>
                         
 
-                        <Grid item xs={9} container >
-                            
-                            <Paper elevation={3} style={classes.paper}>
-                                <Grid container spacing={3} direction="column">
-                                    <Grid item justify="center">
-                                        <Typography variant="h2" color="primary" align="center">Personal information</Typography>  
-                                    </Grid>
-                                    <Grid item container spacing={3} direction="row">
-                                        <Grid item xs={4}>
-                                            <Avatar src={user.photo} alt="pic" variant="square" style={{margin: "10px", width: "350px", height: "400px"}}/>
-                                        </Grid>
-                                        
-                                        <Grid item xs={8} container direction="row" spacing={2} align="center">
-                                            <Grid item xs={6} container align="right">
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h3" color="primary" align="right">Name:</Typography>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h3" color="primary" align="right">Email:</Typography>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h3" color="primary" align="right">Phone:</Typography>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h3" color="primary" align="right">Address:</Typography>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h3" color="primary" align="right">Location:</Typography>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={1} align="center">
-                                                <Divider orientation="vertical" />
-                                            </Grid>
-                                            <Grid item xs={5} container direction="column" align="left">
-                                                <Grid item xs>
-                                                    <TextField disabled variant="standard" value={user.name} />
-                                                </Grid>
-                                                <Grid item xs>
-                                                    <TextField disabled variant="standard" value={user.email} />
-                                                </Grid>
-                                                <Grid item xs>
-                                                    <TextField disabled variant="standard" value={user.phone} />
-                                                </Grid>
-                                                <Grid item xs>
-                                                    <TextField disabled variant="standard" value={user.address} />
-                                                </Grid>
-                                                <Grid item xs>
-                                                    <TextField disabled variant="standard" value={user.location} />
-                                                </Grid>
-                                            </Grid>
-                                            
-                                        </Grid>
+                        <Grid item xs={9}>
 
-                                    </Grid>
-                                </Grid> 
-                            </Paper>
+                            <Grid container direction="column">
+
+                                {/* Personal information */}
+                                <Grid item xs={12}>                        
+                                    <Paper elevation={3} style={classes.paper}>
+                                        <Grid container spacing={3} direction="column">
+                                            <Grid item>
+                                                <Typography variant="h2" color="primary" align="center">Personal information</Typography>  
+                                            </Grid>
+                                            <Grid item container spacing={3} direction="row">
+                                                <Grid item xs={4}>
+                                                    <Avatar src={user.photo} alt="pic" variant="square" style={{margin: "10px", width: "350px", height: "400px"}}/>
+                                                </Grid>
+                                                
+                                                <Grid item xs={8} container direction="row" spacing={2} align="center" style={{padding: "30px"}}>
+                                                    <Grid item xs={6} container spacing={2}>
+                                                        <Grid item xs={12}>
+                                                            <Typography variant="h4" color="primary" align="right">Name:</Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <Typography variant="h4" color="primary" align="right">Email:</Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <Typography variant="h4" color="primary" align="right">Phone:</Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <Typography variant="h4" color="primary" align="right">Address:</Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <Typography variant="h4" color="primary" align="right">Password:</Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid item xs={1} align="center">
+                                                        <Divider orientation="vertical" />
+                                                    </Grid>
+                                                    <Grid item xs={5} container spacing={2}>
+                                                        <Grid item xs={12}>
+                                                            <TextField disabled variant="standard" value={user.name} align="left" />
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <TextField disabled variant="standard" value={user.email} align="left"/>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <TextField disabled variant="standard" value={user.phone} align="left"/>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <TextField disabled variant="standard" value={user.address} align="left"/>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <TextField disabled variant="standard" value={user.password} type="password" align="left"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                    
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid> 
+                                    </Paper>
+                                </Grid>
+
+                                {/* Education history */}
+                                <Grid item xs={12}>
+                                    <Paper elevation={3} style={classes.paper}>
+                                        <Grid container spacing={3} direction="column">
+                                            <Grid item xs>
+                                                <Typography variant="h2" color="primary" align="center">Education</Typography>  
+                                            </Grid>
+                                            <Grid item xs container justify="center">
+                                                {user.education.map((edu) => (
+                                                    <Grid item xs={10}>
+                                                        <Paper elevation={2} style={classes.paperEdu}>
+                                                            <Grid container alignItems="center">
+                                                                <Grid item xs={10}>
+                                                                    <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
+                                                                    <Typography variant="body1" color="primary">{edu.degree}</Typography>
+                                                                    <Typography variant="body2" color="primary">Graduated: {edu.to}</Typography>
+                                                                </Grid>
+                                                                <Grid item xs={2}>
+                                                                    <Button variant="contained" color="primary" size="large" style={classes.button} endIcon={<EditIcon fontSize="large" />}>Edit</Button>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Paper>
+                                                    </Grid>
+                                                ))}
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Grid>    
+                            </Grid>
                         </Grid>
                     
                         
                     </Grid>
 
-                    <Grid container xs={12} justify="center">
-                        <Paper elevation={2} style={{ padding: "20px", alignItems: "center"}}>
-                            <TextField 
-                                variant="filled"
-                                label="input field"
-                                size="medium"
-                                // value="value"
-                                placeholder="placeholder" 
-                                />
-                            <Button variant="contained" color="primary">Details</Button>
-                        </Paper>
-                    </Grid>
                 </Container>
             </ThemeProvider>
         </>
