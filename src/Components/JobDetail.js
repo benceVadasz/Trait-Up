@@ -1,6 +1,6 @@
 import {JobsContext} from '../Contexts/JobsContext';
 import React, {useContext} from 'react';
-import JobDetailPage from '../Components/JobDetailPage';
+import JobDetailPage from '../components/JobDetailPage';
 import {AppBar, Toolbar, Grid } from "@material-ui/core";
 
 const JobDetail = props => {
@@ -15,9 +15,6 @@ const JobDetail = props => {
 
     return (
         <>
-        <AppBar position="static">
-          <Toolbar/>
-        </AppBar>
         <Grid>
             <Grid item xs={12}>
                 <JobDetailPage key={currentJob.id} job={currentJob} props={props}/>

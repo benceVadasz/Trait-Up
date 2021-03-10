@@ -1,7 +1,7 @@
 
 import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
-import JobList from './Components/JobList';
-import JobDetail from './Components/JobDetail';
+import JobList from './components/JobList';
+import JobDetail from './components/JobDetail';
 import {JobsProvider} from './Contexts/JobsContext';
 import {JobProvider} from './Contexts/JobDetailContext';
 import "./App.css";

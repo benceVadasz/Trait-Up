@@ -1,6 +1,7 @@
 import React,{createContext, useState, useEffect} from 'react';
 import axios from "axios";
 
+
 export const JobsContext = createContext();
 
 export const JobsProvider = props => {
@@ -11,7 +12,7 @@ export const JobsProvider = props => {
 
      useEffect(() => {
          axios
-             .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`, {params: {markdown: true}})
+             .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`)
              .then((response) => {
                  const { data } = response;
                  const newJobsData = {};

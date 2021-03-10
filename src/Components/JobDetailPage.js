@@ -16,6 +16,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import parse from 'html-react-parser';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,7 +58,6 @@ const JobDetailPage = ({job, props}) => {
       setExpanded(!expanded);
     };
 
-
     return (
     <Card className={classes.root}>
       <CardHeader
@@ -84,7 +84,8 @@ const JobDetailPage = ({job, props}) => {
 
       <CardContent>
           <Typography variant="body2">
-          {`${job.description}`}
+          {parse(`<div>${job.description}</div>`)}
+          {/* {`${job.description}`} */}
           </Typography>
       </CardContent>
       
