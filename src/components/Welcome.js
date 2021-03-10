@@ -16,27 +16,26 @@ function Welcome() {
       margin: "auto",
       width: "100%",
       minHeight: "90vh",
-      background: '#FFFFFF',
-      borderBottom: 'none'
+      background: "#FFFFFF",
+      borderBottom: "none",
     },
     image: {
       width: 128,
       height: 128,
     },
     img: {
-      marginTop: "80px",
+      marginTop: "90px",
       display: "block",
-      maxWidth: "100%",
-      maxHeight: "100%",
-      marginRight: "170px",
+      marginRight: "100px",
+      width: 800,
     },
     welcomeBlock: {
-        marginTop: "150px",
-        marginLeft: "170px"
+      marginTop: "190px",
+      marginLeft: "80px",
     },
     trait: {
-        color: "#859DF4"
-    }
+      color: "#859DF4",
+    },
   }));
 
   const classes = useStyles();
@@ -46,7 +45,6 @@ function Welcome() {
       <CssBaseline />
       <Paper className={classes.paper} width="15%">
         <Grid container spacing={2}>
-        
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid className={classes.welcomeBlock} item xs spacing={3}>
@@ -54,24 +52,20 @@ function Welcome() {
                   Welcome to <span className={classes.trait}>Trait up!</span>
                 </Typography>
                 <Typography variant="body2" gutterBottom>
-                    Your ultimate job hunt tool to find a job 
+                  Your ultimate job hunt tool to find a job
                 </Typography>
                 <Typography variant="body2">
-                tailored perfectly to your unique personality archetype
+                  tailored perfectly to your unique personality archetype
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant="body2" style={{ cursor: "pointer" }}>
-                </Typography>
+                <Typography
+                  variant="body2"
+                  style={{ cursor: "pointer" }}
+                ></Typography>
               </Grid>
             </Grid>
-            <Grid item>
-              <img
-                className={classes.img}
-                alt="complex"
-                src={welcomeImg}
-              />
-            </Grid>
+            <img className={classes.img} alt="complex" src={welcomeImg} />
           </Grid>
         </Grid>
       </Paper>
