@@ -11,12 +11,12 @@ export const JobsProvider = props => {
 
      useEffect(() => {
          axios
-             .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`)
+             .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`, {params: {markdown: true}})
              .then((response) => {
                  const { data } = response;
                  const newJobsData = {};
   
-                 data.forEach((job, index) => {
+                 data.forEach((job) => {
                     newJobsData[job.id] = {
                         id: job.id,
                         type: job.type,
@@ -34,6 +34,7 @@ export const JobsProvider = props => {
              });
     
      }, []);
+
 
     return (
         <JobsContext.Provider value={jobs}>
