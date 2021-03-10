@@ -53,17 +53,17 @@ const ProfileMenu = () => {
                         </Link>
                     </Grid>
                     <Grid item xs>
-                        <Link to="/favorites" style={classes.link}>
+                        <Link to="/profile/favorites" style={classes.link}>
                             <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<StarIcon fontSize="large" />}>Favorites</Button>
                         </Link>
                     </Grid>
                     <Grid item xs>
-                        <Link to="/applications" style={classes.link}>
+                        <Link to="/profile/applications" style={classes.link}>
                             <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<DescriptionIcon fontSize="large" />}>Applications</Button>
                         </Link>
                     </Grid>
                     <Grid item xs>
-                        <Link to="/assessments" style={classes.link}>
+                        <Link to="/profile/assessments" style={classes.link}>
                             <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<AssessmentIcon fontSize="large" />}>Assessments</Button>
                         </Link>
                     </Grid>

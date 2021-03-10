@@ -87,21 +87,21 @@ const ProfilePage = () => {
                                         </Grid>
                                     </>
                                 )} />
-                                <Route exact path="/favorites" render={(props) => (
+                                <Route exact path="/profile/favorites" render={(props) => (
                                     <>
                                         <Paper>
                                             <h1>Favorites</h1>
                                         </Paper>
                                     </>
                                 )} />
-                                <Route exact path="/applications" render={(props) => (
+                                <Route exact path="/profile/applications" render={(props) => (
                                     <>
                                         <Paper>
                                             <h1>Applications</h1>
                                         </Paper>
                                     </>
                                 )} /> 
-                                <Route exact path="/assessments" render={(props) => (
+                                <Route exact path="/profile/assessments" render={(props) => (
                                     <>
                                         <Paper>
                                             <h1>Assessments</h1>

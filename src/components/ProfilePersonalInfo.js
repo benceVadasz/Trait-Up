@@ -1,7 +1,9 @@
 import React, {useContext} from 'react';
-import {TextField, Typography, Paper, Grid, Avatar, Divider} from '@material-ui/core';
+import {TextField, Typography, Paper, Grid, Avatar, Divider, Button} from '@material-ui/core';
 import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Edit';
 
 const classes = {
     paper: {
@@ -10,6 +12,9 @@ const classes = {
         alignItems: "center", 
         display: "flex", 
         flexFlow: "column"
+    },
+    editButton: {
+        borderRadius: "200px",
     }
 }
 
@@ -21,8 +26,13 @@ const ProfilePersonalInfo = () => {
         <>
             <Paper elevation={3} style={classes.paper}>
                 <Grid container spacing={3} direction="column">
-                    <Grid item>
-                        <Typography variant="h2" color="primary" align="center">Personal information</Typography>  
+                    <Grid item xs container>
+                        <Grid item xs={11}>
+                            <Typography variant="h2" color="primary" align="center">Personal information</Typography> 
+                        </Grid> 
+                        <Grid item xs={1}>
+                            <IconButton variant="contained" color="primary" aria-label="edit" size="large" ><EditIcon fontSize="large"/></IconButton>
+                        </Grid>
                     </Grid>
                     <Grid item container spacing={3} direction="row">
                         <Grid item xs={4}>
