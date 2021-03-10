@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Button, TextField, Typography, Container, Paper, Grid, Avatar, Divider} from '@material-ui/core';
 import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import {teal, orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
+import {UserContext} from '../context/UserContext';
 import batman from '../images/batman.jpg';
 import PersonIcon from '@material-ui/icons/Person';
 import StarIcon from '@material-ui/icons/Star';
@@ -18,6 +19,8 @@ import EditIcon from '@material-ui/icons/Edit';
         
 //     }
 // })
+
+
 
 const classes = {
     container: {
@@ -36,6 +39,7 @@ const classes = {
     paperEdu: {
         padding: "20px",
         margin: "15px",
+        background: "#e7f7fe",
     },
     button: {
         width: "100%",
@@ -82,48 +86,7 @@ const theme = createMuiTheme({
 
 const ProfilePage = () => {
 
-    const [user, setUser] = useState({
-        name: "Sherlock Holmes",
-        email: "sherlock@holmes.com",
-        password: "1234",
-        address: "221B Baker Street, London",
-        location: "London",
-        phone: "+36/20-111-2233",
-        photo: batman,
-        languages: ["english", "german", "esperanto"],
-        education: [
-            {
-                type: "university",
-                school: "Oxford University",
-                degree: "Forensic science",
-                level: "Msc",
-                from: "1880-09-01",
-                to: "1882-06-01"
-            },
-            {
-                type: "university",
-                school: "Cambridge University",
-                degree: "Psychology",
-                level: "PhD",
-                from: "1882-09-01",
-                to: "1884-06-01"
-            }
-        ],
-        experience: [
-            {
-                jobTitle: "detective",
-                employer: "Scotland Yard",
-                from: "1884-06-01",
-                to: "1890-06-01"
-            },
-            {
-                jobTitle: "consultant",
-                employer: "Interpol",
-                from: "1884-06-01",
-                to: "1890-06-01"
-            }
-        ]
-    })
+    const [user, setUser] = useContext(UserContext);
 
 
     return (
@@ -235,8 +198,8 @@ const ProfilePage = () => {
                                                 <Typography variant="h2" color="primary" align="center">Education</Typography>  
                                             </Grid>
                                             <Grid item xs container justify="center">
-                                                {user.education.map((edu) => (
-                                                    <Grid item xs={10}>
+                                                {user.education.map((edu, i) => (
+                                                    <Grid item xs={10} key={i}>
                                                         <Paper elevation={2} style={classes.paperEdu}>
                                                             <Grid container alignItems="center">
                                                                 <Grid item xs={10}>
