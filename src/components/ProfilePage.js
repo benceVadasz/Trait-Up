@@ -1,25 +1,14 @@
-import React, {useState, useContext} from 'react';
+import React, {useContext} from 'react';
 import {Button, TextField, Typography, Container, Paper, Grid, Avatar, Divider} from '@material-ui/core';
-import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 import {teal, orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
-import batman from '../images/batman.jpg';
-import PersonIcon from '@material-ui/icons/Person';
-import StarIcon from '@material-ui/icons/Star';
-import DescriptionIcon from '@material-ui/icons/Description';
-import AssessmentIcon from '@material-ui/icons/Assessment';
+import ProfileMenu from './ProfileMenu';
 import EditIcon from '@material-ui/icons/Edit';
 // import ProfileMiniDrawer from './ProfileMiniDrawer';
 // import TemporaryDrawer from './TemporaryProfileDrawer';
 // import ProfileDropDownMenu from './ProfileDropDownMenu';
-
-// const useStyles = makeStyles({
-//     root: {
-        
-//     }
-// })
-
 
 
 const classes = {
@@ -96,35 +85,11 @@ const ProfilePage = () => {
                     
                     {/* <Typography variant="h1" color="primary" align="center">Profile page</Typography> */}
 
-                    <Grid container spacing={4} direction="row">
+                    <Grid container spacing={3} direction="row">
 
                         {/* Profile menu */}
                         <Grid item xs={3}>
-                            <Paper elevation={3} style={classes.paper}>
-                                <Grid container spacing={2} direction="column">
-                                    <Grid item xs align="center">
-                                        <Avatar src={user.photo} alt="pic" variant="circular" style={classes.avatar} />
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Typography variant="h3" color="primary" align="center">Profile Menu</Typography>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Divider orientation="horizontal" style={{ margin: "5px 0 10px 0" }} />
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<PersonIcon fontSize="large" />}>Profile Info</Button>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<StarIcon fontSize="large" />}>Favorites</Button>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<DescriptionIcon fontSize="large" />}>Applications</Button>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<AssessmentIcon fontSize="large" />}>Assessments</Button>
-                                    </Grid>
-                                </Grid> 
-                            </Paper>
+                            <ProfileMenu />
                         </Grid>
                         
 
