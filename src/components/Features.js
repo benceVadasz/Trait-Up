@@ -46,7 +46,7 @@ function Features() {
     <div className={classes.root}>
         <CssBaseline />
       <Paper className={classes.paper} width="15%">
-        <Grid container justify="center" spacing={16}>
+        <Grid container justify="center">
           <PersonalAssessmentFeature />
           <JobSearchFeature />
           <MockInterview />

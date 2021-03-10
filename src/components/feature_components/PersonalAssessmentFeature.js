@@ -11,14 +11,12 @@ const useStyles = makeStyles({
     margin: "0 20px",
     height: 500,
   },
-  media: {
-    height: 250,
-  },
   title: {
     marginBottom: 20,
   },
   img: {
-    width: 345  
+    maxWidth: 345, 
+
   }
 });
 
