@@ -14,6 +14,7 @@ import DetailsIcon from '@material-ui/icons/Details';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {JobContext} from '../Contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +38,10 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
       backgroundColor: blue[500],
-    }
+    },
+    margin: {
+      margin: theme.spacing(1),
+    },
 
   }));
 
@@ -95,9 +99,9 @@ const JobCard = ({props, jobId}) => {
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="apply">
-            <AddCircleOutlineIcon/>
-          </IconButton>
+          <Button variant="outlined" size="small" color="primary" className={classes.margin}>
+          Apply
+        </Button>
         </CardActions>
       </Card>
     )

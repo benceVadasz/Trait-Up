@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import parse from 'html-react-parser';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -100,9 +101,9 @@ const JobDetailPage = ({job, props}) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="apply">
-            <AddCircleOutlineIcon/>
-          </IconButton>
+        <Button variant="outlined" size="small" color="primary" className={classes.margin}>
+          Apply
+        </Button>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

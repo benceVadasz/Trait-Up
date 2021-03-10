@@ -23,7 +23,7 @@ const JobList = props => {
         <Grid container className={classes.gridContainer} spacing={6} justify="center">
           
             {Object.keys(jobs).map(jobId => 
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid item xs={5}>
                 <JobCard key={jobId} jobId={jobId} props={props}/>
             </Grid>
             )}
