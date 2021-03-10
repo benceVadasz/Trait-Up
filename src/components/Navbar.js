@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Button from "@material-ui/core/Button";
+import logo from "../assets/logo.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   navbarStyle: {
     background: "#859DF4",
   },
+  img: {
+    width: 150,  
+  }
 }));
 
 export default function MenuAppBar() {
@@ -32,6 +36,7 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar className={classes.navbarStyle} position="static">
         <Toolbar>
+          <img className={classes.img} alt="complex" src={logo} />
           <Typography variant="h6" className={classes.title}></Typography>
           <div>
             <Button component={Link} to="/jobs" color="inherit">
