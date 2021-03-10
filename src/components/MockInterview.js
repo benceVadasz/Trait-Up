@@ -4,8 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import InterviewImg from '../assets/interview.png';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
@@ -21,22 +20,21 @@ const useStyles = makeStyles({
     title: {
         marginBottom: 20,  
       },
+      img: {
+        width: 365  
+      },
   });
 export default function MockInterview() {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/contemplative-reptile.jpg"
-          title="Contemplative Reptile"
-        />
+        <img className={classes.img} alt="complex" src={InterviewImg} />
         <CardContent>
           <Typography className={classes.title} align="center" gutterBottom variant="h5" component="h3">
             Mock Interviews
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography align="center" variant="body2" color="textSecondary" component="p">
             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
             across all continents except Antarctica
           </Typography>
