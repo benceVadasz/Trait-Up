@@ -5,10 +5,11 @@ import {AppBar, Toolbar, Grid } from "@material-ui/core";
 
 
 
-const JobList = () => {
+const JobList = props => {
 
     const jobs = useContext(JobsContext);
     console.log(jobs)
+    
 
     return (
       <>
@@ -16,9 +17,9 @@ const JobList = () => {
           <Toolbar/>
         </AppBar>
         <Grid container spacing={4}>
-          <Grid item md={3}>
+          <Grid item xs={12} sm={6} md={4}>
             {Object.keys(jobs).map(jobId => 
-                <JobCard jobId={jobId}/>)}
+                <JobCard key={jobId} jobId={jobId} props={props}/>)}
             </Grid>
         </Grid>
       </>

@@ -39,10 +39,12 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-const JobCard = ({jobId}) => {
+const JobCard = ({props, jobId}) => {
 
     const jobs = useContext(JobsContext);
     const classes = useStyles();
+    const { history } = props;
+;
 
   
     const {id, type, url, created_at, company, company_url, location, title, description, how_to_apply} = jobs[jobId];
@@ -56,7 +58,7 @@ const JobCard = ({jobId}) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="detail">
+            <IconButton aria-label="detail" onClick = {() => history.push(`/jobs/${id}`)}> 
               <DetailsIcon />
             </IconButton>
           }
@@ -80,7 +82,7 @@ const JobCard = ({jobId}) => {
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="apply">
-            <AddCircleOutlineIcon />
+            <AddCircleOutlineIcon/>
           </IconButton>
         </CardActions>
       </Card>

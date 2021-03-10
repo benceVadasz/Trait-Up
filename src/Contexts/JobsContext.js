@@ -6,7 +6,7 @@ export const JobsContext = createContext();
 export const JobsProvider = props => {
 
     const [jobs, setJobs] = useState([]);
-    console.log(jobs)
+    
 
 
      useEffect(() => {
@@ -18,7 +18,7 @@ export const JobsProvider = props => {
   
                  data.forEach((job, index) => {
                     newJobsData[index + 1] = {
-                        id: index + 1,
+                        id: job.id,
                         type: job.type,
                         url: job.url,
                         created_at: job.created_at,
