@@ -3,13 +3,17 @@ import React, {useContext} from 'react';
 import JobDetailPage from '../Components/JobDetailPage';
 
 const JobDetail = props => {
-
+    const { history, match } = props;
+    const { params } = match;
+    const { jobId } = params;
     const jobs = useContext(JobsContext);
+    const currentJob = jobs[jobId];
+    console.log(currentJob)
+    
 
     return (
         <>
-            {Object.keys(jobs).map(jobId => 
-                 <JobDetailPage key={jobId} jobId={jobId} props={props}/>)}
+            <JobDetailPage key={currentJob.id} job={currentJob} props={props}/>
         </>
     )
 }
