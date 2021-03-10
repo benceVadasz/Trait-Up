@@ -12,16 +12,17 @@
 
     "bootstrap": "^4.6.0",
     "history": "^5.0.0",
-=======
+
     "cors-anywhere": "^0.4.3",
->>>>>>> master
+
     "react": "^17.0.1",
     "react-bootstrap": "^1.5.1",
     "react-dom": "^17.0.1",
-<<<<<<< HEAD
+
     "react-history": "^0.18.2",
     "react-hook-use-state": "^1.1.0",
     "react-markdown": "^5.0.3",
+
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.0"
