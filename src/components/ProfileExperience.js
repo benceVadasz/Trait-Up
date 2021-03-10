@@ -26,8 +26,7 @@ const classes = {
     }
 }
 
-
-const ProfileEducation = () => {
+const ProfileExperience = () => {
 
     const [user, setUser] = useContext(UserContext);
 
@@ -36,24 +35,20 @@ const ProfileEducation = () => {
             <Paper elevation={3} style={classes.paper}>
                 <Grid container spacing={3} direction="column">
                     <Grid item xs>
-                        <Typography variant="h2" color="primary" align="center">Education</Typography>  
+                        <Typography variant="h2" color="primary" align="center">Experience</Typography>  
                     </Grid>
                     <Grid item xs container justify="center">
-                        {user.education.map((edu, i) => (
+                        {user.experience.map((exp, i) => (
                             <Grid item xs={10} key={i}>
                                 <Paper elevation={2} style={classes.paperEdu}>
                                     <Grid container alignItems="center">
                                         <Grid item xs={10}>
-                                            <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
-                                            <Typography variant="body1" color="primary">{edu.degree} {edu.level}</Typography>
-                                            <Typography variant="body2" color="primary">Graduated: {edu.to}</Typography>
+                                            <Typography variant="h4" color="primary" style={classes.eduText}>{exp.jobTitle}</Typography>
+                                            <Typography variant="body1" color="primary">{exp.employer}</Typography>
+                                            <Typography variant="body2" color="primary">From {exp.from} to {exp.to}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Button variant="contained" 
-                                                    color="primary" 
-                                                    size="large" 
-                                                    style={classes.button} 
-                                                    endIcon={<EditIcon fontSize="large" />}>Edit</Button>
+                                            <Button variant="contained" color="primary" size="large" style={classes.button} endIcon={<EditIcon fontSize="large" />}>Edit</Button>
                                         </Grid>
                                     </Grid>
                                 </Paper>
@@ -66,4 +61,4 @@ const ProfileEducation = () => {
     )
 }
 
-export default ProfileEducation
+export default ProfileExperience
