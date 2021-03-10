@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
       transform: 'rotate(180deg)',
     },
     avatar: {
-      backgroundColor: blue[500],
+      backgroundColor: "#859DF4",
     },
     margin: {
       margin: theme.spacing(1),
