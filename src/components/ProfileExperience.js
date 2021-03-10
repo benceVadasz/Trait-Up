@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {Button, Typography, Paper, Grid } from '@material-ui/core';
 import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
-import EditIcon from '@material-ui/icons/Edit';
+import ProfileEditDeleteButton from './ProfileEditDeleteButton';
 
 const classes = {
     paper: {
@@ -16,10 +16,6 @@ const classes = {
         padding: "20px",
         margin: "15px",
         background: "#e7f7fe",
-    },
-    button: {
-        width: "100%",
-        fontSize: "18px",
     },
     eduText: {
         marginBottom: "5px",
@@ -48,7 +44,7 @@ const ProfileExperience = () => {
                                             <Typography variant="body2" color="primary">From {exp.from} to {exp.to}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
-                                            <Button variant="contained" color="primary" size="large" style={classes.button} endIcon={<EditIcon fontSize="large" />}>Edit</Button>
+                                            <ProfileEditDeleteButton/>
                                         </Grid>
                                     </Grid>
                                 </Paper>
