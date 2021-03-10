@@ -5,10 +5,11 @@ import {AppBar, Toolbar, Grid } from "@material-ui/core";
 
 
 
+
 const JobList = props => {
 
     const jobs = useContext(JobsContext);
-    
+    console.log(jobs)
 
     return (
       <>
