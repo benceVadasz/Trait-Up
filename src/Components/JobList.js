@@ -20,9 +20,7 @@ const JobList = props => {
 
     return (
       <>
-        <AppBar position="static">
-          <Toolbar/>
-        </AppBar>
+     
         <Grid container className={classes.gridContainer} spacing={6} justify="center">
           
             {Object.keys(jobs).map(jobId => 
