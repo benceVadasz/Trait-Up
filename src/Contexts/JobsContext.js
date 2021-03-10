@@ -27,6 +27,7 @@ export const JobsProvider = props => {
                         title: job.title,
                         description: job.description,
                         how_to_apply: job.how_to_apply,
+                        company_logo: job.company_logo
                      }
                  });
                  setJobs(newJobsData);

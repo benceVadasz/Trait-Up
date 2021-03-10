@@ -13,6 +13,7 @@ import React, {useContext} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {JobContext} from '../Contexts/JobDetailContext';
+import CardMedia from '@material-ui/core/CardMedia';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   
     },
     media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
+
+      paddingTop: '30%', // 16:9
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -47,7 +48,7 @@ const JobCard = ({props, jobId}) => {
     const { history } = props;
     const [job, setJob]  = useContext(JobContext);  
 
-    const {id, type, created_at, company,  location, title, description} = jobs[jobId];
+    const {id, type, created_at, company,  location, title, description, company_logo} = jobs[jobId];
 
     const saveJob = (id, type, created_at, company, location, title, description) => {
       const Job = { id: id, type: type, created_at: created_at, company: company, location: location, title: title, description: description};
@@ -71,6 +72,12 @@ const JobCard = ({props, jobId}) => {
           title =  {`${title}`}
           subheader= {`${company}`}
         />
+
+        <CardMedia height="140"
+        className={classes.media}
+          image={`${company_logo}`}
+  
+      />
       
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
