@@ -1,12 +1,11 @@
 import React, {useContext} from 'react';
 import {JobsContext} from '../Contexts/JobsContext';
-import JobCard from '../Components/JobCard';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import JobCard from './JobCard';
 import {AppBar, Toolbar, Grid } from "@material-ui/core";
 
 
 
-const Jobs = () => {
+const JobList = () => {
 
     const jobs = useContext(JobsContext);
     console.log(jobs)
@@ -16,13 +15,16 @@ const Jobs = () => {
         <AppBar position="static">
           <Toolbar/>
         </AppBar>
-        <Grid container spacing={3}>
-        {Object.keys(jobs).map(jobId => 
-            <JobCard jobId={jobId}/>)}
+        <Grid container spacing={4}>
+          <Grid item md={3}>
+            {Object.keys(jobs).map(jobId => 
+                <JobCard jobId={jobId}/>)}
+            </Grid>
         </Grid>
       </>
     );
     
 }
 
-export default Jobs;
+export default JobList;
+
