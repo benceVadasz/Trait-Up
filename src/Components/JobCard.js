@@ -6,12 +6,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { blue, blueGrey, grey, red } from '@material-ui/core/colors';
+import { blue, blueGrey } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import {JobsContext} from '../Contexts/JobsContext';
 import React, {useContext} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import {JobContext} from '../Contexts/JobDetailContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,10 +45,15 @@ const JobCard = ({props, jobId}) => {
     const jobs = useContext(JobsContext);
     const classes = useStyles();
     const { history } = props;
-;
+    const [job, setJob]  = useContext(JobContext);  
 
-  
-    const {id, type, url, created_at, company, company_url, location, title, description, how_to_apply} = jobs[jobId];
+    const {id, type, created_at, company,  location, title, description} = jobs[jobId];
+
+    const saveJob = (id, type, created_at, company, location, title, description) => {
+      const Job = { id: id, type: type, created_at: created_at, company: company, location: location, title: title, description: description};
+      setJob([...job, Job]);
+      history.push(`/jobs/${id}`)
+    }
 
     return (
         <Card className={classes.root}>
@@ -58,7 +64,7 @@ const JobCard = ({props, jobId}) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="detail" onClick = {() => history.push(`/jobs/${id}`)}> 
+            <IconButton aria-label="detail" onClick = {() => saveJob(id, type, created_at, company, location, title, description)}> 
               <DetailsIcon />
             </IconButton>
           }
