@@ -3,7 +3,7 @@ import { Form, Col } from 'react-bootstrap'
 
 const SearchForm = props => {
     return (
-        <Form className="mb-4" value="inline-block">
+        <Form className="mb-4">
         <Form.Row className="align-items-end">
           <Form.Group as={Col}>
             <Form.Label>Title</Form.Label>
@@ -22,4 +22,4 @@ const SearchForm = props => {
 }
 
 
-export default SearchForm
+export default SearchForm;

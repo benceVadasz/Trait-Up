@@ -23,11 +23,14 @@ const JobList = props => {
         <AppBar position="static">
           <Toolbar/>
         </AppBar>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={12} sm={6} md={4}>
+        <Grid container className={classes.gridContainer} spacing={6} justify="center">
+          
             {Object.keys(jobs).map(jobId => 
-                <JobCard key={jobId} jobId={jobId} props={props}/>)}
+            <Grid item xs={12} sm={6} md={4}>
+                <JobCard key={jobId} jobId={jobId} props={props}/>
             </Grid>
+            )}
+          
         </Grid>
       </>
     );
