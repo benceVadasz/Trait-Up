@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomeBody from "./components/HomeBody";
 import React from "react";
+import Register from "./components/Register";
 
 function App() {
 
@@ -10,9 +11,8 @@ function App() {
     <div className="App">
       <Router>
         <Navbar />
-        <HomeBody />
-        {/* <Route exact path="/jobs" children={<Jobs />} />
-        <Route exact path="/types" children={<Types />} /> */}
+        <Route exact path="/" children={<HomeBody />} />
+        <Route exact path="/register" children={<Register />} />
       </Router>
     </div>
   );

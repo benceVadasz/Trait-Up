@@ -34,8 +34,8 @@ function Join() {
       marginTop: 80,
     },
     joinBtn: {
-      marginLeft: 100,
-      marginTop: 80,
+      marginLeft: 150,
+      marginTop: 330,
       backGround: "#859DF4 !important",
     },
     color: {
