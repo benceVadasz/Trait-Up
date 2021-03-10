@@ -15,10 +15,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 1900,
+
       
     },
     media: {
@@ -49,8 +51,6 @@ const useStyles = makeStyles((theme) => ({
 
 const JobDetailPage = ({job, props}) => {
     const { history, match } = props;
-    const preventDefault = (event) => event.preventDefault();
-
     const [expanded, setExpanded] = React.useState(false);
     const classes = useStyles();
     const handleExpandClick = () => {
@@ -100,9 +100,9 @@ const JobDetailPage = ({job, props}) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <IconButton aria-label="apply">
+            <AddCircleOutlineIcon/>
+          </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -117,9 +117,8 @@ const JobDetailPage = ({job, props}) => {
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>How to apply:</Typography>
           <Typography variant="body2">
-          {`${job.description}`}
+          {`${job.how_to_apply}`}
           </Typography>
         </CardContent>
       </Collapse>
