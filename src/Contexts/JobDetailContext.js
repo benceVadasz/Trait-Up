@@ -19,8 +19,6 @@ export const JobProvider = props => {
         localStorage.setItem("job",JSON.stringify(job))
     }
 
-
-
     return (
         <JobContext.Provider value={[job, saveJob]}>
             {props.children}

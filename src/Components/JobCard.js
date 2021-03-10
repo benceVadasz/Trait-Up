@@ -49,10 +49,11 @@ const JobCard = ({props, jobId}) => {
     const [job, setJob]  = useContext(JobContext);  
 
     const {id, type, created_at, company,  location, title, description, company_logo} = jobs[jobId];
+    const currentJob = jobs[jobId]
 
-    const saveJob = (id, type, created_at, company, location, title, description) => {
-      const Job = { id: id, type: type, created_at: created_at, company: company, location: location, title: title, description: description};
-      setJob([...job, Job]);
+    const saveJob = (currentJob) => {
+      // const Job = { id: id, type: type, created_at: created_at, company: company, location: location, title: title, description: description};
+      setJob([...job, currentJob]);
       history.push(`/jobs/${id}`)
     }
 
@@ -65,7 +66,7 @@ const JobCard = ({props, jobId}) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="detail" onClick = {() => saveJob(id, type, created_at, company, location, title, description)}> 
+            <IconButton aria-label="detail" onClick = {() => saveJob(currentJob)}> 
               <DetailsIcon />
             </IconButton>
           }
