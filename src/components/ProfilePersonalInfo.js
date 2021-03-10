@@ -47,9 +47,11 @@ const ProfilePersonalInfo = () => {
                                     <Typography variant="h4" color="primary" align="right">Password:</Typography>
                                 </Grid>
                             </Grid>
+
                             <Grid item xs={1} align="center">
                                 <Divider orientation="vertical" />
                             </Grid>
+                            
                             <Grid item xs={5} container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField disabled variant="standard" value={user.name} align="left" />

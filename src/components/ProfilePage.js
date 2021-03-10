@@ -5,7 +5,8 @@ import {teal, orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
 import ProfileMenu from './ProfileMenu';
-import ProfilePersonalInfo from './ProfilePersonalInfo'
+import ProfilePersonalInfo from './ProfilePersonalInfo';
+import ProfileEducation from './ProfileEducation';
 import EditIcon from '@material-ui/icons/Edit';
 // import ProfileMiniDrawer from './ProfileMiniDrawer';
 // import TemporaryDrawer from './TemporaryProfileDrawer';
@@ -105,31 +106,7 @@ const ProfilePage = () => {
 
                                 {/* Education history */}
                                 <Grid item xs={12}>
-                                    <Paper elevation={3} style={classes.paper}>
-                                        <Grid container spacing={3} direction="column">
-                                            <Grid item xs>
-                                                <Typography variant="h2" color="primary" align="center">Education</Typography>  
-                                            </Grid>
-                                            <Grid item xs container justify="center">
-                                                {user.education.map((edu, i) => (
-                                                    <Grid item xs={10} key={i}>
-                                                        <Paper elevation={2} style={classes.paperEdu}>
-                                                            <Grid container alignItems="center">
-                                                                <Grid item xs={10}>
-                                                                    <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
-                                                                    <Typography variant="body1" color="primary">{edu.degree}</Typography>
-                                                                    <Typography variant="body2" color="primary">Graduated: {edu.to}</Typography>
-                                                                </Grid>
-                                                                <Grid item xs={2}>
-                                                                    <Button variant="contained" color="primary" size="large" style={classes.button} endIcon={<EditIcon fontSize="large" />}>Edit</Button>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Paper>
-                                                    </Grid>
-                                                ))}
-                                            </Grid>
-                                        </Grid>
-                                    </Paper>
+                                    <ProfileEducation />
                                 </Grid>  
 
                                 {/* Experience */}
