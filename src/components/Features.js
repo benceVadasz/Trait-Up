@@ -2,13 +2,10 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import welcomeImg from "../assets/welcome.png";
-import JobSearchFeature from './JobSearchFeature';
-import PersonalAssessmentFeature from './PersonalAssessmentFeature';
-import MockInterview from './MockInterview';
+import JobSearchFeature from './feature_components/JobSearchFeature';
+import PersonalAssessmentFeature from './feature_components/PersonalAssessmentFeature';
+import MockInterview from './feature_components/MockInterview';
 
 function Features() {
     const useStyles = makeStyles((theme) => ({
