@@ -1,15 +1,16 @@
-import React from 'react'
+import {JobsContext} from '../Contexts/JobsContext';
+import React, {useContext} from 'react';
+import JobDetailPage from '../Components/JobDetailPage';
 
 const JobDetail = props => {
-    const { history, match } = props;
-    const { params } = match;
-    const { jobId } = params;
-    console.log(jobId)
+
+    const jobs = useContext(JobsContext);
 
     return (
-        <div>
-            HELLO
-        </div>
+        <>
+            {Object.keys(jobs).map(jobId => 
+                 <JobDetailPage key={jobId} jobId={jobId} props={props}/>)}
+        </>
     )
 }
 
