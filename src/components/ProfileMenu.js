@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import { Link } from 'react-router-dom';
 import {Button, Typography, Paper, Grid, Avatar, Divider} from '@material-ui/core';
 import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
@@ -23,6 +24,9 @@ const classes = {
         width: "150px",
         height: "150px",
         margin: "5px",
+    },
+    link: {
+        textDecoration: "none",
     }
 }
 
@@ -44,16 +48,24 @@ const ProfileMenu = () => {
                         <Divider orientation="horizontal" style={{ margin: "5px 0 10px 0" }} />
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<PersonIcon fontSize="large" />}>Profile Info</Button>
+                        <Link to="/profile" style={classes.link}>
+                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<PersonIcon fontSize="large" />}>Profile Info</Button>
+                        </Link>
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<StarIcon fontSize="large" />}>Favorites</Button>
+                        <Link to="/favorites" style={classes.link}>
+                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<StarIcon fontSize="large" />}>Favorites</Button>
+                        </Link>
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<DescriptionIcon fontSize="large" />}>Applications</Button>
+                        <Link to="/applications" style={classes.link}>
+                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<DescriptionIcon fontSize="large" />}>Applications</Button>
+                        </Link>
                     </Grid>
                     <Grid item xs>
-                        <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<AssessmentIcon fontSize="large" />}>Assessments</Button>
+                        <Link to="/assessments" style={classes.link}>
+                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<AssessmentIcon fontSize="large" />}>Assessments</Button>
+                        </Link>
                     </Grid>
                 </Grid> 
             </Paper>
