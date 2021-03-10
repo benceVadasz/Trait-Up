@@ -1,6 +1,7 @@
 import {JobsContext} from '../Contexts/JobsContext';
 import React, {useContext} from 'react';
 import JobDetailPage from '../Components/JobDetailPage';
+import {AppBar, Toolbar, Grid } from "@material-ui/core";
 
 const JobDetail = props => {
     const { history, match } = props;
@@ -9,11 +10,19 @@ const JobDetail = props => {
     const jobs = useContext(JobsContext);
     const currentJob = jobs[jobId];
     console.log(currentJob)
+
     
 
     return (
         <>
-            <JobDetailPage key={currentJob.id} job={currentJob} props={props}/>
+        <AppBar position="static">
+          <Toolbar/>
+        </AppBar>
+        <Grid>
+            <Grid item xs={12}>
+                <JobDetailPage key={currentJob.id} job={currentJob} props={props}/>
+            </Grid>
+        </Grid>
         </>
     )
 }
