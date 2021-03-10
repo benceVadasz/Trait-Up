@@ -1,9 +1,14 @@
-<<<<<<< HEAD
+
 import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import JobList from './Components/JobList';
 import JobDetail from './Components/JobDetail';
 import {JobsProvider} from './Contexts/JobsContext';
 import {JobProvider} from './Contexts/JobDetailContext';
+import "./App.css";
+import Navbar from "./components/Navbar";
+import HomeBody from "./components/HomeBody";
+import React from "react";
+import Register from "./components/Register";
 
 const App = props => {
   return (
@@ -11,12 +16,15 @@ const App = props => {
       <JobProvider>
         <Router>
             <Switch>
+            <Navbar />
+            <Route exact path="/" children={<HomeBody />} />
+            <Route exact path="/register" children={<Register />} />
             <Route exact path='/jobs' render={(props) => <JobList {...props}/>}></Route>
             <Route
                     exact
                     path='/jobs/:jobId'
                     render={(props) => <JobDetail {...props}/>}>
-                  </Route>
+            </Route>
           </Switch>
         </Router>
       </JobProvider>
@@ -43,4 +51,5 @@ function App() {
 >>>>>>> master
   );
 }
+
 export default App;
