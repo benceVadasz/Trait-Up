@@ -4,12 +4,21 @@ import {makeStyles, ThemeProvider, createMuiTheme} from '@material-ui/core/style
 import {teal, orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
 import batman from '../images/batman.jpg';
+import ProfileMiniDrawer from './ProfileMiniDrawer';
+import TemporaryDrawer from './TemporaryProfileDrawer';
+import ProfileDropDownMenu from './ProfileDropDownMenu';
 
 // const useStyles = makeStyles({
 //     root: {
         
 //     }
 // })
+
+const classes = {
+    container: {
+        marginTop: "100px",
+    }
+}
 
 const theme = createMuiTheme({
     typography: {
@@ -81,9 +90,9 @@ const ProfilePage = () => {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <Container maxWidth="lg">
+                <Container maxWidth="lg" style={classes.container}>
                     
-                    <Typography variant="h1" color="primary" align="center">Profile page</Typography>
+                    {/* <Typography variant="h1" color="primary" align="center">Profile page</Typography> */}
                     <Paper elevation={3} style={{ padding: "30px", 
                                                 margin: "20px", 
                                                 alignItems: "center", 
@@ -94,10 +103,13 @@ const ProfilePage = () => {
                         
                         <Grid container spacing={3} direction="column">
                             <Grid item xs={12} justify="center">
+                                {/* <TemporaryDrawer /> */}
+                                {/* <ProfileDropDownMenu /> */}
                                 <Typography variant="h2" color="primary" align="center">Personal information</Typography>  
                             </Grid>
                             <Grid item xs={12} container spacing={3} direction="row">
                                 <Grid item xs={4}>
+                                    {/* <ProfileMiniDrawer /> */}
                                     <Avatar src={user.photo} alt="pic" variant="square" style={{width: "350px", height: "400px"}}/>
                                 </Grid>
                                 
