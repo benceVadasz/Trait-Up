@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     background: "#859DF4",
   },
   img: {
-    width: 150,  
+    width: 150,
     marginTop: 5,
-  }
+  },
 }));
 
 export default function MenuAppBar() {
@@ -37,7 +37,9 @@ export default function MenuAppBar() {
     <div className={classes.root}>
       <AppBar className={classes.navbarStyle} position="static">
         <Toolbar>
-          <img className={classes.img} alt="complex" src={logo} />
+          <Button component={Link} to="/" color="inherit">
+            <img className={classes.img} alt="complex" src={logo} />
+          </Button>
           <Typography variant="h6" className={classes.title}></Typography>
           <div>
             <Button component={Link} to="/jobs" color="inherit">
