@@ -17,7 +17,7 @@ export const JobsProvider = props => {
                  const newJobsData = {};
   
                  data.forEach((job, index) => {
-                    newJobsData[index + 1] = {
+                    newJobsData[job.id] = {
                         id: job.id,
                         type: job.type,
                         url: job.url,
