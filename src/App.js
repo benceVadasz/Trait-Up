@@ -11,6 +11,8 @@ function App() {
       <Router>
         <Navbar />
         <HomeBody />
+        {/* <Route exact path="/jobs" children={<Jobs />} />
+        <Route exact path="/types" children={<Types />} /> */}
       </Router>
     </div>
   );
