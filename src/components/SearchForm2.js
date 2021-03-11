@@ -30,7 +30,7 @@ const SearchForm2 = ({jobs}) => {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    aria-label="Toggle password visibility"
+                    aria-label=""
     
                   >
                     <LocationOnIcon/>
