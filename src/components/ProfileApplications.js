@@ -4,11 +4,10 @@ import 'fontsource-roboto';
 
 const classes = {
     paper: {
-        padding: "30px", 
+        padding: "20px", 
         margin: "20px", 
         alignItems: "center", 
-        display: "flex", 
-        flexFlow: "column"
+        background: "#eceef7",
     },
 }
 

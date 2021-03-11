@@ -1,14 +1,14 @@
 import React, {useContext} from 'react';
 import {Button, Typography, Paper, Grid } from '@material-ui/core';
 import 'fontsource-roboto';
+import JobList from './JobList';
 
 const classes = {
     paper: {
-        padding: "30px", 
+        padding: "20px", 
         margin: "20px", 
         alignItems: "center", 
-        display: "flex", 
-        flexFlow: "column"
+        background: "#eceef7",
     },
 }
 
@@ -22,8 +22,8 @@ const ProfileFavorites = () => {
                     <Grid item xs>
                         <Typography variant="h2" color="primary" align="center">Favorites</Typography>  
                     </Grid>
-                    <Grid item xs container justify="center">
-                        
+                    <Grid item xs>
+                        <JobList />
                     </Grid>
                 </Grid>
             </Paper>
