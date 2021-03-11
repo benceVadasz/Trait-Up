@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Paper,
@@ -14,8 +14,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useStoreActions } from 'easy-peasy';
 
 function Register() {
+  
   const paperStyle = {
     padding: "30px 20px",
     height: 660,
@@ -33,18 +35,30 @@ function Register() {
   const marginTop = { marginTop: 5 };
   const button = { backgroundColor: "#859DF4" };
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
+  const add = useStoreActions(actions => actions.addUser);  
+  const [loading, setLoading] = useState(false);
 
   const submit = (e) => {
+    setLoading(true)
     setUser({name, email, gender, password});
-    
   };
 
-  console.log(user);
+  useEffect(() => { 
+    setLoading(false);
+    add(user);
+  }, [user]);
+
+  if (loading) 
+    return (
+      <div className="App">
+        <div className="loading">Loading...</div>
+      </div>
+    );
 
   return (
     <div>
@@ -68,7 +82,7 @@ function Register() {
             />
             <TextField
               onChange={(e) => setEmail(e.target.value)}
-              fullWidth
+              fullWidth 
               label="Email"
               placeholder="Enter your email"
             />
@@ -96,11 +110,13 @@ function Register() {
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
               label="Password"
+              type="password"
               placeholder="Enter your password"
             />
             <TextField
               fullWidth
               label="Confirm Password"
+              type="password"
               placeholder="Confirm your password"
             />
             <FormControlLabel
