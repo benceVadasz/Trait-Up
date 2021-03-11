@@ -6,9 +6,7 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { blue, blueGrey } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import {JobsContext} from '../Contexts/JobsContext';
 import React, {useContext} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import {JobContext} from '../Contexts/JobDetailContext';
@@ -44,18 +42,16 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-const JobCard = ({props, jobId}) => {
+const JobCard = ({props, jobId, jobs}) => {
 
-    const jobs = useContext(JobsContext);
     const classes = useStyles();
     const { history } = props;
     const [job, setJob]  = useContext(JobContext);  
 
-    const {id, type, created_at, company,  location, title, description, company_logo, url} = jobs[jobId];
+    const {id, type, created_at, company,  location, title, description, company_logo, url, how_to_apply} = jobs[jobId];
   
-    const saveJob = (id, type, created_at, company, location, title, description, url) => {
-      console.log("saving job is running..")
-      const currentJob = { id, type, created_at, company, location, title, description, url};
+    const saveJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
+      const currentJob = { id, type, created_at, company, location, title, description, url, how_to_apply};
       setJob(currentJob);
       history.push(`/jobs/${id}`)
 
@@ -70,7 +66,7 @@ const JobCard = ({props, jobId}) => {
             </Avatar>
           }
           action={
-            <IconButton aria-label="detail" onClick = {() => saveJob(id, type, created_at, company, location, title, description, url)}> 
+            <IconButton aria-label="detail" onClick = {() => saveJob(id, type, created_at, company, location, title, description, url, how_to_apply)}> 
               <DetailsIcon />
             </IconButton>
           }
