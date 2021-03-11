@@ -5,9 +5,9 @@ import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Typography from "@material-ui/core/Typography";
 import join from "../assets/join.png";
-import JoinNow from "./join_steps_components/JoinNow";
-import Assessment from "./join_steps_components/Assessment";
-import DreamJob from "./join_steps_components/DreamJob";
+import JoinNow from "./join_step_components/JoinNow";
+import Assessment from "./join_step_components/Assessment";
+import DreamJob from "./join_step_components/DreamJob";
 
 function Join() {
   const useStyles = makeStyles((theme) => ({

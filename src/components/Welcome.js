@@ -24,9 +24,9 @@ function Welcome() {
       height: 128,
     },
     img: {
-      marginTop: "90px",
+      marginTop: 90,
       display: "block",
-      marginRight: "80px",
+      marginRight: 20,
       width: 800,
     },
     welcomeBlock: {

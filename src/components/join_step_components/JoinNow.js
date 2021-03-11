@@ -8,12 +8,12 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
     root: {
-      
+      background: '#F6F6F6',
       maxWidth: 450,
       height: 170,
       marginTop: 50,
       marginLeft: 20,
-      borderTop: '0.1px solid gray',
+      borderTop: '0.1px solid #DFEEFC',
     },
     title: {
       marginTop: 55,

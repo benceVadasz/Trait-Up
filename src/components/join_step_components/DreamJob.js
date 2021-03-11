@@ -8,17 +8,17 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles({
     root: {
-      
+      background: '#F6F6F6',
       maxWidth: 450,
       height: 170,
       marginTop: 50,
       marginLeft: 20,
-      borderTop: '0.1px solid gray',
+      borderTop: '0.1px solid #DFEEFC',
     },
     title: {
       marginTop: 55,
       fontFamily: 'Fugaz One, cursive',
-      width: 280
+      width: 300
     },
     description: { 
       fontFamily: 'Lato, sans-serif',
@@ -28,7 +28,6 @@ const useStyles = makeStyles({
       maxWidth: 345, 
     },
     joinBtn: {
-        marginRight: 10,
         marginTop: 100,
     }, 
     box:{
@@ -37,7 +36,7 @@ const useStyles = makeStyles({
     }
   });
 
-function Assessment() {
+function DreamJob() {
     const classes = useStyles();
 
   return (
@@ -51,16 +50,16 @@ function Assessment() {
           variant="h5"
           component="h3"
         >
-          Take our tests
+          Find your dream job!
         </Typography>
           <Button
                   color="primary"
                   variant="contained"
                   className={classes.joinBtn}
                   component={Link}
-                  to="/assessments"
+                  to="/jobs"
                 >
-                  Assessments
+                  Positions
                 </Button>
         </CardContent>
       </Card>
@@ -68,4 +67,4 @@ function Assessment() {
   );
 }
 
-export default Assessment;
+export default DreamJob;
