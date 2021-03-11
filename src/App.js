@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HomeBody from "./components/HomeBody";
 import React from "react";
 import Register from "./components/Register";
+import Login from "./components/Login";
 import { StoreProvider, createStore, persist } from "easy-peasy";
 import userModel from "./userModel";
 
@@ -18,6 +19,7 @@ function App() {
         <Navbar />
         <Route exact path="/" children={<HomeBody />} />
         <Route exact path="/register" children={<Register />} />
+        <Route exact path="/login" children={<Login />} />
         </StoreProvider>
       </Router>
     </div>
