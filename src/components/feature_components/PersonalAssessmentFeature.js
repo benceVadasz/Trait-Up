@@ -13,6 +13,11 @@ const useStyles = makeStyles({
   },
   title: {
     marginBottom: 20,
+    fontFamily: 'Fugaz One, cursive'
+  },
+  description: { 
+    fontFamily: 'Lato, sans-serif',
+    fontSize: 15,
   },
   img: {
     maxWidth: 345, 
@@ -36,9 +41,8 @@ export default function PersonalAssessmentFeature() {
         >
           Personal assessments
         </Typography>
-        <Typography align="center" variant="body2" color="textSecondary" component="p">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography className={classes.description} align="center" variant="body2" color="textSecondary" component="p">
+          Take a quick but thorough questionnaire to find out exactly what kind of company culture suits you best
         </Typography>
       </CardContent>
     </Card>

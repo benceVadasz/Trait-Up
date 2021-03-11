@@ -19,8 +19,13 @@ const useStyles = makeStyles({
     height: 250,
   },
   title: {
-    marginBottom: 20,  
+    marginBottom: 20, 
+    fontFamily: 'Fugaz One, cursive' 
   }, 
+  description: { 
+    fontFamily: 'Lato, sans-serif',
+    fontSize: 15,
+  },
   img: {
     width: 255  
   }
@@ -36,9 +41,8 @@ export default function JobSearchFeature() {
           <Typography className={classes.title} align="center" gutterBottom variant="h5" component="h3">
             Search for tech jobs all around the world
           </Typography>
-          <Typography align="center" variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-            across all continents except Antarctica
+          <Typography className={classes.description} align="center" variant="body2" color="textSecondary" component="p">
+            Browse through hundreds of IT jobs and find the perfect match for your qualifications
           </Typography>
         </CardContent>
     </Card>
