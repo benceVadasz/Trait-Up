@@ -15,10 +15,11 @@ const classes = {
     paperEdu: {
         padding: "20px",
         margin: "15px",
-        background: "#e7f7fe",
+        background: "#eceef7",
     },
     eduText: {
         marginBottom: "5px",
+        fontWeight: "bold",
     }
 }
 
@@ -41,8 +42,8 @@ const ProfileEducation = () => {
                                     <Grid container alignItems="center">
                                         <Grid item xs={10}>
                                             <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
-                                            <Typography variant="body1" color="primary">{edu.degree} {edu.level}</Typography>
-                                            <Typography variant="body2" color="primary">Graduated: {edu.to}</Typography>
+                                            <Typography variant="body1" color="primary" style={classes.eduText}>{edu.degree} {edu.level}</Typography>
+                                            <Typography variant="body2" color="primary" style={classes.eduText}>Graduated: {edu.to}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
                                             <ProfileEditDeleteButton/>

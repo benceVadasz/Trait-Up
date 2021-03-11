@@ -15,9 +15,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const classes = {
     container: {
-        marginTop: "100px",
-        padding: "20px",
-        maxWidth: "80%",
+        padding: "20px 0",
+        // maxWidth: "90%",
+    },
+    title: {
+        color: "#7c88cc",
     },
 }
 
@@ -26,25 +28,29 @@ const theme = createMuiTheme({
         h1: {
             fontSize: 36,
             margin: "10px",
+            color: "#7c88cc",
         },
         h2: {
             fontSize: 30,
             margin: "10px",
+            color: "#7c88cc",
         },
         h3: {
             fontSize: 24,
             margin: "5px",
+            color: "#7c88cc",
         },
         h4: {
             fontSize: 20,
+            color: "#7c88cc",
         }
     },
     palette: {
         primary: {
-            main: teal[500],
+            main: "#859DF4",
         },
         secondary: {
-            main: orange[500],
+            main: orange[400],
         }
     }
 })
@@ -55,10 +61,8 @@ const ProfilePage = () => {
         <>
             <Router>
                 <ThemeProvider theme={theme}>
-                    <Container style={classes.container}>
-                        
-                        {/* <Typography variant="h1" color="primary" align="center">Profile page</Typography> */}
-
+                    <Container maxWidth="lg" style={classes.container}>
+                    
                         <Grid container spacing={3} direction="row">
 
                             {/* Profile menu */}
@@ -90,21 +94,21 @@ const ProfilePage = () => {
                                 <Route exact path="/profile/favorites" render={(props) => (
                                     <>
                                         <Paper>
-                                            <h1>Favorites</h1>
+                                            <h1 style={classes.title}>Favorites</h1>
                                         </Paper>
                                     </>
                                 )} />
                                 <Route exact path="/profile/applications" render={(props) => (
                                     <>
                                         <Paper>
-                                            <h1>Applications</h1>
+                                            <h1 style={classes.title}>Applications</h1>
                                         </Paper>
                                     </>
                                 )} /> 
                                 <Route exact path="/profile/assessments" render={(props) => (
                                     <>
                                         <Paper>
-                                            <h1>Assessments</h1>
+                                            <h1 style={classes.title}>Assessments</h1>
                                         </Paper>
                                     </>
                                 )} />    

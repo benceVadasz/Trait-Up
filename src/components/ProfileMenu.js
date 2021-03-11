@@ -19,6 +19,7 @@ const classes = {
     button: {
         width: "100%",
         fontSize: "18px",
+        color: "white",
     },
     avatar: {
         width: "150px",

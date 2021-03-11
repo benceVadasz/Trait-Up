@@ -15,10 +15,11 @@ const classes = {
     paperEdu: {
         padding: "20px",
         margin: "15px",
-        background: "#e7f7fe",
+        background: "#eceef7",
     },
     eduText: {
         marginBottom: "5px",
+        fontWeight: "bold",
     }
 }
 
@@ -40,8 +41,8 @@ const ProfileExperience = () => {
                                     <Grid container alignItems="center">
                                         <Grid item xs={10}>
                                             <Typography variant="h4" color="primary" style={classes.eduText}>{exp.jobTitle}</Typography>
-                                            <Typography variant="body1" color="primary">{exp.employer}</Typography>
-                                            <Typography variant="body2" color="primary">From {exp.from} to {exp.to}</Typography>
+                                            <Typography variant="body1" color="primary" style={classes.eduText}>{exp.employer}</Typography>
+                                            <Typography variant="body2" color="primary" style={classes.eduText}>From {exp.from} to {exp.to}</Typography>
                                         </Grid>
                                         <Grid item xs={2}>
                                             <ProfileEditDeleteButton/>
