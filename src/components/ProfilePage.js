@@ -8,6 +8,9 @@ import ProfilePersonalInfo from './ProfilePersonalInfo';
 import ProfileEducation from './ProfileEducation';
 import ProfileExperience from './ProfileExperience';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ProfileFavorites from './ProfileFavorites';
+import ProfileApplications from './ProfileApplications';
+import ProfileAssessments from './ProfileAssessments';
 // import ProfileMiniDrawer from './ProfileMiniDrawer';
 // import TemporaryDrawer from './TemporaryProfileDrawer';
 // import ProfileDropDownMenu from './ProfileDropDownMenu';
@@ -93,23 +96,17 @@ const ProfilePage = () => {
                                 )} />
                                 <Route exact path="/profile/favorites" render={(props) => (
                                     <>
-                                        <Paper>
-                                            <h1 style={classes.title}>Favorites</h1>
-                                        </Paper>
+                                        <ProfileFavorites/>
                                     </>
                                 )} />
                                 <Route exact path="/profile/applications" render={(props) => (
                                     <>
-                                        <Paper>
-                                            <h1 style={classes.title}>Applications</h1>
-                                        </Paper>
+                                        <ProfileApplications/>
                                     </>
                                 )} /> 
                                 <Route exact path="/profile/assessments" render={(props) => (
                                     <>
-                                        <Paper>
-                                            <h1 style={classes.title}>Assessments</h1>
-                                        </Paper>
+                                        <ProfileAssessments/>
                                     </>
                                 )} />    
                             </Grid>    

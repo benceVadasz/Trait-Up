@@ -7,6 +7,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import StarIcon from '@material-ui/icons/Star';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const classes = {
     paper: {
@@ -55,7 +56,7 @@ const ProfileMenu = () => {
                     </Grid>
                     <Grid item xs>
                         <Link to="/profile/favorites" style={classes.link}>
-                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<StarIcon fontSize="large" />}>Favorites</Button>
+                            <Button variant="contained" color="primary" size="large" style={classes.button} startIcon={<FavoriteIcon fontSize="large" />}>Favorites</Button>
                         </Link>
                     </Grid>
                     <Grid item xs>

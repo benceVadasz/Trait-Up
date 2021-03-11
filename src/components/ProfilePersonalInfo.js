@@ -123,9 +123,9 @@ const ProfilePersonalInfo = () => {
                             <Typography variant="h2" color="primary" align="center">Personal information</Typography> 
                         </Grid> 
                         <Grid item xs={2} >
-                            <IconButton variant="contained" color="secondary" aria-label="save" size="medium" 
+                            <IconButton color="secondary" aria-label="save" size="medium" 
                                 onClick={saveInfo} disabled={ !editable ? true : false }><SaveIcon fontSize="large"/></IconButton>
-                            <IconButton variant="contained" color="primary" aria-label="edit" size="medium" 
+                            <IconButton color="primary" aria-label="edit" size="medium" 
                                 onClick={toggleEditable} ><EditIcon fontSize="large"/></IconButton>
                         </Grid>
                     </Grid>
