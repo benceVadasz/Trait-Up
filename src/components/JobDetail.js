@@ -3,6 +3,7 @@ import React, {useContext} from 'react';
 import JobDetailPage from '../components/JobDetailPage';
 import {AppBar, Toolbar, Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import {JobContext} from '../Contexts/JobDetailContext';
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -12,12 +13,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobDetail = props => {
+
     const { history, match } = props;
     const { params } = match;
     const { jobId } = params;
-    const jobs = useContext(JobsContext);
-    const currentJob = jobs[jobId];
+    const [job, saveJob] = useContext(JobContext);
     const classes = useStyles();
+    const currentJob = JSON.parse(localStorage.getItem("job"))
+  
 
     
 
