@@ -4,6 +4,19 @@ import 'fontsource-roboto';
 import {UserContext} from '../context/UserContext';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import PublishIcon from '@material-ui/icons/Publish';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
+    },
+    input: {
+      display: 'none',
+    },
+  }));
 
 const classes = {
     paper: {
@@ -13,31 +26,56 @@ const classes = {
         display: "flex", 
         flexFlow: "column"
     },
-    editButton: {
-        borderRadius: "200px",
-    }
+    avatar: {
+        margin: "10px", 
+        width: "350px", 
+        height: "400px",
+    },
+    avatarGrid: {
+        position: "relative",
+    },
+    uploadButton: {
+        position: "absolute",
+        bottom: "30px",
+        left: "30px",
+        color: "white",
+        padding: "5px 0"
+    },
+
 }
 
 const ProfilePersonalInfo = () => {
+    const uploadClasses = useStyles();
 
     const [user, setUser] = useContext(UserContext);
 
     const [editable, setEditable] = useState(false);
     const [userState, setUserState] = useState({});
-
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
-    const [password, setPassword] = useState("");
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+    const [phone, setPhone] = useState(user.phone);
+    const [address, setAddress] = useState(user.address);
+    const [password, setPassword] = useState(user.password);
 
     useEffect(() => {
-        setUserState(user);
-    }, [])
+        setUserState({...user});
+    }, [user])
+
+    useEffect(() => {
+        console.log("setting values for fields..")
+        setName(userState.name);
+        setEmail(userState.email);
+        setPhone(userState.phone);
+        setAddress(userState.address);
+        setPassword(userState.password);
+    }, [userState])
 
     const toggleEditable = (e) => {
+        // setEditable(prevEditable => !prevEditable)
         if (editable) {
             setEditable(false);
+            setUserState({...user});
+            
         } else {
             setEditable(true);
         }
@@ -45,36 +83,35 @@ const ProfilePersonalInfo = () => {
 
     const saveInfo = (e) => {
         console.log("saving info...");
-        console.log(e.target);
-        console.log(userState);
-        // setUser({...user, })
-        
+        setUser({...userState});
         toggleEditable();
     }
 
     const changeName = (e) => {
-        setUserState({...userState, name: e.target.value}, console.log(userState));
-        setName(e.target.value);
+        setName(e.target.value, console.log(name));
+        setUserState({...userState, name: e.target.value});
     }
 
     const changeEmail = (e) => {
-        setUserState({...userState, email: e.target.value}, console.log(userState));
         setEmail(e.target.value);
+        setUserState({...userState, email: e.target.value});  
     }
 
     const changePhone = (e) => {
-        setUserState({...userState, phone: e.target.value}, console.log(userState));
         setPhone(e.target.value);
+        setUserState({...userState, phone: e.target.value});
+        
     }
 
     const changeAddress = (e) => {
-        setUserState({...userState, address: e.target.value}, console.log(userState));
         setAddress(e.target.value);
+        setUserState({...userState, address: e.target.value});
+        
     }
 
     const changePassword = (e) => {
-        setUserState({...userState, password: e.target.value}, console.log(userState));
         setPassword(e.target.value);
+        setUserState({...userState, password: e.target.value});      
     }
 
     return (
@@ -85,7 +122,7 @@ const ProfilePersonalInfo = () => {
                         <Grid item xs={10}>
                             <Typography variant="h2" color="primary" align="center">Personal information</Typography> 
                         </Grid> 
-                        <Grid item xs={2}>
+                        <Grid item xs={2} >
                             <IconButton variant="contained" color="secondary" aria-label="save" size="medium" 
                                 onClick={saveInfo} disabled={ !editable ? true : false }><SaveIcon fontSize="large"/></IconButton>
                             <IconButton variant="contained" color="primary" aria-label="edit" size="medium" 
@@ -93,12 +130,18 @@ const ProfilePersonalInfo = () => {
                         </Grid>
                     </Grid>
                     <Grid item container spacing={3} direction="row">
-                        <Grid item xs={4}>
-                            <Avatar src={user.photo} alt="pic" variant="square" style={{margin: "10px", width: "350px", height: "400px"}}/>
+                        <Grid item xs={5} style={classes.avatarGrid}>
+                            <Avatar src={user.photo} alt="pic" variant="square" style={classes.avatar}/>
+                            <div className={uploadClasses.root}>
+                                <input accept="image/*" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
+                                <label htmlFor="contained-button-file">
+                                    <Button color="primary" variant="contained" size="small" style={classes.uploadButton} component="span"><PublishIcon fontSize="large"/></Button>
+                                </label>
+                            </div>
                         </Grid>
                         
-                        <Grid item xs={8} container direction="row" spacing={2} align="center" style={{padding: "20px"}}>
-                            <Grid item xs={6} container spacing={2}>
+                        <Grid item xs={7} container direction="row" spacing={2} align="center" style={{padding: "30px 5px"}}>
+                            <Grid item xs={5} container spacing={2}>
                                 <Grid item xs={12}>
                                     <Typography variant="h4" color="primary" align="right">Name:</Typography>
                                 </Grid>
@@ -120,30 +163,30 @@ const ProfilePersonalInfo = () => {
                                 <Divider orientation="vertical" />
                             </Grid>
                             
-                            <Grid item xs={5} container spacing={2}>
+                            <Grid item xs={6} container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField disabled={ !editable ? true : false }
-                                        variant="standard" defaultValue={userState.name ? userState.name : user.name} align="left" 
+                                        variant="standard" value={name ? name : "enter name.."} align="left" 
                                         onChange={changeName} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField disabled={ !editable ? true : false } 
-                                        variant="standard" defaultValue={user.email} align="left"
+                                        variant="standard" value={email ? email : "enter email.."} align="left"
                                         onChange={changeEmail}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField disabled={ !editable ? true : false }
-                                        variant="standard" defaultValue={user.phone} align="left"
+                                        variant="standard" value={phone ? phone : "enter phone number.."} align="left"
                                         onChange={changePhone}/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField disabled={ !editable ? true : false } 
-                                        variant="standard" defaultValue={user.address} align="left"
+                                        variant="standard" value={address ? address : "enter address.."} align="left"
                                         onChange={changeAddress}/>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField disabled={ !editable ? true : false } 
-                                        variant="standard" defaultValue={user.password} type="password" align="left"
+                                    <TextField disabled={ !editable ? true : false } type="password"
+                                        variant="standard" value={password ? password : "enter password.."} align="left"
                                         onChange={changePassword}/>
                                 </Grid>
                             </Grid>
