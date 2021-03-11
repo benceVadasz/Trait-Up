@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -12,6 +13,7 @@
     "bootstrap": "^4.6.0",
     "clsx": "^1.1.1",
     "cors-anywhere": "^0.4.3",
+    "easy-peasy": "^5.0.3",
     "fontsource-roboto": "^4.0.0",
     "history": "^5.0.0",
     "html-react-parser": "^1.2.4",
@@ -21,6 +23,7 @@
     "react-history": "^0.18.2",
     "react-hook-use-state": "^1.1.0",
     "react-markdown": "^5.0.3",
+    "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",

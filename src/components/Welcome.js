@@ -24,17 +24,25 @@ function Welcome() {
       height: 128,
     },
     img: {
-      marginTop: "90px",
+      marginTop: 90,
       display: "block",
-      marginRight: "100px",
+      marginRight: 20,
       width: 800,
     },
     welcomeBlock: {
       marginTop: "190px",
       marginLeft: "80px",
+       
+    },
+    welcomeWord: {
+      fontFamily: 'Fugaz One, cursive'
     },
     trait: {
       color: "#859DF4",
+    },
+    welcomeText: {
+      fontFamily: 'Lato, sans-serif',
+      fontSize: 16
     },
   }));
 
@@ -48,13 +56,13 @@ function Welcome() {
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
               <Grid className={classes.welcomeBlock} item xs spacing={3}>
-                <Typography gutterBottom variant="h3">
+                <Typography className={classes.welcomeWord} gutterBottom variant="h3">
                   Welcome to <span className={classes.trait}>Trait up!</span>
                 </Typography>
-                <Typography variant="body2" gutterBottom>
+                <Typography className={classes.welcomeText} variant="body2" gutterBottom>
                   Your ultimate job hunt tool to find a job
                 </Typography>
-                <Typography variant="body2">
+                <Typography className={classes.welcomeText} variant="body2">
                   tailored perfectly to your unique personality archetype
                 </Typography>
               </Grid>

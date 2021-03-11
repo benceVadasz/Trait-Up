@@ -1,25 +1,52 @@
-import React from 'react'
-import { Form, Col } from 'react-bootstrap'
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment'
 
-const SearchForm = props => {
+
+
+const SearchForm = ({jobs}) => {
+
     return (
-        <Form className="mb-4">
-        <Form.Row className="align-items-end">
-          <Form.Group as={Col}>
-            <Form.Label>Title</Form.Label>
-            <Form.Control  name="description" type="text" />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Label>Location</Form.Label>
-            <Form.Control  name="location" type="text" />
-          </Form.Group>
-          <Form.Group as={Col} xs="auto" className="ml-2">
-            <Form.Check  name="full_time" id="full-time" label="Only Full Time" type="checkbox" className="mb-2" />
-          </Form.Group>
-        </Form.Row>
-      </Form>
-    )
+
+        <div style={{ width: 200 }}>
+            <Autocomplete
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={Object.keys(jobs).map((id) => {
+                    return jobs[id].title
+                })}
+                renderInput={(params) => (
+                    <TextField style={{backgroundColor: "white"}}
+                               {...params}
+                               label="Search by position"
+                               margin="normal"
+                               variant="outlined"
+                               InputProps={{
+                                   ...params.InputProps, type: 'search',
+                                   endAdornment: (
+                                       <InputAdornment position="end">
+                                           <IconButton
+                                               aria-label=""
+
+                                           >
+                                               <SearchIcon/>
+                                           </IconButton>
+                                       </InputAdornment>
+                                   ),
+                               }}
+
+                    />
+                )}
+            />
+        </div>
+    );
+
 }
+
 
 
 export default SearchForm;

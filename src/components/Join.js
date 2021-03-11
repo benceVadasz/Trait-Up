@@ -2,10 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import Typography from "@material-ui/core/Typography";
 import join from "../assets/join.png";
+import JoinNow from "./join_step_components/JoinNow";
+import Assessment from "./join_step_components/Assessment";
+import DreamJob from "./join_step_components/DreamJob";
 
 function Join() {
   const useStyles = makeStyles((theme) => ({
@@ -13,6 +15,8 @@ function Join() {
       flexGrow: 1,
     },
     paper: {
+      display: "flex",
+      flexFlow: "row",
       padding: theme.spacing(2),
       margin: "auto",
       width: "100%",
@@ -25,22 +29,37 @@ function Join() {
       height: 128,
     },
     img: {
-      margin: "auto",
       display: "block",
       maxWidth: "100%",
       maxHeight: "100%",
       width: 800,
-      marginRight: 150,
-      marginTop: 80,
+      float: "right",
+      marginTop: 20,
+      marginLeft: 60,
     },
     joinBtn: {
       marginLeft: 150,
       marginTop: 330,
-      backGround: "#859DF4 !important",
+      backGround: "#5184CE",
     },
     color: {
-        backGround: "#859DF4",
-    }
+      backGround: "#859DF4",
+    },
+    title: {
+        marginBottom: 20,
+        fontFamily: 'Fugaz One, cursive',
+        fontSize: 40,
+        width: 700,
+        marginLeft: 120,
+        marginTop: 115,
+        color: "#859DF4",
+        textShadow: '2px 1px black'
+      },
+    steps: {
+      display: "flex",
+      flexFlow: "column",
+      marginTop: 12,
+    },
   }));
 
   const classes = useStyles();
@@ -49,20 +68,33 @@ function Join() {
     <div className={classes.root}>
       <CssBaseline />
       <Paper className={classes.paper} width="15%">
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-              <Button color="primary" variant="contained" className={classes.joinBtn} component={Link} to="/login">
-              Join now!
-            </Button>
-              </Grid>
-              <Grid item></Grid>
-            </Grid>
-            <Grid item>
-              <img className={classes.img} alt="complex" src={join} />
-            </Grid>
-          </Grid>
+        <Grid
+          className={classes.steps}
+          item
+          xs
+          container
+          direction="column"
+          spacing={2}
+        >
+          <JoinNow />
+          <Assessment />
+          <DreamJob />
+        </Grid>
+        <Grid container>
+        <Grid item>
+          <Typography
+            className={classes.title}
+            align="center"
+            gutterBottom
+            variant="h5"
+            component="h3"
+          >
+            Let us help you get started
+          </Typography>
+        </Grid>
+        <Grid item>
+          <img className={classes.img} alt="complex" src={join} />
+        </Grid>
         </Grid>
       </Paper>
     </div>

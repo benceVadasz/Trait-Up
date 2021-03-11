@@ -4,12 +4,11 @@ export const JobContext = createContext();
 
 export const JobProvider = props => {
 
-    const [job, setJob] = useState([]);
+    const [job, setJob] = useState({});
 
     useEffect(() => {
-        if (localStorage.getItem("job")){
-            setJob(JSON.parse(localStorage.getItem("job")))
-        }
+        setJob(JSON.parse(localStorage.getItem("job")))
+        
        
     }, [setJob])
 
