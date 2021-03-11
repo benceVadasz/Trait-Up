@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import parse from 'html-react-parser';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
       transform: 'rotate(180deg)',
     },
     avatar: {
-      backgroundColor: blue[500],
+      backgroundColor: "#859DF4",
     },
     link: {
         '& > * + *': {
@@ -85,13 +86,14 @@ const JobDetailPage = ({job, props}) => {
       <CardContent>
           <Typography variant="body2">
           {parse(`<div>${job.description}</div>`)}
-          {/* {`${job.description}`} */}
           </Typography>
       </CardContent>
       
       <CardContent>
         <Typography className={classes.link}>
-        <Link href={`${job.url}`} onClick={() => {history.push(`${job.url}`)}}>
+        <Link to={`${job.url}`} onClick={() => {
+          window.open(`${job.url}`)
+          }}>
             See position on GitHub Job
         </Link>
         </Typography>
@@ -101,9 +103,9 @@ const JobDetailPage = ({job, props}) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="apply">
-            <AddCircleOutlineIcon/>
-          </IconButton>
+        <Button variant="outlined" size="small" color="primary" className={classes.margin}>
+          Apply
+        </Button>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -119,7 +121,7 @@ const JobDetailPage = ({job, props}) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2">
-          {`${job.how_to_apply}`}
+          {parse(`<div>${job.how_to_apply}</div>`)}
           </Typography>
         </CardContent>
       </Collapse>
