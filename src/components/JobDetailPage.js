@@ -91,7 +91,9 @@ const JobDetailPage = ({job, props}) => {
       
       <CardContent>
         <Typography className={classes.link}>
-        <Link href={`${job.url}`} onClick={() => {history.push(`${job.url}`)}}>
+        <Link to={`${job.url}`} onClick={() => {
+          window.open(`${job.url}`)
+          }}>
             See position on GitHub Job
         </Link>
         </Typography>
