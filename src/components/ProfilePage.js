@@ -60,72 +60,70 @@ const theme = createMuiTheme({
 const ProfilePage = () => {
   return (
     <>
-      <Router>
-        <ThemeProvider theme={theme}>
-          <Container maxWidth="lg" style={classes.container}>
-            <Grid container spacing={3} direction="row">
-              {/* Profile menu */}
-              <Grid item xs={3}>
-                <ProfileMenu />
-              </Grid>
-
-              <Grid item xs={9}>
-                <Route
-                  exact
-                  path="/profile"
-                  render={(props) => (
-                    <>
-                      <Grid container direction="column">
-                        {/* Personal information */}
-                        <Grid item xs={12}>
-                          <ProfilePersonalInfo />
-                        </Grid>
-
-                        {/* Education history */}
-                        <Grid item xs={12}>
-                          <ProfileEducation />
-                        </Grid>
-
-                        {/* Experience */}
-                        <Grid item xs={12}>
-                          <ProfileExperience />
-                        </Grid>
-                      </Grid>
-                    </>
-                  )}
-                />
-                <Route
-                  exact
-                  path="/profile/favorites"
-                  render={(props) => (
-                    <>
-                      <ProfileFavorites />
-                    </>
-                  )}
-                />
-                <Route
-                  exact
-                  path="/profile/applications"
-                  render={(props) => (
-                    <>
-                      <ProfileApplications />
-                    </>
-                  )}
-                />
-                <Route
-                  exact
-                  path="/profile/assessments"
-                  render={(props) => (
-                    <>
-                      <ProfileAssessments />
-                    </>
-                  )}
-                />
-              </Grid>
+      <ThemeProvider theme={theme}>
+        <Container maxWidth="lg" style={classes.container}>
+          <Grid container spacing={3} direction="row">
+            {/* Profile menu */}
+            <Grid item xs={3}>
+              <ProfileMenu/>
             </Grid>
-          </Container>
-        </ThemeProvider>
-      </Router>
+
+            <Grid item xs={9}>
+              <Route
+                exact
+                path="/profile"
+                render={(props) => (
+                  <>
+                    <Grid container direction="column">
+                      {/* Personal information */}
+                      <Grid item xs={12}>
+                        <ProfilePersonalInfo/>
+                      </Grid>
+
+                      {/* Education history */}
+                      <Grid item xs={12}>
+                        <ProfileEducation/>
+                      </Grid>
+
+                      {/* Experience */}
+                      <Grid item xs={12}>
+                        <ProfileExperience/>
+                      </Grid>
+                    </Grid>
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/profile/favorites"
+                render={(props) => (
+                  <>
+                    <ProfileFavorites/>
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/profile/applications"
+                render={(props) => (
+                  <>
+                    <ProfileApplications/>
+                  </>
+                )}
+              />
+              <Route
+                exact
+                path="/profile/assessments"
+                render={(props) => (
+                  <>
+                    <ProfileAssessments/>
+                  </>
+                )}
+              />
+            </Grid>
+          </Grid>
+        </Container>
+      </ThemeProvider>
     </>
   );
 };
