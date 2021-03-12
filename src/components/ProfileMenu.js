@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
 import {Button, Typography, Paper, Grid, Avatar, Divider} from '@material-ui/core';
 import 'fontsource-roboto';
-import {UserContext} from '../context/UserContext';
+import {UserContext} from '../contexts/UserContext';
 import PersonIcon from '@material-ui/icons/Person';
 import StarIcon from '@material-ui/icons/Star';
 import DescriptionIcon from '@material-ui/icons/Description';
