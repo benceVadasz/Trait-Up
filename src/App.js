@@ -38,7 +38,6 @@ const App = (props) => {
 
             <UserProvider>
               <Route
-                exact
                 path="/profile"
                 render={(props) => (
                   <>
