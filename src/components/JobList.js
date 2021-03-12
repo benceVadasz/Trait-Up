@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { JobsContext } from "../Contexts/JobsContext";
+import { JobsContext } from "../context/JobsContext";
 import JobCard from "./JobCard";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";

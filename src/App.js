@@ -1,8 +1,8 @@
 import { Route, BrowserRouter as Router } from "react-router-dom";
 import JobList from "./components/JobList";
 import JobDetail from "./components/JobDetail";
-import { JobsProvider } from "./Contexts/JobsContext";
-import { JobProvider } from "./Contexts/JobDetailContext";
+import { JobsProvider } from "./context/JobsContext";
+import { JobProvider } from "./context/JobDetailContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import HomeBody from "./components/HomeBody";
