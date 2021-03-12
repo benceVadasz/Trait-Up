@@ -51,7 +51,7 @@ function Register() {
   useEffect(() => { 
     setLoading(false);
     add(user);
-  }, [user]);
+  }, [add, user]);
 
   if (loading) 
     return (

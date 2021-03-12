@@ -10,12 +10,9 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { blue, red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 
@@ -53,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 
 const JobDetailPage = ({job, props}) => {
-    const { history, match } = props;
     const [expanded, setExpanded] = React.useState(false);
     const classes = useStyles();
     const handleExpandClick = () => {
