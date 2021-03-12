@@ -1,8 +1,8 @@
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import {Route, BrowserRouter as Router, BrowserRouter} from 'react-router-dom';
 import JobList from "./components/JobList";
 import JobDetail from "./components/JobDetail";
-import { JobsProvider } from "./context/JobsContext";
-import { JobProvider } from "./context/JobDetailContext";
+import { JobsProvider } from "./contexts/JobsContext";
+import { JobProvider } from "./contexts/JobDetailContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import HomeBody from "./components/HomeBody";
@@ -12,7 +12,7 @@ import Login from "./components/Login";
 import { StoreProvider, createStore, persist } from "easy-peasy";
 import userModel from "./userModel";
 import ProfilePage from "./components/ProfilePage";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider } from "./contexts/UserContext";
 
 const App = (props) => {
   const store = createStore(persist(userModel, { storage: "localStorage" }));
