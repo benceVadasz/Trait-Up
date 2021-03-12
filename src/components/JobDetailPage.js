@@ -22,8 +22,9 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 1900,
-
-      
+    },
+    text: {
+      fontFamily: 'Lato, sans-serif',
     },
     media: {
       height: 0,
@@ -72,19 +73,19 @@ const JobDetailPage = ({job, props}) => {
       />
       <CardContent>
         
-      <Typography variant="body2" color="textSecondary" component="p">
+      <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Job type: {`${job.type}`}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Location: {`${job.location}`}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Created at: {`${job.created_at}`}
           </Typography>
       </CardContent>
 
       <CardContent>
-          <Typography variant="body2">
+          <Typography className={classes.text} variant="body2">
           {parse(`<div>${job.description}</div>`)}
           </Typography>
       </CardContent>
