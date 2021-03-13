@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 
-export const JobContext = createContext();
+export const JobContext = createContext([null, () => {}]);
 
 export const JobProvider = props => {
 

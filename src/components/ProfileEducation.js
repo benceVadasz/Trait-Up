@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Button, Typography, Paper, Grid } from '@material-ui/core';
 import 'fontsource-roboto';
-import {UserContext} from '../context/UserContext';
+import {UserContext} from '../contexts/UserContext';
 import ProfileEditDeleteButton from './ProfileEditDeleteButton';
 
 const classes = {

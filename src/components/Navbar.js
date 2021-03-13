@@ -1,19 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Button from "@material-ui/core/Button";
-import logo from "../assets/logo.png";
+import React from 'react';
+import {Link} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import Button from '@material-ui/core/Button';
+import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: "#F6F6F6",
+    background: '#F6F6F6',
     flexGrow: 1,
-    marginBottom: "5px",
+    marginBottom: '5px',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   navbarStyle: {
-    background: "#859DF4",
+    background: '#859DF4',
   },
   img: {
     width: 150,
@@ -38,9 +38,9 @@ export default function MenuAppBar() {
       <AppBar className={classes.navbarStyle} position="static">
         <Toolbar>
           <Button component={Link} to="/" color="inherit">
-            <img className={classes.img} alt="complex" src={logo} />
+            <img className={classes.img} alt="complex" src={logo}/>
           </Button>
-          <Typography variant="h6" className={classes.title}></Typography>
+          <Typography variant="h6" className={classes.title}/>
           <div>
             <Button component={Link} to="/jobs" color="inherit">
               Jobs
@@ -59,7 +59,7 @@ export default function MenuAppBar() {
               aria-haspopup="true"
               color="inherit"
             >
-              <AccountCircle />
+              <AccountCircle/>
             </IconButton>
           </div>
         </Toolbar>
