@@ -16,7 +16,7 @@ export const JobsProvider = props => {
              .then((response) => {
                  const { data } = response;
                  const newJobsData = {};
-  
+
                  data.forEach((job) => {
                     newJobsData[job.id] = {
                         id: job.id,
