@@ -23,8 +23,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobList = (props) => {
-  const jobs = useContext(JobsContext);
+  let jobs = useContext(JobsContext);
   const classes = useStyles();
+
+  function handleOnTypeFilter(e) {
+    const value = e.target.innerHTML;
+    const type = 'type';
+    const filteredJobs = filterJobs(type, value)
+    jobs = filteredJobs
+  }
+  
+  function handleOnLocationFilter(e) {
+    const value = e.target.innerHTML;
+    const type = 'location';
+    const filteredJobs = filterJobs(type, value)
+    jobs = filteredJobs
+  }
+
+  function filterJobs(type, value) {
+    let filteredJobs = [];
+    jobs.map(job => {
+      if (type === "type") {
+        if (job.type.includes(value)) {
+          filteredJobs.push()   
+        } 
+        else {
+          if (job.location.includes(value)) {
+            filteredJobs.push()   
+          } 
+        }
+      }
+    });
+    return filteredJobs;
+  }
+
 
   return (
     <>
@@ -37,11 +69,11 @@ const JobList = (props) => {
           style={{ borderRadius: 20 }}
         >
           <Grid item lg={4}>
-            <SearchForm jobs={jobs} />
+            <SearchForm onFilter={handleOnTypeFilter} jobs={jobs} />
           </Grid>
 
           <Grid item lg={4}>
-            <SearchForm2 jobs={jobs} />
+            <SearchForm2 onFilter={handleOnLocationFilter} jobs={jobs} />
           </Grid>
         </Grid>
       </Grid>
