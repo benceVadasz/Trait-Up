@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {JobsContext} from "../Contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -23,23 +23,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobList = (props) => {
+
     let jobs = useContext(JobsContext);
     const classes = useStyles();
 
     function handleOnTypeFilter(e) {
         const value = e.target.innerHTML;
         const type = 'type';
-        jobs = filterJobs(type, value)
+        jobs = filterJobs(type, value);
+        window.location.reload();
     }
 
     function handleOnLocationFilter(e) {
         const value = e.target.innerHTML;
         const type = 'location';
-        jobs = filterJobs(type, value)
+        jobs = filterJobs(type, value);
+        window.location.reload();
     }
 
     function filterJobs(type, value) {
-        let filter = value;
         let jobArray = []
         for (let [key, value] of Object.entries(jobs)) {
             jobArray.push(value);
