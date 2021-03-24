@@ -24,21 +24,20 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-    let jobs = useContext(JobsContext);
+    let {jobs, setJobs} = useContext(JobsContext);
     const classes = useStyles();
 
     function handleOnTypeFilter(e) {
         const value = e.target.innerHTML;
+        console.log(value);
         const type = 'type';
-        jobs = filterJobs(type, value);
-        window.location.reload();
+        setJobs(filterJobs(type, value));
     }
 
     function handleOnLocationFilter(e) {
         const value = e.target.innerHTML;
         const type = 'location';
-        jobs = filterJobs(type, value);
-        window.location.reload();
+        setJobs(filterJobs(type, value));
     }
 
     function filterJobs(type, value) {

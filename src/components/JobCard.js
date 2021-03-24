@@ -61,10 +61,10 @@ const JobCard = ({props, jobId, jobs}) => {
         axios({
             method: "post",
             url:
-                "http://localhost:8888/Trait-Up-Backend/public/api/addToFavourites",
+                "http://localhost/Trait-Up-Backend/public/api/addToFavourites",
             headers: {Authorization: "Bearer " + token},
             params: {
-                id, type, created_at, company, location, title, company_logo
+                id, type, created_at, company, location, title, company_logo,
             }
         }).then(() => {
             window.location.href = "/mail/inbox";
