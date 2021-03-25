@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import {
   Grid,
   Paper,
@@ -38,20 +39,42 @@ function Register() {
   const [user, setUser] = useState({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
+  // const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const add = useStoreActions(actions => actions.addUser);  
   const [loading, setLoading] = useState(false);
-
-  const submit = (e) => {
-    setLoading(true)
-    setUser({name, email, gender, password});
-  };
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => { 
     setLoading(false);
     add(user);
   }, [add, user]);
+
+  const submit = (e) => {
+    if (password !== confirmPassword) alert("Passwords do not match");
+    setLoading(true);
+    e.preventDefault();
+    axios
+      .post("http://localhost/Trait-Up-Backend/public/api/registration", {
+        headers: {
+          "Content-Type": "application/json",
+          //Accept: "application/json, text-plain, */*",
+          //"X-Requested-With": "XMLHttpRequest",
+        },
+        name,
+        email,
+        password,
+      })
+      .then((response) => {
+        setLoading(false);
+        // sessionStorage.setItem("email", email);
+        // sessionStorage.setItem("token", response.data.token);
+        window.location.href = "/";
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
 
   if (loading) 
     return (
@@ -86,7 +109,7 @@ function Register() {
               label="Email"
               placeholder="Enter your email"
             />
-            <FormControl component="fieldset" style={marginTop}>
+             {/* <FormControl component="fieldset" style={marginTop}>
               <FormLabel component="legend">Gender</FormLabel>
               <RadioGroup
                 onChange={(e) => setGender(e.target.value)}
@@ -105,7 +128,7 @@ function Register() {
                   label="Male"
                 />
               </RadioGroup>
-            </FormControl>
+            </FormControl>  */}
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
@@ -114,15 +137,16 @@ function Register() {
               placeholder="Enter your password"
             />
             <TextField
+              onChange={(e) => setConfirmPassword(e.target.value)}
               fullWidth
               label="Confirm Password"
               type="password"
               placeholder="Confirm your password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox color="primary" name="checkedA" />}
               label="I accept the terms and conditions."
-            />
+            /> */}
             <Button type="submit" variant="contained" style={button}>
               Sign up
             </Button>

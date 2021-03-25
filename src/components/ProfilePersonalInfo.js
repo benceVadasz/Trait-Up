@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {TextField, Typography, Paper, Grid, Avatar, Divider, Button, IconButton} from '@material-ui/core';
 import 'fontsource-roboto';
-import {UserContext} from '../context/UserContext';
+import {UserContext} from '../Contexts/UserContext';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import PublishIcon from '@material-ui/icons/Publish';

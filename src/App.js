@@ -1,4 +1,4 @@
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import {Route, BrowserRouter as Router, BrowserRouter} from 'react-router-dom';
 import JobList from "./components/JobList";
 import JobDetail from "./components/JobDetail";
 import { JobsProvider } from "./Contexts/JobsContext";
@@ -12,7 +12,7 @@ import Login from "./components/Login";
 import { StoreProvider, createStore, persist } from "easy-peasy";
 import userModel from "./userModel";
 import ProfilePage from "./components/ProfilePage";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider } from "./Contexts/UserContext";
 
 const App = (props) => {
   const store = createStore(persist(userModel, { storage: "localStorage" }));
@@ -38,7 +38,6 @@ const App = (props) => {
 
             <UserProvider>
               <Route
-                exact
                 path="/profile"
                 render={(props) => (
                   <>
