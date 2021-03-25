@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuAppBar() {
   const classes = useStyles();
 
+  function logOut() {
+    sessionStorage.clear();
+    window.location.href = '/';
+
+  }
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.navbarStyle} position="static">
@@ -45,22 +51,34 @@ export default function MenuAppBar() {
             <Button component={Link} to="/jobs" color="inherit">
               Jobs
             </Button>
-            <Button component={Link} to="/login" color="inherit">
-              Login
-            </Button>
-            <Button component={Link} to="/register" color="inherit">
-              Register
-            </Button>
-            <IconButton
-              component={Link}
-              to="/profile"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle/>
-            </IconButton>
+            {
+            sessionStorage.getItem('token') ?
+            <>
+              <Button component={Link} to="" onClick={logOut} color="inherit">
+                Logout
+              </Button>
+              <IconButton
+                component={Link}
+                to="/profile"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                color="inherit"
+              >
+                <AccountCircle/>
+              </IconButton>
+            </>
+            :
+            <>
+              <Button component={Link} to="/login" color="inherit">
+                Login
+              </Button>
+              <Button component={Link} to="/register" color="inherit">
+                Register
+              </Button>
+            </>
+          }
+            
           </div>
         </Toolbar>
       </AppBar>
