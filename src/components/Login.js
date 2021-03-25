@@ -9,6 +9,7 @@ import {
   Button,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import { BASE_URL } from "../constants";
 
 function Login() {
   const paperStyle = {
@@ -37,7 +38,7 @@ function Login() {
     setLoading(true);
     e.preventDefault();
     axios
-      .post("http://localhost/Trait-Up-Backend/public/api/login", {
+      .post(`${BASE_URL}/Trait-Up-Backend/public/api/login`, {
         headers: {
           "Content-Type": "application/json",
           // "Access-Control-Allow-Origin": "*",

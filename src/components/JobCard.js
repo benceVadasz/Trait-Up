@@ -62,7 +62,6 @@ const JobCard = ({props, jobId, jobs}) => {
     }
     const [liked, setLiked] = useState(false);
     const handleFavouriteEvent = () => {
-        setLiked(true);
         axios({
             method: "post",
             url:
@@ -72,7 +71,11 @@ const JobCard = ({props, jobId, jobs}) => {
                 id, type, created_at, company, location, title, company_logo,
             }
         }).then(() => {
-        });
+          setLiked(true);
+        })
+            .catch(function (error) {
+                alert(error);
+            });
     }
 
     return (
