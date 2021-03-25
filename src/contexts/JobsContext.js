@@ -25,7 +25,7 @@ export const JobsProvider = props => {
                 })
 
                 setAllLocations(uniqueLocations);
-                setAllJobs(data);
+                setAllJobs(result);
                 const newJobsData = {};
 
                 result.forEach((job) => {
