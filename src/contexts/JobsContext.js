@@ -9,13 +9,16 @@ export const JobsProvider = props => {
   const [jobs, setJobs] = useState({});
 
   useEffect(() => {
+
     axios
-      .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`)
+      .get(`http://localhost/traitup_backend/public/api/jobs`)
+      
       .then((response) => {
         const {data} = response;
+        let result = JSON.parse(data["jobs"])
         const newJobsData = {};
 
-        data.forEach((job) => {
+        result.forEach((job) => {
           newJobsData[job.id] = {
             id: job.id,
             type: job.type,
