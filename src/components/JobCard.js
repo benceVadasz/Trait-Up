@@ -13,6 +13,7 @@ import {JobContext} from '../Contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { BASE_URL } from "../constants";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +66,7 @@ const JobCard = ({props, jobId, jobs}) => {
         axios({
             method: "post",
             url:
-                "http://localhost:8888/Trait-Up-Backend/public/api/addToFavourites",
+                `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
             headers: {Authorization: "Bearer " + token},
             params: {
                 id, type, created_at, company, location, title, company_logo,
