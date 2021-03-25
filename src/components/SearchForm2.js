@@ -5,17 +5,18 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-const SearchForm2 = ({ jobs, onFilter }) => {
+const SearchForm2 = ({ onFilter , locations  }) => {
   return (
-    <div style={{ width: 200 }}>
+    <div style={{ width: 200, marginLeft: 10 }}>
       <Autocomplete
         onChange={onFilter}
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={Object.keys(jobs).map((id) => {
-          return jobs[id].location;
+        options={locations.map(location => {
+          return location;
         })}
+
         renderInput={(params) => (
           <TextField
             style={{ backgroundColor: "white" }}

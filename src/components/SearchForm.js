@@ -7,14 +7,14 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 const SearchForm = ({ jobs, onFilter }) => {
   return (
-    <div style={{ width: 200 }}>
+    <div style={{ width: 200, marginRight: 10 }}>
       <Autocomplete
         onChange={onFilter}
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={Object.keys(jobs).map((id) => {
-          return jobs[id].title;
+        options={jobs.map(job => {
+          return job.title;
         })}
         renderInput={(params) => (
           <TextField

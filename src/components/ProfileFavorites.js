@@ -1,7 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Button, Typography, Paper, Grid } from '@material-ui/core';
+import {BASE_URL} from "../constants";
 import 'fontsource-roboto';
 import JobList from './JobList';
+import axios from "axios";
 
 const classes = {
     paper: {
@@ -13,7 +15,18 @@ const classes = {
 }
 
 
+
+
 const ProfileFavorites = () => {
+
+    useEffect(() => {
+        axios
+            .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`)
+            .then((response) => {
+                const {data} = response;
+            });
+
+    }, []);
 
     return (
         <>
