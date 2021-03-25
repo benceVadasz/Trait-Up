@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import {JobsContext} from "../Contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     demo: {
         height: 80,
-        background: "#859DF4",
+        // background: "#859DF4",
         marginTop: 40,
         marginBottom: 40,
         [theme.breakpoints.up("lg")]: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-    let {jobs, setJobs} = useContext(JobsContext);
+    let {jobs, setJobs, allJobs, uniqueLocations} = useContext(JobsContext);
     const classes = useStyles();
 
     function handleOnTypeFilter(e) {
@@ -41,21 +41,20 @@ const JobList = (props) => {
     }
 
     function filterJobs(type, value) {
-        let jobArray = []
-        for (let [key, value] of Object.entries(jobs)) {
-            jobArray.push(value);
-        }
+        setJobs(allJobs)
         let filteredJobs = [];
-        if (jobArray.length > 0) {
-            for (let i in jobArray) {
+        if (allJobs.length > 0) {
+            for (let i in allJobs) {
                 if (type === "type") {
-                    if (jobArray[i].type.includes(value)) {
-                        filteredJobs.push(jobArray[i])
+                    let splitType = value.split(' ');
+                    let queryKeyWord =splitType[0];
+                    if (allJobs[i].description.includes(queryKeyWord)) {
+                        filteredJobs.push(allJobs[i])
                     }
                 }
                 else {
-                    if (jobArray[i].location.includes(value)) {
-                        filteredJobs.push(jobArray[i])
+                    if (allJobs[i].location.includes(value)) {
+                        filteredJobs.push(allJobs[i])
                     }
                 }
             };
@@ -75,11 +74,11 @@ const JobList = (props) => {
                     style={{borderRadius: 20}}
                 >
                     <Grid item lg={4}>
-                        <SearchForm onFilter={handleOnTypeFilter} jobs={jobs}/>
+                        <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs}/>
                     </Grid>
 
                     <Grid item lg={4}>
-                        <SearchForm2 onFilter={handleOnLocationFilter} jobs={jobs}/>
+                        <SearchForm2 onFilter={handleOnLocationFilter} locations={uniqueLocations}/>
                     </Grid>
                 </Grid>
             </Grid>
