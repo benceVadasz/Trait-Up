@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react';
 import axios from "axios";
-
+import { BASE_URL } from "../constants";
 
 export const JobsContext = createContext();
 
@@ -14,10 +14,11 @@ export const JobsProvider = props => {
 
     useEffect(() => {
         axios
-            .get(`https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json`)
+            .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`)
             .then((response) => {
                 const {data} = response;
-                data.forEach(job => {
+                let result = JSON.parse(data["jobs"])
+                result.forEach(job => {
                     if (!uniqueLocations.includes(job.location)) {
                         uniqueLocations.push(job.location);
                     }
@@ -27,7 +28,7 @@ export const JobsProvider = props => {
                 setAllJobs(data);
                 const newJobsData = {};
 
-                data.forEach((job) => {
+                result.forEach((job) => {
                     newJobsData[job.id] = {
                         id: job.id,
                         type: job.type,
