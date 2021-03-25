@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import axios from "axios";
-import { JobsContext } from "./Contexts/JobsContext";
+import { JobsContext } from "./contexts/JobsContext";
 
 export default function useFetchJobs(type, value) {
   const [jobs, setJobs] = useContext(JobsContext);

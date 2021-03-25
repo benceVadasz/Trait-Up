@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import React, {useContext, useState} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
-import {JobContext} from '../Contexts/JobDetailContext';
+import {JobContext} from '../contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
