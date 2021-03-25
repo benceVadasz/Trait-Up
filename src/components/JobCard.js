@@ -7,7 +7,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import {JobContext} from '../Contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -40,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
+    liked: {
+        color: 'red'
+    }
 
 }));
 
@@ -56,18 +59,18 @@ const JobCard = ({props, jobId, jobs}) => {
         setJob(currentJob);
         history.push(`/jobs/${id}`)
     }
-
+    const [liked, setLiked] = useState(false);
     const handleFavouriteEvent = () => {
+        setLiked(true);
         axios({
             method: "post",
             url:
-                "http://localhost/Trait-Up-Backend/public/api/addToFavourites",
+                "http://localhost:8888/Trait-Up-Backend/public/api/addToFavourites",
             headers: {Authorization: "Bearer " + token},
             params: {
                 id, type, created_at, company, location, title, company_logo,
             }
         }).then(() => {
-            window.location.href = "/mail/inbox";
         });
     }
 
@@ -107,7 +110,7 @@ const JobCard = ({props, jobId, jobs}) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton onClick={handleFavouriteEvent} aria-label="add to favorites">
+                <IconButton className={liked?classes.liked:''} onClick={handleFavouriteEvent} aria-label="add to favorites">
                     <FavoriteIcon/>
                 </IconButton>
                 <Button variant="outlined" size="small" color="primary" className={classes.margin}>
