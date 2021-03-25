@@ -8,8 +8,8 @@ export const JobsProvider = props => {
 
     const [jobs, setJobs] = useState([]);
     const [allJobs, setAllJobs] = useState([]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const uniqueLocations = [];
+    const [allLocations, setAllLocations] = useState([]);
 
 
     useEffect(() => {
@@ -18,12 +18,13 @@ export const JobsProvider = props => {
             .then((response) => {
                 const {data} = response;
                 data.forEach(job => {
-                    if (!uniqueLocations.includes(job.location)){
+                    if (!uniqueLocations.includes(job.location)) {
                         uniqueLocations.push(job.location);
                     }
                 })
+
+                setAllLocations(uniqueLocations);
                 setAllJobs(data);
-                console.log(uniqueLocations);
                 const newJobsData = {};
 
                 data.forEach((job) => {
@@ -41,15 +42,12 @@ export const JobsProvider = props => {
                     }
                 });
                 setJobs(newJobsData);
-
-
             });
-
-    }, [uniqueLocations]);
+    }, []);
 
 
     return (
-        <JobsContext.Provider value={{jobs, setJobs, allJobs, uniqueLocations}}>
+        <JobsContext.Provider value={{jobs, setJobs, allJobs, allLocations}}>
             {props.children}
         </JobsContext.Provider>
     )

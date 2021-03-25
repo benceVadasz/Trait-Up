@@ -13,9 +13,10 @@ const SearchForm2 = ({ onFilter , locations  }) => {
         freeSolo
         id="free-solo-2-demo"
         disableClearable
-        options={locations.forEach(location => {
+        options={locations.map(location => {
           return location;
         })}
+
         renderInput={(params) => (
           <TextField
             style={{ backgroundColor: "white" }}

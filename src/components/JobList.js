@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     },
     demo: {
         height: 80,
-        // background: "#859DF4",
         marginTop: 40,
         marginBottom: 40,
         [theme.breakpoints.up("lg")]: {
@@ -24,12 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-    let {jobs, setJobs, allJobs, uniqueLocations} = useContext(JobsContext);
+    let {jobs, setJobs, allJobs, allLocations} = useContext(JobsContext);
     const classes = useStyles();
-
     function handleOnTypeFilter(e) {
         const value = e.target.innerHTML;
-        console.log(value);
         const type = 'type';
         setJobs(filterJobs(type, value));
     }
@@ -62,10 +59,9 @@ const JobList = (props) => {
         return filteredJobs;
     }
 
-
     return (
         <>
-            <Grid container justify="center" spacing={12}>
+            <Grid container justify="center">
                 <Grid
                     container
                     className={classes.demo}
@@ -78,7 +74,7 @@ const JobList = (props) => {
                     </Grid>
 
                     <Grid item lg={4}>
-                        <SearchForm2 onFilter={handleOnLocationFilter} locations={uniqueLocations}/>
+                        <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations}/>
                     </Grid>
                 </Grid>
             </Grid>
@@ -89,7 +85,7 @@ const JobList = (props) => {
                 justify="center"
             >
                 {Object.keys(jobs).map((jobId) => (
-                    <Grid item xs={5}>
+                    <Grid key={jobId} item xs={5}>
                         <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
                     </Grid>
                 ))}
