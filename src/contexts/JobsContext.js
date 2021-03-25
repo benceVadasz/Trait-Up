@@ -11,7 +11,7 @@ export const JobsProvider = props => {
   useEffect(() => {
 
     axios
-      .get(`http://localhost/traitup_backend/public/api/jobs`)
+      .get(`http://localhost/Trait-Up-Backend/public/api/jobs`)
       
       .then((response) => {
         const {data} = response;
