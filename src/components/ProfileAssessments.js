@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Typography, Paper, Grid } from '@material-ui/core';
+import {Typography, Paper, Grid } from '@material-ui/core';
 import 'fontsource-roboto';
 
 const classes = {
