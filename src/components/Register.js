@@ -16,6 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { useStoreActions } from 'easy-peasy';
+import { BASE_URL } from "../constants";
 
 function Register() {
   
@@ -55,7 +56,7 @@ function Register() {
     setLoading(true);
     e.preventDefault();
     axios
-      .post("http://localhost/Trait-Up-Backend/public/api/registration", {
+      .post(`${BASE_URL}/Trait-Up-Backend/public/api/registration`, {
         headers: {
           "Content-Type": "application/json",
           //Accept: "application/json, text-plain, */*",
