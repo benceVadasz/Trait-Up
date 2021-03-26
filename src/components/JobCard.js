@@ -95,10 +95,12 @@ const JobCard = ({props, jobId, jobs}) => {
                 title={`${title}`}
                 subheader={`${company}`}
             />
+          {company_logo ?
             <CardMedia height="140"
                        className={classes.media}
-                       image={`${company_logo}`}
+                       image={company_logo}
             />
+          : <div style={{height: "140px"}}/> }
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                     Job type: {`${type}`}
