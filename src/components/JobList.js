@@ -1,97 +1,143 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import SearchForm2 from "./SearchForm2";
+import Spinner from "react-spinner-material";
 
 const useStyles = makeStyles((theme) => ({
-    gridContainer: {
-        paddingLeft: "40px",
-        paddingRight: "40px",
+  load: {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+  },
+  gridContainer: {
+    paddingLeft: "40px",
+    paddingRight: "40px",
+  },
+  demo: {
+    height: 80,
+    marginTop: 40,
+    marginBottom: 40,
+    [theme.breakpoints.up("lg")]: {
+      width: 600,
     },
-    demo: {
-        height: 80,
-        marginTop: 40,
-        marginBottom: 40,
-        [theme.breakpoints.up("lg")]: {
-            width: 600,
-        },
-    },
+  },
 }));
 
 const JobList = (props) => {
 
-    let {jobs, setJobs, allJobs, allLocations} = useContext(JobsContext);
-    const classes = useStyles();
-    function handleOnTypeFilter(e) {
-        const value = e.target.innerHTML;
-        const type = 'type';
-        setJobs(filterJobs(type, value));
-    }
+  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
+  const classes = useStyles();
 
-    function handleOnLocationFilter(e) {
-        const value = e.target.innerHTML;
-        const type = 'location';
-        setJobs(filterJobs(type, value));
-    }
+  const [typeFilter, setTypeFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
 
-    function filterJobs(type, value) {
-        setJobs(allJobs)
-        let filteredJobs = [];
-        if (allJobs.length > 0) {
-            for (let i in allJobs) {
-                if (type === "type") {
-                    let splitType = value.split(' ');
-                    let queryKeyWord =splitType[0];
-                    if (allJobs[i].description.includes(queryKeyWord)) {
-                        filteredJobs.push(allJobs[i])
-                    }
-                }
-                else {
-                    if (allJobs[i].location.includes(value)) {
-                        filteredJobs.push(allJobs[i])
-                    }
-                }
-            };
+  function handleOnTypeFilter(e) {
+    const value = e.target.innerHTML;
+    console.log(value)
+    setTypeFilter(value);
+    const type = locationFilter !== "" ? 'both' : 'jobType';
+    setJobs(filterJobs(type, value));
+  }
+
+  function handleOnLocationFilter(e) {
+    const value = e.target.innerHTML;
+    setLocationFilter(value);
+    const type = typeFilter !== "" ? 'both' : 'location';
+    setJobs(filterJobs(type, value));
+  }
+
+  function clearJob(e) {
+    if (e.type === 'blur') {
+      setJobs(filterJobs("location", locationFilter));
+    }
+  }
+
+    function clearLocation(e) {
+    if (e.type === 'blur') {
+      setJobs(filterJobs("jobType", typeFilter));
+    }
+  }
+
+  function filterJobs(filterType, value) {
+    console.log(filterType);
+    setJobs(allJobs)
+    let filteredJobs = [];
+    if (allJobs.length > 0) {
+      for (let i in allJobs) {
+        if (filterType === 'both') {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
+            filteredJobs.push(allJobs[i])
+          }
+        } else if (filterType === "jobType") {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].description.includes(queryKeyWord)) {
+            filteredJobs.push(allJobs[i])
+          }
+        } else {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].location.includes(queryKeyWord)) {
+            filteredJobs.push(allJobs[i])
+          }
         }
-        return filteredJobs;
+      }
     }
+    return filteredJobs;
+  }
 
+  if (loading)
     return (
-        <>
-            <Grid container justify="center">
-                <Grid
-                    container
-                    className={classes.demo}
-                    alignItems="center"
-                    justify="center"
-                    style={{borderRadius: 20}}
-                >
-                    <Grid item lg={4}>
-                        <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs}/>
-                    </Grid>
-
-                    <Grid item lg={4}>
-                        <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations}/>
-                    </Grid>
-                </Grid>
-            </Grid>
-            <Grid
-                container
-                className={classes.gridContainer}
-                spacing={6}
-                justify="center"
-            >
-                {Object.keys(jobs).map((jobId) => (
-                    <Grid key={jobId} item xs={5}>
-                        <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
-                    </Grid>
-                ))}
-            </Grid>
-        </>
+      <div className={classes.load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+        />
+      </div>
     );
+
+  return (
+    <>
+      <Grid container justify="center">
+        <Grid
+          container
+          className={classes.demo}
+          alignItems="center"
+          justify="center"
+          style={{borderRadius: 20}}
+        >
+          <Grid item lg={4}>
+            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
+          </Grid>
+
+          <Grid item lg={4}>
+            <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        className={classes.gridContainer}
+        spacing={6}
+        justify="center"
+      >
+        {Object.keys(jobs).map((jobId) => (
+          <Grid key={jobId} item xs={5}>
+            <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+          </Grid>
+        ))}
+      </Grid>
+    </>
+  );
 };
 
 export default JobList;

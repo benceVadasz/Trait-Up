@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import {Button, Typography, Paper, Grid } from '@material-ui/core';
+import React, { useEffect} from 'react';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import {BASE_URL} from "../constants";
 import 'fontsource-roboto';
 import JobList from './JobList';
@@ -23,7 +23,6 @@ const ProfileFavorites = () => {
         axios
             .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`)
             .then((response) => {
-                const {data} = response;
             });
 
     }, []);

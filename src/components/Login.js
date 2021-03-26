@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { BASE_URL } from "../constants";
+import Spinner from "react-spinner-material";
 
 function Login() {
   const paperStyle = {
@@ -28,6 +29,7 @@ function Login() {
   const avatarStyle = { backgroundColor: "#859DF4",  };
   const button = { backgroundColor: "#859DF4" };
   const passwordStyle = { marginBottom: 30 };
+  const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,9 +43,6 @@ function Login() {
       .post(`${BASE_URL}/Trait-Up-Backend/public/api/login`, {
         headers: {
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
-          // Accept: "application/json, text-plain, */*",
-          // "X-Requested-With": "XMLHttpRequest",
         },
         email,
         password,
@@ -51,7 +50,6 @@ function Login() {
       .then((response) => {
         
         setLoading(false);
-        // const user = JSON.parse(sessionStorage.getItem('user'));
         sessionStorage.setItem("user", JSON.stringify(response.data.user));
         sessionStorage.setItem("token", response.data.token);
         window.location.href = '/';
@@ -63,11 +61,15 @@ function Login() {
 
   if (loading) 
     return (
-      <div className="App">
-        <div className="loading">Loading...</div>
+      <div style={load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+          color={'black'}/>
       </div>
     );
-
 
   return (
     <div>

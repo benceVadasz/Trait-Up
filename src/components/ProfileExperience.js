@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Button, Typography, Paper, Grid } from '@material-ui/core';
+import { Typography, Paper, Grid } from '@material-ui/core';
 import 'fontsource-roboto';
 import {UserContext} from '../contexts/UserContext';
 import ProfileEditDeleteButton from './ProfileEditDeleteButton';
@@ -25,7 +25,7 @@ const classes = {
 
 const ProfileExperience = () => {
 
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
 
     return (
         <>

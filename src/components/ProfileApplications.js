@@ -11,7 +11,6 @@ const classes = {
     },
 }
 
-
 const ProfileApplications = () => {
 
     return (

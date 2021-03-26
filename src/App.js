@@ -1,4 +1,4 @@
-import {Route, BrowserRouter as Router, BrowserRouter} from 'react-router-dom';
+import {Route, BrowserRouter as Router } from 'react-router-dom';
 import JobList from "./components/JobList";
 import JobDetail from "./components/JobDetail";
 import { JobsProvider } from "./contexts/JobsContext";
