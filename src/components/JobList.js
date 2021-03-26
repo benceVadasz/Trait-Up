@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -31,39 +31,64 @@ const useStyles = makeStyles((theme) => ({
 const JobList = (props) => {
 
   let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
-  console.log(loading);
   const classes = useStyles();
+
+  const [typeFilter, setTypeFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
-    const type = 'type';
+    console.log(value)
+    setTypeFilter(value);
+    const type = locationFilter !== "" ? 'both' : 'jobType';
     setJobs(filterJobs(type, value));
   }
 
   function handleOnLocationFilter(e) {
     const value = e.target.innerHTML;
-    const type = 'location';
+    setLocationFilter(value);
+    const type = typeFilter !== "" ? 'both' : 'location';
     setJobs(filterJobs(type, value));
   }
 
-  function filterJobs(type, value) {
+  function clearJob(e) {
+    if (e.type === 'blur') {
+      setJobs(filterJobs("location", locationFilter));
+    }
+  }
+
+    function clearLocation(e) {
+    if (e.type === 'blur') {
+      setJobs(filterJobs("jobType", typeFilter));
+    }
+  }
+
+  function filterJobs(filterType, value) {
+    console.log(filterType);
     setJobs(allJobs)
     let filteredJobs = [];
     if (allJobs.length > 0) {
       for (let i in allJobs) {
-        if (type === "type") {
-          let splitType = value.split(' ');
+        if (filterType === 'both') {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
+            filteredJobs.push(allJobs[i])
+          }
+        } else if (filterType === "jobType") {
+          let splitType = value.split(/[ ,]+/);
           let queryKeyWord = splitType[0];
           if (allJobs[i].description.includes(queryKeyWord)) {
             filteredJobs.push(allJobs[i])
           }
         } else {
-          if (allJobs[i].location.includes(value)) {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].location.includes(queryKeyWord)) {
             filteredJobs.push(allJobs[i])
           }
         }
       }
-      ;
     }
     return filteredJobs;
   }
@@ -91,11 +116,11 @@ const JobList = (props) => {
           style={{borderRadius: 20}}
         >
           <Grid item lg={4}>
-            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs}/>
+            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
           </Grid>
 
           <Grid item lg={4}>
-            <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations}/>
+            <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
           </Grid>
         </Grid>
       </Grid>

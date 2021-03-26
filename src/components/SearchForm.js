@@ -5,12 +5,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-const SearchForm = ({ jobs, onFilter }) => {
+const SearchForm = ({ jobs, onFilter, clear }) => {
   return (
     <div style={{ width: 200, marginRight: 10 }}>
       <Autocomplete
         onChange={onFilter}
         freeSolo
+        name={'job'}
+        onClose={clear}
         id="free-solo-2-demo"
         disableClearable
         options={jobs.map(job => {
