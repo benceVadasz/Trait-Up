@@ -9,33 +9,29 @@ import {
   Button,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import { useStoreActions } from 'easy-peasy';
 import { BASE_URL } from "../constants";
+import Spinner from "react-spinner-material";
 
 function Register() {
   
   const paperStyle = {
     padding: "30px 20px",
-    height: 660,
+    height: 460,
     width: 500,
     margin: "70px auto",
   };
   const formStyle = {
-    height: 520,
+    height: 350,
     display: "flex",
     flexFlow: "column wrap",
     justifyContent: "space-between",
   };
+
   const headerStyle = { margin: 0 };
   const avatarStyle = { backgroundColor: "#859DF4", marginBottom: 10 };
-  const marginTop = { marginTop: 5 };
   const button = { backgroundColor: "#859DF4" };
+  const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
 
   const [user, setUser] = useState({});
   const [name, setName] = useState("");
@@ -68,8 +64,6 @@ function Register() {
       })
       .then((response) => {
         setLoading(false);
-        // sessionStorage.setItem("email", email);
-        // sessionStorage.setItem("token", response.data.token);
         window.location.href = "/";
       })
       .catch(function (error) {
@@ -79,8 +73,13 @@ function Register() {
 
   if (loading) 
     return (
-      <div className="App">
-        <div className="loading">Loading...</div>
+      <div style={load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+         color={'black'}/>
       </div>
     );
 

@@ -4,3 +4,10 @@ body {
     background: #F6F6F6;
 }
 
+.load {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

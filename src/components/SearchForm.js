@@ -6,7 +6,6 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 const SearchForm = ({ jobs, onFilter }) => {
-  console.log(jobs)
   return (
     <div style={{ width: 200, marginRight: 10 }}>
       <Autocomplete
