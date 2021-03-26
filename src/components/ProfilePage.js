@@ -7,7 +7,7 @@ import ProfileMenu from './ProfileMenu';
 import ProfilePersonalInfo from './ProfilePersonalInfo';
 import ProfileEducation from './ProfileEducation';
 import ProfileExperience from './ProfileExperience';
-import {BrowserRouter, BrowserRouter as Router, Route} from 'react-router-dom';
+import { Route} from 'react-router-dom';
 import ProfileFavorites from './ProfileFavorites';
 import ProfileApplications from './ProfileApplications';
 import ProfileAssessments from './ProfileAssessments';

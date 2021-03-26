@@ -12,7 +12,6 @@ const classes = {
     },
 }
 
-
 const ProfileAssessments = () => {
 
     return (

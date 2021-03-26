@@ -78,7 +78,6 @@ export default function MenuAppBar() {
               </Button>
             </>
           }
-            
           </div>
         </Toolbar>
       </AppBar>

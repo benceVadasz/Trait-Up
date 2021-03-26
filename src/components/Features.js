@@ -12,8 +12,6 @@ function Features() {
         root: {
           flexGrow: 1,
           borderBottom: 'none',
-          
-
         },
         paper: {
           padding: theme.spacing(10),

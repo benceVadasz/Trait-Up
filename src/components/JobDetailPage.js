@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(2),
           },
     }
-    
   }));
 
 
@@ -79,13 +78,11 @@ const JobDetailPage = ({job, props}) => {
           Created at: {`${job.created_at}`}
           </Typography>
       </CardContent>
-
       <CardContent>
           <Typography className={classes.text} variant="body2">
           {parse(`<div>${job.description}</div>`)}
           </Typography>
       </CardContent>
-      
       <CardContent>
         <Typography className={classes.link}>
         <Link to={`${job.url}`} onClick={() => {
@@ -95,7 +92,6 @@ const JobDetailPage = ({job, props}) => {
         </Link>
         </Typography>
     </CardContent>
-
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
@@ -114,7 +110,6 @@ const JobDetailPage = ({job, props}) => {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2">
@@ -122,9 +117,8 @@ const JobDetailPage = ({job, props}) => {
           </Typography>
         </CardContent>
       </Collapse>
-
     </Card>
     )
 }
 
-export default JobDetailPage
+export default JobDetailPage;

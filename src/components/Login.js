@@ -43,9 +43,6 @@ function Login() {
       .post(`${BASE_URL}/Trait-Up-Backend/public/api/login`, {
         headers: {
           "Content-Type": "application/json",
-          // "Access-Control-Allow-Origin": "*",
-          // Accept: "application/json, text-plain, */*",
-          // "X-Requested-With": "XMLHttpRequest",
         },
         email,
         password,
@@ -53,7 +50,6 @@ function Login() {
       .then((response) => {
         
         setLoading(false);
-        // const user = JSON.parse(sessionStorage.getItem('user'));
         sessionStorage.setItem("user", JSON.stringify(response.data.user));
         sessionStorage.setItem("token", response.data.token);
         window.location.href = '/';
@@ -74,7 +70,6 @@ function Login() {
           color={'black'}/>
       </div>
     );
-
 
   return (
     <div>

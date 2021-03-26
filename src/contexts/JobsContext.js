@@ -47,6 +47,7 @@ export const JobsProvider = props => {
         });
         setJobs(newJobsData);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

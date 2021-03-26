@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from 'axios';
 import {
   Grid,
@@ -9,7 +9,6 @@ import {
   Button,
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import { useStoreActions } from 'easy-peasy';
 import { BASE_URL } from "../constants";
 import Spinner from "react-spinner-material";
 
@@ -33,19 +32,11 @@ function Register() {
   const button = { backgroundColor: "#859DF4" };
   const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
 
-  const [user, setUser] = useState({});
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  // const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
-  const add = useStoreActions(actions => actions.addUser);  
   const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  useEffect(() => { 
-    setLoading(false);
-    add(user);
-  }, [add, user]);
 
   const submit = (e) => {
     if (password !== confirmPassword) alert("Passwords do not match");
@@ -55,8 +46,6 @@ function Register() {
       .post(`${BASE_URL}/Trait-Up-Backend/public/api/registration`, {
         headers: {
           "Content-Type": "application/json",
-          //Accept: "application/json, text-plain, */*",
-          //"X-Requested-With": "XMLHttpRequest",
         },
         name,
         email,
@@ -109,26 +98,6 @@ function Register() {
               label="Email"
               placeholder="Enter your email"
             />
-             {/* <FormControl component="fieldset" style={marginTop}>
-              <FormLabel component="legend">Gender</FormLabel>
-              <RadioGroup
-                onChange={(e) => setGender(e.target.value)}
-                aria-label="gender"
-                name="gender"
-                style={{ display: "initial" }}
-              >
-                <FormControlLabel
-                  value="female"
-                  control={<Radio />}
-                  label="Female"
-                />
-                <FormControlLabel
-                  value="male"
-                  control={<Radio color="primary" />}
-                  label="Male"
-                />
-              </RadioGroup>
-            </FormControl>  */}
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
@@ -143,10 +112,6 @@ function Register() {
               type="password"
               placeholder="Confirm your password"
             />
-            {/* <FormControlLabel
-              control={<Checkbox color="primary" name="checkedA" />}
-              label="I accept the terms and conditions."
-            /> */}
             <Button type="submit" variant="contained" style={button}>
               Sign up
             </Button>

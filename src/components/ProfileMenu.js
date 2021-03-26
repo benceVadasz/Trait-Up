@@ -4,7 +4,7 @@ import {Button, Typography, Paper, Grid, Avatar, Divider} from '@material-ui/cor
 import 'fontsource-roboto';
 import {UserContext} from '../contexts/UserContext';
 import PersonIcon from '@material-ui/icons/Person';
-import StarIcon from '@material-ui/icons/Star';
+// import StarIcon from '@material-ui/icons/Star';
 import DescriptionIcon from '@material-ui/icons/Description';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -34,7 +34,7 @@ const classes = {
 
 const ProfileMenu = () => {
 
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
 
     return (
         <>
