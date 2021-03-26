@@ -74,7 +74,7 @@ const JobCard = ({props, jobId, jobs}) => {
           setLiked(true);
         })
             .catch(function (error) {
-                alert(error);
+                alert('You have to log in to add jobs to your favourites');
             });
     }
 
