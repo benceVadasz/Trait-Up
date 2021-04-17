@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef, useCallback } from "react";
+import React, {useContext, useState, useRef, useCallback, useEffect} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -6,6 +6,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import SearchForm2 from "./SearchForm2";
 import Spinner from "react-spinner-material";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from "axios";
+import {BASE_URL} from "../constants";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -30,11 +34,13 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-  let {jobs, setJobs, allJobs, allLocations, loading, setPageNumber, hasMore} = useContext(JobsContext);
+  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
   const classes = useStyles();
 
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
+  const [offset, setOffset] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -60,7 +66,7 @@ const JobList = (props) => {
     }
   }
 
-    function clearLocation(e) {
+  function clearLocation(e) {
     if (e.type === 'blur') {
       setLocationFilter("");
       setJobs(filterJobs("jobType", typeFilter));
@@ -95,18 +101,48 @@ const JobList = (props) => {
     return filteredJobs;
   }
 
-  const observer = useRef(null);
-  const lastJobRef = useCallback(node => {
-    console.log('here')
-    if (loading) return
-    if (observer.current) observer.current.disconnect()
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        setPageNumber(prevPageNumber => prevPageNumber + 1)
-      }
-    })
-    if (node) observer.current.observe(node)
-  }, [loading, hasMore])
+  const loadNextJobs = () => {
+    setOffset(prevOffset => prevOffset + 1)
+  }
+
+  useEffect(() => {
+    console.log(offset)
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
+        {
+          params: {offset}
+        })
+      .then((response) => {
+        console.log(allJobs)
+        const {data} = response;
+        console.log(data)
+        let result = JSON.parse(data["jobs"])
+         let resultSpread = [...result];
+        setHasMore(result.length > 0)
+        resultSpread.forEach(res => {
+          allJobs.push(res)
+        })
+        setJobs(allJobs);
+        const newJobsData = {};
+
+        result.forEach((job) => {
+          newJobsData[job.id] = {
+            id: job.id,
+            type: job.type,
+            url: job.url,
+            created_at: job.created_at,
+            company: job.company,
+            location: job.location,
+            title: job.title,
+            description: job.description,
+            how_to_apply: job.how_to_apply,
+            company_logo: job.company_logo
+          }
+        });
+        // setJobs(newJobsData);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offset]);
 
 
   if (loading)
@@ -123,6 +159,7 @@ const JobList = (props) => {
 
   return (
     <>
+
       <Grid container justify="center">
         <Grid
           container
@@ -140,23 +177,32 @@ const JobList = (props) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid
-        container
-        className={classes.gridContainer}
-        spacing={6}
-        justify="center"
+      <InfiniteScroll
+        dataLength={1000} //This is important field to render the next data
+        next={loadNextJobs}
+        hasMore={hasMore}
+        loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
+        endMessage={
+          <p style={{textAlign: 'center'}}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
       >
-        {Object.keys(jobs).map((jobId, index) => (
-          index === 49 ?
-          <Grid ref={lastJobRef} key={jobId} item xs={5}>
-            <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
-          </Grid> :
+        <Grid
+          container
+          className={classes.gridContainer}
+          spacing={6}
+          justify="center"
+        >
+          {Object.keys(jobs).map((jobId, index) => (
             <Grid key={jobId} item xs={5}>
               <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
             </Grid>
-        ))}
-      </Grid>
+          ))}
+        </Grid>
+      </InfiniteScroll>
       <div>{loading && 'Loading...'}</div>
+
     </>
   );
 };
