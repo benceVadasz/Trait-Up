@@ -48,23 +48,27 @@ const JobList = (props) => {
     const value = e.target.innerHTML;
     setLocationFilter(value);
     const type = typeFilter !== "" ? 'both' : 'location';
-    setJobs(filterJobs(type, value));
+    const results = filterJobs(type, value);
+    setJobs(results);
   }
 
-  function clearJob(e) {
+  async function clearJob(e) {
     if (e.type === 'blur') {
-      setJobs(filterJobs("location", locationFilter));
+      setTypeFilter("");
+      const filteredJobs = await filterJobs("location", locationFilter);
+      setJobs(filteredJobs);
     }
   }
 
     function clearLocation(e) {
     if (e.type === 'blur') {
+      setLocationFilter("");
       setJobs(filterJobs("jobType", typeFilter));
+      console.log(jobs);
     }
   }
 
   function filterJobs(filterType, value) {
-    console.log(filterType);
     setJobs(allJobs)
     let filteredJobs = [];
     if (allJobs.length > 0) {
@@ -82,9 +86,7 @@ const JobList = (props) => {
             filteredJobs.push(allJobs[i])
           }
         } else {
-          let splitType = value.split(/[ ,]+/);
-          let queryKeyWord = splitType[0];
-          if (allJobs[i].location.includes(queryKeyWord)) {
+          if (allJobs[i].location.includes(value)) {
             filteredJobs.push(allJobs[i])
           }
         }
