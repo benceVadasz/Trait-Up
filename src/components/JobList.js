@@ -1,4 +1,4 @@
-import React, {useContext, useState, useRef, useCallback, useEffect} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -9,7 +9,6 @@ import Spinner from "react-spinner-material";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {
