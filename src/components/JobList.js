@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useRef, useCallback } from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
+  let {jobs, setJobs, allJobs, allLocations, loading, setPageNumber, hasMore} = useContext(JobsContext);
   const classes = useStyles();
 
   const [typeFilter, setTypeFilter] = useState("");
@@ -95,6 +95,20 @@ const JobList = (props) => {
     return filteredJobs;
   }
 
+  const observer = useRef(null);
+  const lastJobRef = useCallback(node => {
+    console.log('here')
+    if (loading) return
+    if (observer.current) observer.current.disconnect()
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPageNumber(prevPageNumber => prevPageNumber + 1)
+      }
+    })
+    if (node) observer.current.observe(node)
+  }, [loading, hasMore])
+
+
   if (loading)
     return (
       <div className={classes.load}>
@@ -132,12 +146,17 @@ const JobList = (props) => {
         spacing={6}
         justify="center"
       >
-        {Object.keys(jobs).map((jobId) => (
-          <Grid key={jobId} item xs={5}>
+        {Object.keys(jobs).map((jobId, index) => (
+          index === 49 ?
+          <Grid ref={lastJobRef} key={jobId} item xs={5}>
             <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
-          </Grid>
+          </Grid> :
+            <Grid key={jobId} item xs={5}>
+              <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+            </Grid>
         ))}
       </Grid>
+      <div>{loading && 'Loading...'}</div>
     </>
   );
 };
