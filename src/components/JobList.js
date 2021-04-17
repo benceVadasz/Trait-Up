@@ -38,7 +38,7 @@ const JobList = (props) => {
 
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
-  const [offset, setOffset] = useState(1);
+  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
   function handleOnTypeFilter(e) {
@@ -101,22 +101,22 @@ const JobList = (props) => {
   }
 
   const loadNextJobs = () => {
-    setOffset(prevOffset => prevOffset + 1)
+    setPage(prevOffset => prevOffset + 1)
   }
 
   useEffect(() => {
-    console.log(offset)
+    console.log(page)
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
         {
-          params: {offset}
+          params: {page}
         })
       .then((response) => {
         console.log(allJobs)
         const {data} = response;
         console.log(data)
         let result = JSON.parse(data["jobs"])
-         let resultSpread = [...result];
+        let resultSpread = [...result];
         setHasMore(result.length > 0)
         resultSpread.forEach(res => {
           allJobs.push(res)
@@ -141,8 +141,16 @@ const JobList = (props) => {
         // setJobs(newJobsData);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offset]);
+  }, [page]);
 
+  const handleScroll = (e) => {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+    if (bottom) {
+      if (page >= 2) {
+        setPage(prevOffset => prevOffset + 1)
+      }
+    }
+  }
 
   if (loading)
     return (
@@ -177,6 +185,7 @@ const JobList = (props) => {
         </Grid>
       </Grid>
       <InfiniteScroll
+        onScroll={handleScroll}
         dataLength={1000} //This is important field to render the next data
         next={loadNextJobs}
         hasMore={hasMore}
