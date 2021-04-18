@@ -112,9 +112,7 @@ const JobList = (props) => {
           params: {page}
         })
       .then((response) => {
-        console.log(allJobs)
         const {data} = response;
-        console.log(data)
         let result = JSON.parse(data["jobs"])
         let resultSpread = [...result];
         setHasMore(result.length > 0)
@@ -122,23 +120,6 @@ const JobList = (props) => {
           allJobs.push(res)
         })
         setJobs(allJobs);
-        const newJobsData = {};
-
-        result.forEach((job) => {
-          newJobsData[job.id] = {
-            id: job.id,
-            type: job.type,
-            url: job.url,
-            created_at: job.created_at,
-            company: job.company,
-            location: job.location,
-            title: job.title,
-            description: job.description,
-            how_to_apply: job.how_to_apply,
-            company_logo: job.company_logo
-          }
-        });
-        // setJobs(newJobsData);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
