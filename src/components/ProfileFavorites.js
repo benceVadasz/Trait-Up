@@ -45,7 +45,7 @@ const ProfileFavorites = (props) => {
         <Grid style={classes.favBox} container spacing={3} direction="row">
           {favourites.map((job) => (
             <Grid key={job['job_id']} item xs={5}>
-              <FavouriteCard key={job['job_id']} job={job} />
+              <FavouriteCard props={props} key={job['job_id']} job={job} />
             </Grid>
           ))}
         </Grid>
