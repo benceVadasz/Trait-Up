@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -6,6 +6,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import SearchForm2 from "./SearchForm2";
 import Spinner from "react-spinner-material";
+import axios from "axios";
+import {BASE_URL} from "../constants";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -32,9 +35,9 @@ const JobList = (props) => {
 
   let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
   const classes = useStyles();
-
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
+  const [favourites, setFavourites] = useState([]);
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -56,7 +59,7 @@ const JobList = (props) => {
     }
   }
 
-    function clearLocation(e) {
+  function clearLocation(e) {
     if (e.type === 'blur') {
       setJobs(filterJobs("jobType", typeFilter));
     }
@@ -91,6 +94,24 @@ const JobList = (props) => {
     }
     return filteredJobs;
   }
+
+  const filterOutIds = (favArray) => {
+    const res = []
+    favArray.forEach(fav => {
+      res.push(fav.job_id)
+    })
+    return res;
+  }
+  const token = sessionStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+        {headers: {Authorization: "Bearer " + token}})
+      .then((response) => {
+        setFavourites(filterOutIds(response.data.mail));
+      });
+
+  }, []);
 
   if (loading)
     return (
@@ -131,12 +152,13 @@ const JobList = (props) => {
       >
         {Object.keys(jobs).map((jobId) => (
           <Grid key={jobId} item xs={5}>
-            <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+            <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props} favourites={favourites} setFavourites={setFavourites}/>
           </Grid>
         ))}
       </Grid>
     </>
   );
-};
+}
+;
 
 export default JobList;
