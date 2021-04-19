@@ -52,10 +52,9 @@ const JobCard = ({props, jobId, jobs}) => {
     const classes = useStyles();
     const {history} = props;
     const [job, setJob] = useContext(JobContext);
-
     const {id, type, created_at, company, location, title, description, company_logo, url, how_to_apply} = jobs[jobId];
 
-    const saveJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
+    const viewJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
         const currentJob = {id, type, created_at, company, location, title, description, url, how_to_apply};
         setJob(currentJob);
         history.push(`/jobs/${id}`)
@@ -88,7 +87,7 @@ const JobCard = ({props, jobId, jobs}) => {
                 }
                 action={
                     <IconButton aria-label="detail"
-                                onClick={() => saveJob(id, type, created_at, company, location, title, description, url, how_to_apply)}>
+                                onClick={() => viewJob(id, type, created_at, company, location, title, description, url, how_to_apply)}>
                         <DetailsIcon/>
                     </IconButton>
                 }

@@ -38,7 +38,6 @@ const JobList = (props) => {
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
-    console.log(value)
     setTypeFilter(value);
     const type = locationFilter !== "" ? 'both' : 'jobType';
     setJobs(filterJobs(type, value));
