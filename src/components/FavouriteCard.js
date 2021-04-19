@@ -7,12 +7,13 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, { useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {BASE_URL} from "../constants";
+import {JobContext} from "../contexts/JobDetailContext";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,20 +47,21 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const FavouriteCard = ({job}) => {
+const FavouriteCard = ({props, job}) => {
   const token = sessionStorage.getItem("token");
   const classes = useStyles();
-
+  const {history} = props;
+  const [currJob, setJob] = useContext(JobContext);
   const [liked, setLiked] = useState(true);
-  const handleFavouriteEvent = () => {
+
+  const removeFromFavourites = () => {
     axios({
       method: "post",
       url:
-        `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
+        `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
       headers: {Authorization: "Bearer " + token},
       params: {
-
-        // id, type, created_at, company, location, title, company_logo,
+        id : job.id
       }
     }).then(() => {
       setLiked(true);
@@ -67,6 +69,12 @@ const FavouriteCard = ({job}) => {
       .catch(function (error) {
         alert('You have to log in to add jobs to your favourites');
       });
+  }
+
+
+  const viewJob = () => {
+    setJob(job);
+    history.push(`/jobs/${job.job_id}`)
   }
 
   return (
@@ -79,8 +87,7 @@ const FavouriteCard = ({job}) => {
         }
         action={
           <IconButton aria-label="detail"
-
-          >
+                      onClick={() => viewJob()}>
             <DetailsIcon/>
           </IconButton>
         }
@@ -103,7 +110,7 @@ const FavouriteCard = ({job}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={liked ? classes.liked : ''} onClick={handleFavouriteEvent} aria-label="add to favorites">
+        <IconButton className={liked ? classes.liked : ''} onClick={removeFromFavourites} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>
