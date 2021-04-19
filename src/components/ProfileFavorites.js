@@ -16,7 +16,7 @@ const classes = {
   },
   favBox: {
     display: "flex",
-    flexFlow: "row",
+    flexFlow: "row wrap",
     justifyContent: "space-around",
     background: "#eceef7",
   },

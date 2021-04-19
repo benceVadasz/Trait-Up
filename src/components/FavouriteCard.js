@@ -50,7 +50,7 @@ const FavouriteCard = ({job}) => {
   const token = sessionStorage.getItem("token");
   const classes = useStyles();
 
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(true);
   const handleFavouriteEvent = () => {
     axios({
       method: "post",
