@@ -12,13 +12,14 @@ const classes = {
     margin: "20px",
     alignItems: "center",
     background: "#eceef7",
+    height: "100%"
   },
-  // paper: {
-  //   padding: "20px",
-  //   margin: "20px",
-  //   alignItems: "center",
-  //   background: "#eceef7",
-  // },
+  favBox: {
+    display: "flex",
+    flexFlow: "row",
+    justifyContent: "space-around",
+    background: "#eceef7",
+  },
 }
 
 
@@ -40,11 +41,8 @@ const ProfileFavorites = (props) => {
   return (
     <>
       <Paper elevation={3} style={classes.paper}>
+        <Typography variant="h2" color="primary" align="center">Favorites</Typography>
         <Grid style={classes.favBox} container spacing={3} direction="row">
-          {/*<Grid item xs>*/}
-            <Typography variant="h2" color="primary" align="center">Favorites</Typography>
-          {/*</Grid>*/}
-          {/*<JobList/>*/}
           {favourites.map((job) => (
             <Grid key={job['job_id']} item xs={5}>
               <FavouriteCard key={job['job_id']} job={job} />
