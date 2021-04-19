@@ -8,7 +8,6 @@ import SearchForm2 from "./SearchForm2";
 import Spinner from "react-spinner-material";
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {

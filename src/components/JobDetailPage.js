@@ -16,8 +16,6 @@ import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {useParams} from "react-router";
-import {withMobileDialog} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {

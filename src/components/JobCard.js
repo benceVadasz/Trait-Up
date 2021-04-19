@@ -14,7 +14,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {BASE_URL} from "../constants";
-import {forEach} from "react-bootstrap/ElementChildren";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -104,6 +103,7 @@ const JobCard = ({props, jobId, jobs, favourites, setFavourites}) => {
         setLiked(true);
       }
     }
+    // eslint-disable-next-line
   }, [favourites]);
 
 

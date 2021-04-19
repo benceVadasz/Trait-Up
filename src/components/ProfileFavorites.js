@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import {BASE_URL} from "../constants";
 import 'fontsource-roboto';
 import axios from "axios";
 import FavouriteCard from "./FavouriteCard";
-import {JobsContext} from "../contexts/JobsContext";
 
 const classes = {
   paper: {
@@ -26,8 +25,6 @@ const classes = {
 const ProfileFavorites = (props) => {
   const token = sessionStorage.getItem("token");
   const [favourites, setFavourites] = useState([]);
-  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
-  console.log(jobs)
   useEffect(() => {
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
