@@ -45,12 +45,16 @@ const useStyles = makeStyles((theme) => ({
     '& > * + *': {
       marginLeft: theme.spacing(2),
     },
+    liked: {
+      color: 'red'
+    }
   }
 }));
 
 
 const JobDetailPage = ({job, props}) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [liked, setLiked] = React.useState(false);
   const [description, setDescription] = React.useState("");
   const classes = useStyles();
   const handleExpandClick = () => {
@@ -67,14 +71,20 @@ const JobDetailPage = ({job, props}) => {
               Authorization: "Bearer " + sessionStorage.getItem("token"),
             },
             params: {
-              id: job.job_id
+              id: job.job_id,
+              user_id: JSON.parse(sessionStorage.getItem("user")).id
             },
           }
         ).then((res) => {
         setDescription(JSON.parse(res.data['job']).description)
+        if (res.data.isFav) {
+          setLiked(true)
+          console.log('fav true')
+
+        }
       })
         .catch(function (error) {
-          alert('You have to log in to add jobs to your favourites');
+          alert('Could not load job description');
         });
     }
   }, [job]);
@@ -118,8 +128,8 @@ const JobDetailPage = ({job, props}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon/>
+        <IconButton className={liked ? classes.liked : ''}  aria-label="add to favorites">
+          <FavoriteIcon />
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>
           Apply
