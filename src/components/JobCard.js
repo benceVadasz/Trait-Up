@@ -13,7 +13,6 @@ import {JobContext} from '../contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import {useStoreActions, useStoreState} from "easy-peasy";
-import {favouriteModel} from '../favouriteModel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,32 +62,27 @@ const JobCard = ({props, jobId, jobs}) => {
   }
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
 
+  const likeSetter = () => {
+    setLiked(!liked)
+  }
+
   const handleFavouriteEvent = () => {
-    if (liked) {
-      removeFromFavourites(id)
+    if (sessionStorage.getItem('token')) {
+      const currentJob = {id, type, created_at, company, location, title, description, url, how_to_apply, company_logo};
+      if (liked) {
+        if(removeFromFavourites(currentJob.id)) {
+          likeSetter();
+        }
+      } else {
+        if (addToFavourites(currentJob)) {
+          likeSetter();
+        }
+      }
     } else {
-      addToFavourites(job);
-      setLiked(true);
+      alert('You have to log in to like jobs')
     }
   }
 
-  // const removeFromFavourites = () => {
-  //   axios({
-  //     method: "post",
-  //     url:
-  //       `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
-  //     headers: {Authorization: "Bearer " + token},
-  //     params: {
-  //       id
-  //     }
-  //   }).then((res) => {
-  //     setLiked(false);
-  //     setFavourites(favourites.filter(item => item !== res.data.jobId));
-  //   })
-  //     .catch(function (error) {
-  //       alert('You have to log in to add jobs to your favourites');
-  //     });
-  // }
   const favouriteJobs = useStoreState((state) => state.favourites);
   useEffect(() => {
     if (favouriteJobs.length > 0) {

@@ -7,8 +7,8 @@ const favouriteModel = {
   token: sessionStorage.getItem("token"),
   favourites: [],
   addToFavourites: action((state, job) => {
-    saveAsFavourite(job);
     state.favourites = [...state.favourites, job];
+    saveAsFavourite(job);
   }),
   setFavourites: action((state, favourites) => {
     state.favourites = favourites;
@@ -22,10 +22,13 @@ const favouriteModel = {
 
 const saveAsFavourite = (job) => {
 
-  if (!favouriteModel.token) alert("Please log in to like jobs")
+  if (!favouriteModel.token){
+    alert("Please log in to like jobs");
+    return false;
+  }
   else {
     const {
-      job_id, type, created_at, company, location, title, company_logo
+      id, type, created_at, company, location, title, company_logo
     } = job;
       axios({
         method: "post",
@@ -33,13 +36,14 @@ const saveAsFavourite = (job) => {
           `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
         headers: {Authorization: "Bearer " + favouriteModel.token},
         params: {
-          job_id, type, created_at, company, location, title, company_logo,
+          job_id: id, type, created_at, company, location, title, company_logo,
         }
       }).then((res) => {
-        alert('job added to favourites')
+        return true;
       })
         .catch(function (error) {
           alert('You have to log in to add jobs to your favourites');
+          return false;
         });
   }
 }
@@ -53,9 +57,11 @@ const removeFromSavedJobs = (id) => {
       id
     }
   }).then((res) => {
+    return true;
   })
     .catch(function (error) {
       alert('You have to log in to add jobs to your favourites');
+      return false;
     });
 }
 
