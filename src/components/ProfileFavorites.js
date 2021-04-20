@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import 'fontsource-roboto';
 import FavouriteCard from "./FavouriteCard";
-import {useStoreState} from "easy-peasy";
+import {useStoreActions, useStoreState} from "easy-peasy";
+import axios from "axios";
+import {BASE_URL} from "../constants";
 
 const classes = {
   paper: {
@@ -22,8 +24,19 @@ const classes = {
 
 
 const ProfileFavorites = (props) => {
-
+  const token = sessionStorage.getItem("token");
+  const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+        {headers: {Authorization: "Bearer " + token}})
+      .then((response) => {
+        setFaves(response.data.jobs);
+      });
+  }, [favouriteJobs]);
+
   return (
     <>
       <Paper elevation={3} style={classes.paper}>

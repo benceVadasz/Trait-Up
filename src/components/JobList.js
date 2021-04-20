@@ -8,7 +8,7 @@ import SearchForm2 from "./SearchForm2";
 import Spinner from "react-spinner-material";
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {useStoreActions} from "easy-peasy";
+import {useStoreActions, useStoreState} from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -33,125 +33,125 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
-  const classes = useStyles();
-  const [typeFilter, setTypeFilter] = useState("");
-  const [locationFilter, setLocationFilter] = useState("");
-  const [favourites, setFavourites] = useState([]);
-  // const setFaves = useStoreActions((actions) => actions.setFavourites);
+    let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
+    const classes = useStyles();
+    const token = sessionStorage.getItem("token");
+    const [typeFilter, setTypeFilter] = useState("");
+    const [locationFilter, setLocationFilter] = useState("");
+    const setFaves = useStoreActions((actions) => actions.setFavourites);
+    const favouriteJobs = useStoreState((state) => state.favourites);
 
-  function handleOnTypeFilter(e) {
-    const value = e.target.innerHTML;
-    setTypeFilter(value);
-    const type = locationFilter !== "" ? 'both' : 'jobType';
-    setJobs(filterJobs(type, value));
-  }
-
-  function handleOnLocationFilter(e) {
-    const value = e.target.innerHTML;
-    setLocationFilter(value);
-    const type = typeFilter !== "" ? 'both' : 'location';
-    setJobs(filterJobs(type, value));
-  }
-
-  function clearJob(e) {
-    if (e.type === 'blur') {
-      setJobs(filterJobs("location", locationFilter));
+    function handleOnTypeFilter(e) {
+      const value = e.target.innerHTML;
+      setTypeFilter(value);
+      const type = locationFilter !== "" ? 'both' : 'jobType';
+      setJobs(filterJobs(type, value));
     }
-  }
 
-  function clearLocation(e) {
-    if (e.type === 'blur') {
-      setJobs(filterJobs("jobType", typeFilter));
+    function handleOnLocationFilter(e) {
+      const value = e.target.innerHTML;
+      setLocationFilter(value);
+      const type = typeFilter !== "" ? 'both' : 'location';
+      setJobs(filterJobs(type, value));
     }
-  }
 
-  function filterJobs(filterType, value) {
-    console.log(filterType);
-    setJobs(allJobs)
-    let filteredJobs = [];
-    if (allJobs.length > 0) {
-      for (let i in allJobs) {
-        if (filterType === 'both') {
-          let splitType = value.split(/[ ,]+/);
-          let queryKeyWord = splitType[0];
-          if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
-            filteredJobs.push(allJobs[i])
-          }
-        } else if (filterType === "jobType") {
-          let splitType = value.split(/[ ,]+/);
-          let queryKeyWord = splitType[0];
-          if (allJobs[i].description.includes(queryKeyWord)) {
-            filteredJobs.push(allJobs[i])
-          }
-        } else {
-          let splitType = value.split(/[ ,]+/);
-          let queryKeyWord = splitType[0];
-          if (allJobs[i].location.includes(queryKeyWord)) {
-            filteredJobs.push(allJobs[i])
+    function clearJob(e) {
+      if (e.type === 'blur') {
+        setJobs(filterJobs("location", locationFilter));
+      }
+    }
+
+    function clearLocation(e) {
+      if (e.type === 'blur') {
+        setJobs(filterJobs("jobType", typeFilter));
+      }
+    }
+
+    function filterJobs(filterType, value) {
+      console.log(filterType);
+      setJobs(allJobs)
+      let filteredJobs = [];
+      if (allJobs.length > 0) {
+        for (let i in allJobs) {
+          if (filterType === 'both') {
+            let splitType = value.split(/[ ,]+/);
+            let queryKeyWord = splitType[0];
+            if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
+              filteredJobs.push(allJobs[i])
+            }
+          } else if (filterType === "jobType") {
+            let splitType = value.split(/[ ,]+/);
+            let queryKeyWord = splitType[0];
+            if (allJobs[i].description.includes(queryKeyWord)) {
+              filteredJobs.push(allJobs[i])
+            }
+          } else {
+            let splitType = value.split(/[ ,]+/);
+            let queryKeyWord = splitType[0];
+            if (allJobs[i].location.includes(queryKeyWord)) {
+              filteredJobs.push(allJobs[i])
+            }
           }
         }
       }
+      return filteredJobs;
     }
-    return filteredJobs;
-  }
 
-  const filterOutIds = (favArray) => {
-    const res = []
-    favArray.forEach(fav => {
-      res.push(fav.job_id)
-    })
-    return res;
-  }
+    useEffect(() => {
+      axios
+        .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+          {headers: {Authorization: "Bearer " + token}})
+        .then((response) => {
+          setFaves(response.data.jobs);
+        });
+    }, [favouriteJobs]);
 
+    if (loading)
+      return (
+        <div className={classes.load}>
+          <Spinner
+            size={120}
+            spinnerColor={"#333"}
+            spinnerWidth={2}
+            visible={true}
+          />
+        </div>
+      );
 
-
-  if (loading)
     return (
-      <div className={classes.load}>
-        <Spinner
-          size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
-          visible={true}
-        />
-      </div>
-    );
+      <>
+        <Grid container justify="center">
+          <Grid
+            container
+            className={classes.demo}
+            alignItems="center"
+            justify="center"
+            style={{borderRadius: 20}}
+          >
+            <Grid item lg={4}>
+              <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
+            </Grid>
 
-  return (
-    <>
-      <Grid container justify="center">
-        <Grid
-          container
-          className={classes.demo}
-          alignItems="center"
-          justify="center"
-          style={{borderRadius: 20}}
-        >
-          <Grid item lg={4}>
-            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
-          </Grid>
-
-          <Grid item lg={4}>
-            <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
+            <Grid item lg={4}>
+              <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-      <Grid
-        container
-        className={classes.gridContainer}
-        spacing={6}
-        justify="center"
-      >
-        {Object.keys(jobs).map((jobId) => (
-          <Grid key={jobId} item xs={5}>
-            <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props} favourites={favourites} setFavourites={setFavourites}/>
-          </Grid>
-        ))}
-      </Grid>
-    </>
-  );
-}
+        <Grid
+          container
+          className={classes.gridContainer}
+          spacing={6}
+          justify="center"
+        >
+          {Object.keys(jobs).map((jobId) => (
+            <Grid key={jobId} item xs={5}>
+              <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+            </Grid>
+          ))}
+        </Grid>
+      </>
+    );
+  }
 ;
 
 export default JobList;
