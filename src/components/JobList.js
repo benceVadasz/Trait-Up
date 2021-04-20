@@ -38,7 +38,7 @@ const JobList = (props) => {
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [favourites, setFavourites] = useState([]);
-  const setFaves = useStoreActions((actions) => actions.setFavourites);
+  // const setFaves = useStoreActions((actions) => actions.setFavourites);
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -103,15 +103,8 @@ const JobList = (props) => {
     })
     return res;
   }
-  const token = sessionStorage.getItem("token");
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        setFaves(response.data.jobs);
-      });
-  }, []);
+
+
 
   if (loading)
     return (
