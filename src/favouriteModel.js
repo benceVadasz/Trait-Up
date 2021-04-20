@@ -17,7 +17,10 @@ const favouriteModel = {
   removeFromFavourites: action((state, id) => {
     state.favourites = state.favourites.filter(savedJob => savedJob.id !== id);
     removeFromSavedJobs(id);
-})
+}),
+  isLiked: action((state, id) => {
+    return state.favourites.filter(savedJob => savedJob.id === id).length > 0;
+  })
 };
 
 const saveAsFavourite = (job) => {
