@@ -16,6 +16,7 @@ import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
+import {useStoreActions} from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,10 +45,10 @@ const useStyles = makeStyles((theme) => ({
   link: {
     '& > * + *': {
       marginLeft: theme.spacing(2),
-    },
-    liked: {
-      color: 'red'
     }
+  },
+  liked: {
+    color: 'red'
   }
 }));
 
@@ -56,6 +57,8 @@ const JobDetailPage = ({job, props}) => {
   const [expanded, setExpanded] = React.useState(false);
   const [liked, setLiked] = React.useState(false);
   const [description, setDescription] = React.useState("");
+  const isLiked = useStoreActions((actions) => actions.isLiked);
+
   const classes = useStyles();
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -77,10 +80,9 @@ const JobDetailPage = ({job, props}) => {
           }
         ).then((res) => {
         setDescription(JSON.parse(res.data['job']).description)
-        if (res.data.isFav) {
-          setLiked(true)
-          console.log('fav true')
-
+        let id = JSON.parse(res.data['job']).id;
+        if (isLiked(id)) {
+          setLiked(true);
         }
       })
         .catch(function (error) {
