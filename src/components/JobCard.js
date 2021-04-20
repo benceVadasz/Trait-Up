@@ -12,9 +12,8 @@ import DetailsIcon from '@material-ui/icons/Details';
 import {JobContext} from '../contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
-import {BASE_URL} from "../constants";
-
+import {useStoreActions, useStoreState} from "easy-peasy";
+import {favouriteModel} from '../favouriteModel';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,64 +46,60 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const JobCard = ({props, jobId, jobs, favourites, setFavourites}) => {
-  const token = sessionStorage.getItem("token");
+const JobCard = ({props, jobId, jobs}) => {
   const classes = useStyles();
   const {history} = props;
   const [job, setJob] = useContext(JobContext);
   const [liked, setLiked] = useState(false);
   const {id, type, created_at, company, location, title, description, company_logo, url, how_to_apply} = jobs[jobId];
 
+
+  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
+
   const viewJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
     const currentJob = {id, type, created_at, company, location, title, description, url, how_to_apply};
     setJob(currentJob);
     history.push(`/jobs/${id}`)
   }
+  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
+
   const handleFavouriteEvent = () => {
-    liked ? removeFromFavourites() :
-    axios({
-      method: "post",
-      url:
-        `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
-      headers: {Authorization: "Bearer " + token},
-      params: {
-        id, type, created_at, company, location, title, company_logo,
-      }
-    }).then((res) => {
+    if (liked) {
+      removeFromFavourites(id)
+    } else {
+      addToFavourites(job);
       setLiked(true);
-      setFavourites(oldArray => [...oldArray, res.data.jobId])
-    })
-      .catch(function (error) {
-        alert('You have to log in to add jobs to your favourites');
-      });
+    }
   }
 
-  const removeFromFavourites = () => {
-    axios({
-      method: "post",
-      url:
-        `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
-      headers: {Authorization: "Bearer " + token},
-      params: {
-        id
-      }
-    }).then((res) => {
-      setLiked(false);
-      setFavourites(favourites.filter(item => item !== res.data.jobId));
-    })
-      .catch(function (error) {
-        alert('You have to log in to add jobs to your favourites');
-      });
-  }
-
+  // const removeFromFavourites = () => {
+  //   axios({
+  //     method: "post",
+  //     url:
+  //       `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
+  //     headers: {Authorization: "Bearer " + token},
+  //     params: {
+  //       id
+  //     }
+  //   }).then((res) => {
+  //     setLiked(false);
+  //     setFavourites(favourites.filter(item => item !== res.data.jobId));
+  //   })
+  //     .catch(function (error) {
+  //       alert('You have to log in to add jobs to your favourites');
+  //     });
+  // }
+  const favouriteJobs = useStoreState((state) => state.favourites);
   useEffect(() => {
-    for (let fav of favourites) {
-      if (fav === id) {
-        setLiked(true);
+    if (favouriteJobs.length > 0) {
+      for (let fav of favouriteJobs) {
+        if (fav.job_id === id) {
+          setLiked(true);
+        }
       }
     }
     // eslint-disable-next-line
-  }, [favourites]);
+  }, [favouriteJobs]);
 
 
   return (
@@ -140,7 +135,7 @@ const JobCard = ({props, jobId, jobs, favourites, setFavourites}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={liked?classes.liked:''} onClick={handleFavouriteEvent} aria-label="add to favorites">
+        <IconButton className={liked ? classes.liked : ''} onClick={handleFavouriteEvent} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>

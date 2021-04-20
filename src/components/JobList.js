@@ -8,6 +8,7 @@ import SearchForm2 from "./SearchForm2";
 import Spinner from "react-spinner-material";
 import axios from "axios";
 import {BASE_URL} from "../constants";
+import {useStoreActions} from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -37,6 +38,7 @@ const JobList = (props) => {
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [favourites, setFavourites] = useState([]);
+  const setFaves = useStoreActions((actions) => actions.setFavourites);
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -107,9 +109,8 @@ const JobList = (props) => {
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
         {headers: {Authorization: "Bearer " + token}})
       .then((response) => {
-        setFavourites(filterOutIds(response.data.mail));
+        setFaves(response.data.jobs);
       });
-
   }, []);
 
   if (loading)
