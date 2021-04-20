@@ -9,13 +9,13 @@ import HomeBody from "./components/HomeBody";
 import React from "react";
 import Register from "./components/Register";
 import Login from "./components/Login";
-import {StoreProvider, createStore, persist} from "easy-peasy";
-import userModel from "./userModel";
+import {StoreProvider, createStore} from "easy-peasy";
 import ProfilePage from "./components/ProfilePage";
 import {UserProvider} from "./contexts/UserContext";
+import favouriteModel from "./favouriteModel";
 
 const App = (props) => {
-  const store = createStore(persist(userModel, {storage: "localStorage"}));
+  const store = createStore(favouriteModel);
   return (
     <JobsProvider>
       <JobProvider>
