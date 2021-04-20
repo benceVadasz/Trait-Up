@@ -61,7 +61,7 @@ const FavouriteCard = ({props, job}) => {
         `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
       headers: {Authorization: "Bearer " + token},
       params: {
-        id : job.id
+        id : job.job_id
       }
     }).then(() => {
       setLiked(true);

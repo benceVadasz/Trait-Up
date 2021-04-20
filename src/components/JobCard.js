@@ -50,13 +50,13 @@ const JobCard = ({props, jobId, jobs}) => {
   const {history} = props;
   const [job, setJob] = useContext(JobContext);
   const [liked, setLiked] = useState(false);
-  const {id, type, created_at, company, location, title, description, company_logo, url, how_to_apply} = jobs[jobId];
+  const {id: job_id, type, created_at, company, location, title, description, company_logo, url, how_to_apply} = jobs[jobId];
 
 
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
   const viewJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
-    const currentJob = {id, type, created_at, company, location, title, description, url, how_to_apply};
+    const currentJob = {job_id, type, created_at, company, location, title, description, url, how_to_apply};
     setJob(currentJob);
     history.push(`/jobs/${id}`)
   }
@@ -68,7 +68,7 @@ const JobCard = ({props, jobId, jobs}) => {
 
   const handleFavouriteEvent = () => {
     if (sessionStorage.getItem('token')) {
-      const currentJob = {id, type, created_at, company, location, title, description, url, how_to_apply, company_logo};
+      const currentJob = {id: job_id, type, created_at, company, location, title, description, url, how_to_apply, company_logo};
       if (liked) {
         if(removeFromFavourites(currentJob.id)) {
           likeSetter();
@@ -87,7 +87,7 @@ const JobCard = ({props, jobId, jobs}) => {
   useEffect(() => {
     if (favouriteJobs.length > 0) {
       for (let fav of favouriteJobs) {
-        if (fav.job_id === id) {
+        if (fav.job_id === job_id) {
           setLiked(true);
         }
       }
@@ -106,7 +106,7 @@ const JobCard = ({props, jobId, jobs}) => {
         }
         action={
           <IconButton aria-label="detail"
-                      onClick={() => viewJob(id, type, created_at, company, location, title, description, url, how_to_apply)}>
+                      onClick={() => viewJob(job_id, type, created_at, company, location, title, description, url, how_to_apply)}>
             <DetailsIcon/>
           </IconButton>
         }
