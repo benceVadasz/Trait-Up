@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
@@ -51,12 +51,12 @@ const JobList = (props) => {
       setJobs(filterJobs(type, value));
     }
 
-    function handleOnLocationFilter(e) {
-      const value = e.target.innerHTML;
-      setLocationFilter(value);
-      const type = typeFilter !== "" ? 'both' : 'location';
-      setJobs(filterJobs(type, value));
-    }
+  function handleOnLocationFilter(e) {
+    const value = e.target.innerHTML;
+    setLocationFilter(value);
+    const type = typeFilter !== "" ? 'both' : 'location';
+    setJobs(filterJobs(type, value));
+  }
 
   async function clearJob(e) {
     if (e.type === 'blur') {
@@ -70,7 +70,6 @@ const JobList = (props) => {
     if (e.type === 'blur') {
       setLocationFilter("");
       setJobs(filterJobs("jobType", typeFilter));
-      console.log(jobs);
     }
   }
 
@@ -133,14 +132,6 @@ const JobList = (props) => {
       }
     }
   }
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        setFaves(response.data.jobs);
-      });
-  }, [favouriteJobs]);
 
   if (loading)
     return (
@@ -153,20 +144,41 @@ const JobList = (props) => {
         />
       </div>
     );
+    useEffect(() => {
+      axios
+        .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+          {headers: {Authorization: "Bearer " + token}})
+        .then((response) => {
+          setFaves(response.data.jobs);
+        });
+    }, [favouriteJobs]);
 
-    return (
-      <>
-        <Grid container justify="center">
-          <Grid
-            container
-            className={classes.demo}
-            alignItems="center"
-            justify="center"
-            style={{borderRadius: 20}}
-          >
-            <Grid item lg={4}>
-              <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
-            </Grid>
+    if (loading)
+      return (
+        <div className={classes.load}>
+          <Spinner
+            size={120}
+            spinnerColor={"#333"}
+            spinnerWidth={2}
+            visible={true}
+          />
+        </div>
+      );
+
+  return (
+    <>
+
+      <Grid container justify="center">
+        <Grid
+          container
+          className={classes.demo}
+          alignItems="center"
+          justify="center"
+          style={{borderRadius: 20}}
+        >
+          <Grid item lg={4}>
+            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
+          </Grid>
 
           <Grid item lg={4}>
             <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
