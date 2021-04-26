@@ -113,10 +113,8 @@ const JobCard = ({props, jobId, jobs}) => {
       for (let fav of favouriteJobs) {
         if (fav.job_id === job_id) {
           setLiked(true);
-        })
-            .catch(function (error) {
-                alert('You have to log in to add jobs to your favourites');
-            });
+        }
+      }
     }
     // eslint-disable-next-line
   }, [favouriteJobs]);

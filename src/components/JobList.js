@@ -133,17 +133,6 @@ const JobList = (props) => {
     }
   }
 
-  if (loading)
-    return (
-      <div className={classes.load}>
-        <Spinner
-          size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
-          visible={true}
-        />
-      </div>
-    );
     useEffect(() => {
       axios
         .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
