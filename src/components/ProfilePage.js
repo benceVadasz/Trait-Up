@@ -98,7 +98,7 @@ const ProfilePage = () => {
                 path="/profile/favorites"
                 render={(props) => (
                   <>
-                    <ProfileFavorites/>
+                    <ProfileFavorites {...props}/>
                   </>
                 )}
               />

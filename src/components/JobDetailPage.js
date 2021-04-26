@@ -1,6 +1,5 @@
-
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useEffect} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,47 +14,85 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
 import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
+import axios from "axios";
+import {BASE_URL} from "../constants";
+import {useStoreActions} from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      maxWidth: 1900,
-    },
-    text: {
-      fontFamily: 'Lato, sans-serif',
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      marginLeft: 'auto',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: "#859DF4",
-    },
-    link: {
-        '& > * + *': {
-            marginLeft: theme.spacing(2),
-          },
+  root: {
+    maxWidth: 1900,
+  },
+  text: {
+    fontFamily: 'Lato, sans-serif',
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: "#859DF4",
+  },
+  link: {
+    '& > * + *': {
+      marginLeft: theme.spacing(2),
     }
-  }));
+  },
+  liked: {
+    color: 'red'
+  }
+}));
 
 
 const JobDetailPage = ({job, props}) => {
-    const [expanded, setExpanded] = React.useState(false);
-    const classes = useStyles();
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
+  const [expanded, setExpanded] = React.useState(false);
+  const [liked, setLiked] = React.useState(false);
+  const [description, setDescription] = React.useState("");
+  const isLiked = useStoreActions((actions) => actions.isLiked);
 
-    return (
+  const classes = useStyles();
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
+  useEffect(() => {
+    if (job) {
+      axios
+        .get(
+          `${BASE_URL}/Trait-Up-Backend/public/api/getJobDescriptionById`,
+          {
+            headers: {
+              Authorization: "Bearer " + sessionStorage.getItem("token"),
+            },
+            params: {
+              id: job.job_id,
+              user_id: JSON.parse(sessionStorage.getItem("user")).id
+            },
+          }
+        ).then((res) => {
+        setDescription(JSON.parse(res.data['job']).description)
+        let id = JSON.parse(res.data['job']).id;
+        if (isLiked(id)) {
+          setLiked(true);
+        }
+      })
+        .catch(function (error) {
+          alert('Could not load job description');
+        });
+    }
+  }, [job]);
+
+
+  return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -63,37 +100,37 @@ const JobDetailPage = ({job, props}) => {
             TUp
           </Avatar>
         }
-        title =  {`${job.title}`}
-        subheader= {`${job.company}`}
+        title={`${job.title}`}
+        subheader={`${job.company}`}
       />
       <CardContent>
-        
-      <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Job type: {`${job.type}`}
-          </Typography>
-          <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+        </Typography>
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Location: {`${job.location}`}
-          </Typography>
-          <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+        </Typography>
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
           Created at: {`${job.created_at}`}
-          </Typography>
+        </Typography>
       </CardContent>
       <CardContent>
-          <Typography className={classes.text} variant="body2">
-          {parse(`<div>${job.description}</div>`)}
-          </Typography>
+        <Typography className={classes.text} variant="body2">
+          {parse(`<div>${description}</div>`)}
+        </Typography>
       </CardContent>
       <CardContent>
         <Typography className={classes.link}>
-        <Link to={`${job.url}`} onClick={() => {
-          window.open(`${job.url}`)
+          <Link to={`${job.url}`} onClick={() => {
+            window.open(`${job.url}`)
           }}>
             See position on GitHub Job
-        </Link>
+          </Link>
         </Typography>
-    </CardContent>
+      </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton className={liked ? classes.liked : ''}  aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>
@@ -107,18 +144,18 @@ const JobDetailPage = ({job, props}) => {
           aria-expanded={expanded}
           aria-label="show more"
         > How to apply:
-          <ExpandMoreIcon />
+          <ExpandMoreIcon/>
         </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2">
-          {parse(`<div>${job.how_to_apply}</div>`)}
+            {parse(`<div>${job.how_to_apply}</div>`)}
           </Typography>
         </CardContent>
       </Collapse>
     </Card>
-    )
+  )
 }
 
 export default JobDetailPage;
