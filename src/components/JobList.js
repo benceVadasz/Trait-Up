@@ -44,12 +44,12 @@ const JobList = (props) => {
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
 
-    function handleOnTypeFilter(e) {
-      const value = e.target.innerHTML;
-      setTypeFilter(value);
-      const type = locationFilter !== "" ? 'both' : 'jobType';
-      setJobs(filterJobs(type, value));
-    }
+  function handleOnTypeFilter(e) {
+    const value = e.target.innerHTML;
+    setTypeFilter(value);
+    const type = locationFilter !== "" ? 'both' : 'jobType';
+    setJobs(filterJobs(type, value));
+  }
 
   function handleOnLocationFilter(e) {
     const value = e.target.innerHTML;
@@ -133,26 +133,28 @@ const JobList = (props) => {
     }
   }
 
-    useEffect(() => {
+  useEffect(() => {
+    if (token) {
       axios
         .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
           {headers: {Authorization: "Bearer " + token}})
         .then((response) => {
           setFaves(response.data.jobs);
         });
-    }, [favouriteJobs]);
+    }
+  }, []);
 
-    if (loading)
-      return (
-        <div className={classes.load}>
-          <Spinner
-            size={120}
-            spinnerColor={"#333"}
-            spinnerWidth={2}
-            visible={true}
-          />
-        </div>
-      );
+  if (loading)
+    return (
+      <div className={classes.load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+        />
+      </div>
+    );
 
   return (
     <>
