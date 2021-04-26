@@ -9,6 +9,9 @@ import Spinner from "react-spinner-material";
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
+import InfiniteScroll from 'react-infinite-scroll-component';
+import axios from "axios";
+import {BASE_URL} from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -33,13 +36,15 @@ const useStyles = makeStyles((theme) => ({
 
 const JobList = (props) => {
 
-    let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
-    const classes = useStyles();
-    const token = sessionStorage.getItem("token");
-    const [typeFilter, setTypeFilter] = useState("");
-    const [locationFilter, setLocationFilter] = useState("");
-    const setFaves = useStoreActions((actions) => actions.setFavourites);
-    const favouriteJobs = useStoreState((state) => state.favourites);
+  let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
+  const classes = useStyles();
+  const token = sessionStorage.getItem("token");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [locationFilter, setLocationFilter] = useState("");
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const setFaves = useStoreActions((actions) => actions.setFavourites);
+  const favouriteJobs = useStoreState((state) => state.favourites);
 
     function handleOnTypeFilter(e) {
       const value = e.target.innerHTML;
@@ -55,48 +60,93 @@ const JobList = (props) => {
       setJobs(filterJobs(type, value));
     }
 
-    function clearJob(e) {
-      if (e.type === 'blur') {
-        setJobs(filterJobs("location", locationFilter));
-      }
+  async function clearJob(e) {
+    if (e.type === 'blur') {
+      setTypeFilter("");
+      const filteredJobs = await filterJobs("location", locationFilter);
+      setJobs(filteredJobs);
     }
+  }
 
-    function clearLocation(e) {
-      if (e.type === 'blur') {
-        setJobs(filterJobs("jobType", typeFilter));
-      }
+  function clearLocation(e) {
+    if (e.type === 'blur') {
+      setLocationFilter("");
+      setJobs(filterJobs("jobType", typeFilter));
+      console.log(jobs);
     }
+  }
 
-    function filterJobs(filterType, value) {
-      console.log(filterType);
-      setJobs(allJobs)
-      let filteredJobs = [];
-      if (allJobs.length > 0) {
-        for (let i in allJobs) {
-          if (filterType === 'both') {
-            let splitType = value.split(/[ ,]+/);
-            let queryKeyWord = splitType[0];
-            if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
-              filteredJobs.push(allJobs[i])
-            }
-          } else if (filterType === "jobType") {
-            let splitType = value.split(/[ ,]+/);
-            let queryKeyWord = splitType[0];
-            if (allJobs[i].description.includes(queryKeyWord)) {
-              filteredJobs.push(allJobs[i])
-            }
-          } else {
-            let splitType = value.split(/[ ,]+/);
-            let queryKeyWord = splitType[0];
-            if (allJobs[i].location.includes(queryKeyWord)) {
-              filteredJobs.push(allJobs[i])
-            }
+  function filterJobs(filterType, value) {
+    setJobs(allJobs)
+    let filteredJobs = [];
+    if (allJobs.length > 0) {
+      for (let i in allJobs) {
+        if (filterType === 'both') {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
+            filteredJobs.push(allJobs[i])
+          }
+        } else if (filterType === "jobType") {
+          let splitType = value.split(/[ ,]+/);
+          let queryKeyWord = splitType[0];
+          if (allJobs[i].description.includes(queryKeyWord)) {
+            filteredJobs.push(allJobs[i])
+          }
+        } else {
+          if (allJobs[i].location.includes(value)) {
+            filteredJobs.push(allJobs[i])
           }
         }
       }
-      return filteredJobs;
     }
+    return filteredJobs;
+  }
 
+  const loadNextJobs = () => {
+    setPage(prevOffset => prevOffset + 1)
+  }
+
+  useEffect(() => {
+    console.log(page)
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
+        {
+          params: {page}
+        })
+      .then((response) => {
+        const {data} = response;
+        let result = JSON.parse(data["jobs"])
+        let resultSpread = [...result];
+        setHasMore(result.length > 0)
+        resultSpread.forEach(res => {
+          allJobs.push(res)
+        })
+        setJobs(allJobs);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  const handleScroll = (e) => {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+    if (bottom) {
+      if (page >= 2) {
+        setPage(prevOffset => prevOffset + 1)
+      }
+    }
+  }
+
+  if (loading)
+    return (
+      <div className={classes.load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+        />
+      </div>
+    );
     useEffect(() => {
       axios
         .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
@@ -132,26 +182,40 @@ const JobList = (props) => {
               <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
             </Grid>
 
-            <Grid item lg={4}>
-              <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
-            </Grid>
+          <Grid item lg={4}>
+            <SearchForm2 onFilter={handleOnLocationFilter} locations={allLocations} clear={clearLocation}/>
           </Grid>
         </Grid>
+      </Grid>
+      <InfiniteScroll
+        onScroll={handleScroll}
+        dataLength={1000} //This is important field to render the next data
+        next={loadNextJobs}
+        hasMore={hasMore}
+        loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
+        endMessage={
+          <p style={{textAlign: 'center'}}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
         <Grid
           container
           className={classes.gridContainer}
           spacing={6}
           justify="center"
         >
-          {Object.keys(jobs).map((jobId) => (
+          {Object.keys(jobs).map((jobId, index) => (
             <Grid key={jobId} item xs={5}>
               <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
             </Grid>
           ))}
         </Grid>
-      </>
-    );
-  }
-;
+      </InfiniteScroll>
+      <div>{loading && 'Loading...'}</div>
+
+    </>
+  );
+};
 
 export default JobList;

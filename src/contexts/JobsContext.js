@@ -12,11 +12,15 @@ export const JobsProvider = props => {
   const [allLocations, setAllLocations] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [hasMore, setHasMore] = useState(false)
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`)
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
+        {
+          params: {limit: 50}
+        })
       .then((response) => {
         setLoading(false);
         const {data} = response;
@@ -26,7 +30,7 @@ export const JobsProvider = props => {
             uniqueLocations.push(job.location);
           }
         })
-
+        setHasMore(result.length > 0)
         setAllLocations(uniqueLocations);
         setAllJobs(result);
         const newJobsData = {};
@@ -52,7 +56,7 @@ export const JobsProvider = props => {
 
 
   return (
-    <JobsContext.Provider value={{jobs, setJobs, allJobs, allLocations, loading}}>
+    <JobsContext.Provider value={{jobs, setJobs, allJobs, allLocations, loading, hasMore}}>
       {props.children}
     </JobsContext.Provider>
   )
