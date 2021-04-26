@@ -16,7 +16,7 @@ import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {useStoreActions} from "easy-peasy";
+import {useStoreActions, useStoreState} from "easy-peasy";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +57,10 @@ const JobDetailPage = ({job, props}) => {
   const [expanded, setExpanded] = React.useState(false);
   const [liked, setLiked] = React.useState(false);
   const [description, setDescription] = React.useState("");
-  const isLiked = useStoreActions((actions) => actions.isLiked);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  const favouriteJobs = useStoreState((state) => state.favourites);
+  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
+  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
   const classes = useStyles();
   const handleExpandClick = () => {
@@ -70,26 +73,52 @@ const JobDetailPage = ({job, props}) => {
         .get(
           `${BASE_URL}/Trait-Up-Backend/public/api/getJobDescriptionById`,
           {
-            headers: {
-              Authorization: "Bearer " + sessionStorage.getItem("token"),
-            },
             params: {
               id: job.job_id,
-              user_id: JSON.parse(sessionStorage.getItem("user")).id
+              // user_id: JSON.parse(sessionStorage.getItem("user")).id
             },
           }
         ).then((res) => {
         setDescription(JSON.parse(res.data['job']).description)
-        let id = JSON.parse(res.data['job']).id;
-        if (isLiked(id)) {
-          setLiked(true);
-        }
       })
         .catch(function (error) {
           alert('Could not load job description');
         });
     }
   }, [job]);
+
+  useEffect(() => {
+    if (user && favouriteJobs) {
+      if (isLiked()) {
+        setLiked(true);
+      }
+    }
+  }, [user])
+
+  const isLiked = () => {
+    for (let iterJob of favouriteJobs) {
+      if (job.job_id === iterJob.job_id) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  const handleFavouriteEvent = () => {
+    if (user) {
+      console.log(job)
+      if (liked) {
+        setLiked(false)
+        removeFromFavourites(job.job_id)
+      } else {
+        if (addToFavourites(job)) {
+          setLiked(!liked);
+        }
+      }
+    } else {
+      alert('You have to log in to like jobs')
+    }
+  }
 
 
   return (
@@ -130,7 +159,7 @@ const JobDetailPage = ({job, props}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={liked ? classes.liked : ''}  aria-label="add to favorites">
+        <IconButton onClick={handleFavouriteEvent} className={liked ? classes.liked : ''}  aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>
