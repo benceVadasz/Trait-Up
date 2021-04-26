@@ -10,8 +10,6 @@ import axios from "axios";
 import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import axios from "axios";
-import {BASE_URL} from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   load: {
