@@ -41,8 +41,10 @@ const JobList = (props) => {
   const [locationFilter, setLocationFilter] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [lengthOfJobs, setlengthOfJobs] = useState(50);
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
+  const [isBottom, setIsBottom] = useState(false);
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -63,6 +65,7 @@ const JobList = (props) => {
       setTypeFilter("");
       const filteredJobs = await filterJobs("location", locationFilter);
       setJobs(filteredJobs);
+      setHasMore(true);
     }
   }
 
@@ -70,10 +73,12 @@ const JobList = (props) => {
     if (e.type === 'blur') {
       setLocationFilter("");
       setJobs(filterJobs("jobType", typeFilter));
+      setHasMore(true);
     }
   }
 
   function filterJobs(filterType, value) {
+    setHasMore(false);
     setJobs(allJobs)
     let filteredJobs = [];
     if (allJobs.length > 0) {
@@ -101,11 +106,14 @@ const JobList = (props) => {
   }
 
   const loadNextJobs = () => {
-    setPage(prevOffset => prevOffset + 1)
+    if (isBottom) {
+      setPage(prevOffset => prevOffset + 1)
+    }
+    setlengthOfJobs(length => length + 50);
+    setIsBottom(false)
   }
 
   useEffect(() => {
-    console.log(page)
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
         {
@@ -125,11 +133,11 @@ const JobList = (props) => {
   }, [page]);
 
   const handleScroll = (e) => {
-    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
-    if (bottom) {
-      if (page >= 2) {
-        setPage(prevOffset => prevOffset + 1)
-      }
+    console.log(allJobs.length)
+    if (e.target.scrollingElement.scrollHeight -
+      e.target.scrollingElement.scrollTop === e.target.scrollingElement.clientHeight) {
+      console.log('setting it true')
+      setIsBottom(true)
     }
   }
 
@@ -176,9 +184,10 @@ const JobList = (props) => {
           </Grid>
         </Grid>
       </Grid>
+
       <InfiniteScroll
         onScroll={handleScroll}
-        dataLength={1000} //This is important field to render the next data
+        dataLength={lengthOfJobs} //This is important field to render the next data
         next={loadNextJobs}
         hasMore={hasMore}
         loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
@@ -188,19 +197,22 @@ const JobList = (props) => {
           </p>
         }
       >
-        <Grid
-          container
-          className={classes.gridContainer}
-          spacing={6}
-          justify="center"
-        >
-          {Object.keys(jobs).map((jobId, index) => (
-            <Grid key={jobId} item xs={5}>
-              <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
-            </Grid>
-          ))}
-        </Grid>
+        <div>
+          <Grid
+            container
+            className={classes.gridContainer}
+            spacing={6}
+            justify="center"
+          >
+            {Object.keys(jobs).map((jobId, index) => (
+              <Grid key={jobId} item xs={5}>
+                <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+              </Grid>
+            ))}
+          </Grid>
+        </div>
       </InfiniteScroll>
+
       <div>{loading && 'Loading...'}</div>
 
     </>
