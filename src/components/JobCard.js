@@ -11,8 +11,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import DetailsIcon from '@material-ui/icons/Details';
 import {JobContext} from '../contexts/JobDetailContext';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import {useStoreActions, useStoreState} from "easy-peasy";
+import ApplyModal from "./ApplyModal";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -157,9 +157,7 @@ const JobCard = ({props, jobId, jobs}) => {
         <IconButton className={liked ? classes.liked : ''} onClick={handleFavouriteEvent} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
-        <Button variant="outlined" size="small" color="primary" className={classes.margin}>
-          Apply
-        </Button>
+        <ApplyModal></ApplyModal>
       </CardActions>
     </Card>
   )
