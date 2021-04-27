@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -29,7 +30,10 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: theme.spacing(1),
-  }
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const ApplyModal = () => {
@@ -52,17 +56,28 @@ const ApplyModal = () => {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
+      <h2 id="simple-modal-title">Right. Let's get started</h2>
       <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+        Upload your CV
       </p>
-      {/*<SimpleModal />*/}
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.button}
+        startIcon={<CloudUploadIcon />}
+      >
+        Upload
+      </Button>
+      <Button variant="contained"  color="primary" className={classes.margin}>
+        Apply
+      </Button>
+
     </div>
   );
 
   return (
     <div>
-      <Button variant="outlined" size="small" color="primary" className={classes.margin} onClick={handleOpen}>
+      <Button variant="contained" color="primary" className={classes.margin} onClick={handleOpen}>
         Apply
       </Button>
       <Modal
