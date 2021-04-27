@@ -39,7 +39,11 @@ const ApplyModal = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
-    setOpen(true);
+    if (sessionStorage.getItem('token')) {
+      setOpen(true);
+    } else {
+      alert('Please log in in order to apply for a job')
+    }
   };
 
   const handleClose = () => {
