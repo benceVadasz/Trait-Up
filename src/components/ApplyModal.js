@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import PublishIcon from "@material-ui/icons/Publish";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -34,6 +35,13 @@ const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
   },
+  uploadButton: {
+    position: "absolute",
+    bottom: "30px",
+    left: "30px",
+    color: "white",
+    padding: "5px 0",
+  }
 }));
 
 const ApplyModal = () => {
@@ -41,6 +49,7 @@ const ApplyModal = () => {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+  const uploadClasses = useStyles();
 
   const handleOpen = () => {
     if (sessionStorage.getItem('token')) {
@@ -60,14 +69,21 @@ const ApplyModal = () => {
       <p id="simple-modal-description">
         Upload your CV
       </p>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        startIcon={<CloudUploadIcon />}
-      >
-        Upload
-      </Button>
+
+      <div>
+        <input accept="application/pdf" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
+        <label htmlFor="contained-button-file">
+          {/*<Button*/}
+          {/*  variant="contained"*/}
+          {/*  color="primary"*/}
+          {/*  className={classes.button}*/}
+          {/*  startIcon={<CloudUploadIcon />}*/}
+          {/*>*/}
+          {/*  Upload*/}
+          {/*</Button>*/}
+        </label>
+      </div>
+
       <Button variant="contained"  color="primary" className={classes.margin}>
         Apply
       </Button>
