@@ -46,6 +46,16 @@ const ApplyModal = () => {
     setOpen(false);
   };
 
+  const body = (
+    <div style={modalStyle} className={classes.paper}>
+      <h2 id="simple-modal-title">Text in a modal</h2>
+      <p id="simple-modal-description">
+        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      </p>
+      {/*<SimpleModal />*/}
+    </div>
+  );
+
   return (
     <Button variant="outlined" size="small" color="primary" className={classes.margin}>
       Apply
