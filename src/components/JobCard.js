@@ -157,7 +157,7 @@ const JobCard = ({props, jobId, jobs}) => {
         <IconButton className={liked ? classes.liked : ''} onClick={handleFavouriteEvent} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
-        <ApplyModal jobId={job_id} type={type} company={company} location={location} title={title} createdAt={created_at}></ApplyModal>
+        <ApplyModal jobId={job_id} type={type} company={company} location={location} title={title} createdAt={created_at} description={description}></ApplyModal>
       </CardActions>
     </Card>
   )
