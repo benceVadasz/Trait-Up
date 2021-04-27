@@ -2,8 +2,8 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
-import PublishIcon from "@material-ui/icons/Publish";
+import {BASE_URL} from "../constants";
+import axios from 'axios';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -44,12 +44,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ApplyModal = () => {
+const ApplyModal = (jobId ,type, company, location, title, createdAt) => {
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const uploadClasses = useStyles();
+
 
   const handleOpen = () => {
     if (sessionStorage.getItem('token')) {
@@ -63,6 +64,26 @@ const ApplyModal = () => {
     setOpen(false);
   };
 
+  const apply = () => {
+    axios
+      .post(`${BASE_URL}/Trait-Up-Backend/public/api/apply`, {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+        },
+        jobId,
+        type,
+        company,
+        location,
+        title,
+        createdAt
+      })
+      .then((response) => {
+        window.location.href = '/';
+      })
+  };
+
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Right. Let's get started</h2>
@@ -72,19 +93,9 @@ const ApplyModal = () => {
 
       <div>
         <input accept="application/pdf" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
-        <label htmlFor="contained-button-file">
-          {/*<Button*/}
-          {/*  variant="contained"*/}
-          {/*  color="primary"*/}
-          {/*  className={classes.button}*/}
-          {/*  startIcon={<CloudUploadIcon />}*/}
-          {/*>*/}
-          {/*  Upload*/}
-          {/*</Button>*/}
-        </label>
       </div>
 
-      <Button variant="contained"  color="primary" className={classes.margin}>
+      <Button variant="contained"  color="primary" className={classes.margin} onClick={apply}>
         Apply
       </Button>
 
