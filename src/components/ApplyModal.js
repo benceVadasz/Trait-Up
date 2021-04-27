@@ -57,9 +57,19 @@ const ApplyModal = () => {
   );
 
   return (
-    <Button variant="outlined" size="small" color="primary" className={classes.margin}>
-      Apply
-    </Button>
+    <div>
+      <Button variant="outlined" size="small" color="primary" className={classes.margin} onClick={handleOpen}>
+        Apply
+      </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+    </div>
   )
 }
 
