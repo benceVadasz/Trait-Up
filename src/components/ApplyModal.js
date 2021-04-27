@@ -35,7 +35,16 @@ const useStyles = makeStyles((theme) => ({
 const ApplyModal = () => {
 
   const classes = useStyles();
+  const [modalStyle] = React.useState(getModalStyle);
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Button variant="outlined" size="small" color="primary" className={classes.margin}>
