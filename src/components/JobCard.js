@@ -49,9 +49,10 @@ const JobCard = ({props, jobId, jobs}) => {
   const classes = useStyles();
   const {history} = props;
   const [job, setJob] = useContext(JobContext);
-  const isLiked = useStoreActions((actions) => actions.isLiked);
-  const jobIsLiked = isLiked(jobId);
   const [liked, setLiked] = useState(false);
+  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
+  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
+
   const {
     id: job_id,
     type,
@@ -66,7 +67,7 @@ const JobCard = ({props, jobId, jobs}) => {
   } = jobs[jobId];
 
 
-  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
+
 
   const viewJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
     const currentJob = {job_id, type, created_at, company, location, title, description, url, how_to_apply};
@@ -74,7 +75,7 @@ const JobCard = ({props, jobId, jobs}) => {
     setJob(currentJob);
     history.push(`/jobs/${id}`)
   }
-  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
+
 
   const likeSetter = () => {
     setLiked(!liked)
@@ -83,7 +84,7 @@ const JobCard = ({props, jobId, jobs}) => {
   const handleFavouriteEvent = () => {
     if (sessionStorage.getItem('token')) {
       const currentJob = {
-        id: job_id,
+        job_id,
         type,
         created_at,
         company,
@@ -96,7 +97,7 @@ const JobCard = ({props, jobId, jobs}) => {
       };
       if (liked) {
         setLiked(false)
-        removeFromFavourites(currentJob.id)
+        removeFromFavourites(currentJob.job_id)
       } else {
         if (addToFavourites(currentJob)) {
           likeSetter();
