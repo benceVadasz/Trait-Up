@@ -158,21 +158,20 @@ export default function ModalBody() {
                     autoComplete="address"
                   />
                 </Grid>
-                {/*<Grid item xs={12}>*/}
-                {/*  <TextField*/}
-                {/*    variant="outlined"*/}
-                {/*    required*/}
-                {/*    value={personalData[key].pho}*/}
-                {/*    value={personalData[key].name}*/}
-                {/*    fullWidth*/}
-                {/*    name="phone"*/}
-                {/*    label="Phone number"*/}
-                {/*    id="phone"*/}
-                {/*  />*/}
-                {/*</Grid>*/}
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    value={personalData[key].phone_number}
+                    fullWidth
+                    name="phone"
+                    label="Phone number"
+                    id="phone"
+                  />
+                </Grid>
               </Grid>
             ))}
-          }
+
 
           <Grid item xs={12}>
             <FormControlLabel
