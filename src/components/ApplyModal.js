@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import {BASE_URL} from "../constants";
 import axios from 'axios';
 
+
 function rand() {
   return Math.round(Math.random() * 20) - 10;
 }
@@ -44,12 +45,13 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ApplyModal = (jobId ,type, company, location, title, createdAt) => {
+const ApplyModal = (jobId ,type, company, location, title, createdAt, description) => {
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
   const uploadClasses = useStyles();
+  const token = sessionStorage.getItem('token');
 
 
   const handleOpen = () => {
@@ -64,19 +66,23 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt) => {
     setOpen(false);
   };
 
-  const apply = () => {
+
+  const applyForJob = () => {
+    console.log(sessionStorage.getItem('token'))
     axios
-      .post(`${BASE_URL}/Trait-Up-Backend/public/api/apply`, {
+      .post(`${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type' : 'application/json',
           'Authorization': 'Bearer ' + sessionStorage.getItem('token')
         },
-        jobId,
-        type,
-        company,
-        location,
-        title,
-        createdAt
+        // params: {
+        //   jobId : jobId,
+        //   type: type,
+        //   company: company,
+        //   location: location,
+        //   title: title,
+        //   description: description
+        // }
       })
       .then((response) => {
         window.location.href = '/';
@@ -87,15 +93,14 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt) => {
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Right. Let's get started</h2>
-      <p id="simple-modal-description">
-        Upload your CV
-      </p>
-
+      {/*<p id="simple-modal-description">*/}
+      {/*  Upload your CV*/}
+      {/*</p>*/}
       <div>
         <input accept="application/pdf" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
       </div>
 
-      <Button variant="contained"  color="primary" className={classes.margin} onClick={apply}>
+      <Button variant="contained"  color="primary" className={classes.margin} onClick={applyForJob}>
         Apply
       </Button>
 
