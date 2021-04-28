@@ -6,7 +6,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,22 +54,11 @@ export default function ModalBody() {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Full name"
                 autoFocus
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
@@ -84,17 +74,28 @@ export default function ModalBody() {
                 variant="outlined"
                 required
                 fullWidth
+                id="address"
+                label="Address"
+                name="address"
+                autoComplete="address"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
                 name="phone"
                 label="Phone number"
                 id="phone"
               />
             </Grid>
-            {/*<Grid item xs={12}>*/}
-            {/*  <FormControlLabel*/}
-            {/*    control={<Checkbox value="allowExtraEmails" color="primary" />}*/}
-            {/*    label="I want to receive inspiration, marketing promotions and updates via email."*/}
-            {/*  />*/}
-            {/*</Grid>*/}
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="Fill in automatically"
+              />
+            </Grid>
           </Grid>
 
         </form>
