@@ -89,7 +89,7 @@ const ProfileApplications = (props) => {
                   >
                     {Object.keys(applications).map((jobId, index) => (
                       <Grid key={jobId} item xs={5}>
-                        <JobCard key={jobId} jobs={applications} jobId={jobId} props={props}/>
+                        <JobCard key={jobId} jobs={applications} jobId={jobId} props={props} isApplied={true}/>
                       </Grid>
                     ))}
                   </Grid>

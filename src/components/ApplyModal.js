@@ -8,6 +8,8 @@ import ModalBody from "./ModalBody";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
+import PublishIcon from "@material-ui/icons/Publish";
+import {Grid} from "@material-ui/core";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -137,11 +139,8 @@ const ApplyModal = (jobId) => {
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      {/*<p id="simple-modal-description">*/}
-      {/*  Upload your CV*/}
-      {/*</p>*/}
-      <ModalBody></ModalBody>
 
+      <ModalBody></ModalBody>
       <Button
         variant="contained"
         component="label"
@@ -155,8 +154,6 @@ const ApplyModal = (jobId) => {
           hidden
         />
       </Button>
-
-
       <Button
         type="submit"
         fullWidth
