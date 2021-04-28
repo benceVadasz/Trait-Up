@@ -43,7 +43,7 @@ const ProfileApplications = (props) => {
     const [applications, setApplications] = useState({});
     const token = sessionStorage.getItem("token");
     const classes = useStyles();
-    console.log(applications)
+
 
     const fetchApplications = () => {
     axios
