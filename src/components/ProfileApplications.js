@@ -59,6 +59,8 @@ const ProfileApplications = (props) => {
             company: job.company,
             location: job.location,
             title: job.title,
+            company_logo: job.company_logo,
+            created_at: job.created_at
           }
         });
         setApplications(applicationsWithJobId);
