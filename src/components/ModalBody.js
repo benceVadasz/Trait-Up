@@ -37,7 +37,9 @@ export default function ModalBody() {
   const classes = useStyles();
   const [personalData, setPersonalData] = useState();
   const token = sessionStorage.getItem("token");
+  const [isFill, setFill] = useState(false);
   console.log(personalData)
+  console.log(isFill)
 
   const fetchUserData = () => {
     axios
@@ -53,6 +55,11 @@ export default function ModalBody() {
     fetchUserData();
   }, [setPersonalData])
 
+  const fillAutomatically = () => {
+    setFill(true);
+  }
+
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -64,57 +71,114 @@ export default function ModalBody() {
           Let's start the application
         </Typography>
         <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="Full name"
-                autoFocus
-              />
+          {!isFill ?
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="Full name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="address"
+                  label="Address"
+                  name="address"
+                  autoComplete="address"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="phone"
+                  label="Phone number"
+                  id="phone"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="address"
-                label="Address"
-                name="address"
-                autoComplete="address"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="phone"
-                label="Phone number"
-                id="phone"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Fill in automatically"
-              />
-            </Grid>
+            :
+            Object.keys(personalData).map(key => (
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    autoComplete="fname"
+                    name="firstName"
+                    variant="outlined"
+                    value={personalData[key].name}
+                    required
+                    fullWidth
+                    id="firstName"
+                    label="Full name"
+                    autoFocus
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    value={personalData[key].email}
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    value={personalData[key].address}
+                    fullWidth
+                    id="address"
+                    label="Address"
+                    name="address"
+                    autoComplete="address"
+                  />
+                </Grid>
+                {/*<Grid item xs={12}>*/}
+                {/*  <TextField*/}
+                {/*    variant="outlined"*/}
+                {/*    required*/}
+                {/*    value={personalData[key].pho}*/}
+                {/*    value={personalData[key].name}*/}
+                {/*    fullWidth*/}
+                {/*    name="phone"*/}
+                {/*    label="Phone number"*/}
+                {/*    id="phone"*/}
+                {/*  />*/}
+                {/*</Grid>*/}
+              </Grid>
+            ))}
+          }
+
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={<Checkbox value="allowExtraEmails" color="primary" onClick={fillAutomatically} />}
+              label="Fill in automatically"
+            />
           </Grid>
 
         </form>
