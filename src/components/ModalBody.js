@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +8,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import axios from "axios";
+import {BASE_URL} from "../constants";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,6 +35,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalBody() {
   const classes = useStyles();
+  const [personalData, setPersonalData] = useState();
+  const token = sessionStorage.getItem("token");
+  console.log(personalData)
+
+  const fetchUserData = () => {
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getUserDatasById`,
+        {headers: {Authorization: "Bearer " + token}})
+      .then((response) => {
+
+        setPersonalData(response.data.personalData);
+      });
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, [setPersonalData])
 
   return (
     <Container component="main" maxWidth="xs">
