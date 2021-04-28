@@ -8,8 +8,6 @@ import ModalBody from "./ModalBody";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
-import Grid from '@material-ui/core/Grid';
-import {Container} from "@material-ui/core";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -54,11 +52,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ApplyModal = (jobId ,type, company, location, title, createdAt, description) => {
+const ApplyModal = (jobId) => {
+  console.log(jobId)
+
 
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
+
+
 
   const handleOpen = () => {
     if (sessionStorage.getItem('token')) {
@@ -86,27 +88,51 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
   };
 
 
+  // const applyForJob = () => {
+  //
+  //   axios
+  //     .post(`${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`, {
+  //       headers: {
+  //         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+  //       },
+  //       params: {
+  //         jobId : job.jobId,
+  //         type: job.type,
+  //         company: job.company,
+  //         location: job.location,
+  //         title: job.title,
+  //         description: job.description
+  //       }
+  //     })
+  //     .then((response) => {
+  //       window.location.href = '/';
+  //     })
+  // };
+
   const applyForJob = () => {
-    console.log(sessionStorage.getItem('token'))
-    axios
-      .post(`${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`, {
-        headers: {
-          'Content-Type' : 'application/json',
-          'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-        },
-        // params: {
-        //   jobId : jobId,
-        //   type: type,
-        //   company: company,
-        //   location: location,
-        //   title: title,
-        //   description: description
-        // }
-      })
-      .then((response) => {
-        window.location.href = '/';
-      })
-  };
+
+    axios({
+      method: "post",
+      url:
+        `${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`,
+      headers: {Authorization: "Bearer " + sessionStorage.getItem('token')},
+      params: {
+        jobId : jobId.jobId,
+        title : jobId.title,
+        type : jobId.type,
+        location : jobId.location,
+        company : jobId.company,
+        description : jobId.description,
+        created_at : jobId.created_at
+
+      }
+
+    }).then(() => {
+      window.location.href = '/jobs';
+    })
+
+  }
+
 
 
   const body = (
