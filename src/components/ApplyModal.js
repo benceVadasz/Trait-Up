@@ -5,6 +5,11 @@ import Modal from '@material-ui/core/Modal';
 import {BASE_URL} from "../constants";
 import axios from 'axios';
 import ModalBody from "./ModalBody";
+import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
+import Box from "@material-ui/core/Box";
+import Grid from '@material-ui/core/Grid';
+import {Container} from "@material-ui/core";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -42,7 +47,11 @@ const useStyles = makeStyles((theme) => ({
     left: "30px",
     color: "white",
     padding: "5px 0",
-  }
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+
+  },
 }));
 
 const ApplyModal = (jobId ,type, company, location, title, createdAt, description) => {
@@ -50,9 +59,6 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
-  const uploadClasses = useStyles();
-  const token = sessionStorage.getItem('token');
-
 
   const handleOpen = () => {
     if (sessionStorage.getItem('token')) {
@@ -61,6 +67,19 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
       alert('Please log in in order to apply for a job')
     }
   };
+
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          TraitUp
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -96,9 +115,22 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
       {/*  Upload your CV*/}
       {/*</p>*/}
       <ModalBody></ModalBody>
-      <div>
-        <input accept="application/pdf" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
-      </div>
+
+      <Button
+        variant="contained"
+        component="label"
+        color="primary"
+        fullWidth
+        className={classes.submit}
+      >
+        Upload CV
+        <input
+          type="file"
+          hidden
+        />
+      </Button>
+
+
       <Button
         type="submit"
         fullWidth
@@ -109,6 +141,9 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
       >
         Apply
       </Button>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
 
     </div>
   );
