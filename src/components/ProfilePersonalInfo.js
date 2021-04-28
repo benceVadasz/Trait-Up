@@ -1,7 +1,6 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TextField, Typography, Paper, Grid, Avatar, Divider, Button, IconButton} from '@material-ui/core';
 import 'fontsource-roboto';
-import {UserContext} from '../contexts/UserContext';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import PublishIcon from '@material-ui/icons/Publish';
@@ -9,6 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import favouriteModel from "../favouriteModel";
+// import { KeyboardDatePicker } from "@material-ui/pickers";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +44,6 @@ const classes = {
     color: "white",
     padding: "5px 0"
   },
-
 }
 
 const ProfilePersonalInfo = () => {
@@ -56,9 +55,10 @@ const ProfilePersonalInfo = () => {
   const [userState, setUserState] = useState({});
   const [name, setName] = useState(userState.name);
   const [email, setEmail] = useState(userState.email);
-  const [phone, setPhone] = useState(userState.phone);
-  const [address, setAddress] = useState(userState.address);
-  const [password, setPassword] = useState(userState.password);
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState(userState['phone number']);
+  // const [password, setPassword] = useState(userState.password);
+  const [birthday, setBirthday] = useState("");
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
@@ -76,12 +76,12 @@ const ProfilePersonalInfo = () => {
 
 
   useEffect(() => {
-    console.log("setting values for fields..")
+    console.log(userState);
     setName(userState.name);
     setEmail(userState.email);
-    setPhone(userState.phone);
+    setPhone(userState['phone number']);
     setAddress(userState.address);
-    setPassword(userState.password);
+    setBirthday(userState['birth date']);
   }, [userState])
 
   const toggleEditable = (e) => {
@@ -96,13 +96,13 @@ const ProfilePersonalInfo = () => {
   }
 
   const saveInfo = (e) => {
-    console.log("saving info...");
     setUserState({...userState});
     updateInfo();
     toggleEditable();
   }
 
   const updateInfo = () => {
+    console.log(userState)
     axios({
       method: "put",
       url:
@@ -132,7 +132,7 @@ const ProfilePersonalInfo = () => {
 
   const changePhone = (e) => {
     setPhone(e.target.value);
-    setUserState({...userState, phone: e.target.value});
+    setUserState({...userState, 'phone number': e.target.value});
   }
 
   const changeAddress = (e) => {
@@ -140,9 +140,9 @@ const ProfilePersonalInfo = () => {
     setUserState({...userState, address: e.target.value});
   }
 
-  const changePassword = (e) => {
-    setPassword(e.target.value);
-    setUserState({...userState, password: e.target.value});
+  const changeBirthday = (e) => {
+    setBirthday(e.target.value);
+    setUserState({...userState, birthday: e.target.value});
   }
 
   return (
@@ -189,7 +189,7 @@ const ProfilePersonalInfo = () => {
                   <Typography variant="h4" color="primary" align="right">Address:</Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="h4" color="primary" align="right">Password:</Typography>
+                  <Typography variant="h4" color="primary" align="right">Birthday:</Typography>
                 </Grid>
               </Grid>
 
@@ -219,9 +219,22 @@ const ProfilePersonalInfo = () => {
                              onChange={changeAddress}/>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField disabled={!editable} type="password"
-                             variant="standard" value={password ? password : "enter password.."} align="left"
-                             onChange={changePassword}/>
+                  {/*<TextField disabled={!editable} type="password"*/}
+                  {/*           variant="standard" value={password ? password : "enter password.."} align="left"*/}
+                  {/*           onChange={changePassword}/>*/}
+                  <TextField
+                    id="date"
+                    label="Birthday"
+                    type="date"
+                    disabled={!editable}
+                    onChange={changeBirthday}
+                    value={birthday ? birthday : "add your birthday.."}
+                    // className={classes.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+
                 </Grid>
               </Grid>
 
