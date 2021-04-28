@@ -6,6 +6,8 @@ import ProfileEditDeleteButton from './ProfileEditDeleteButton';
 import useState from "react-hook-use-state";
 import axios from "axios";
 import {BASE_URL} from "../constants";
+import AddEducationButton from "./AddEducationButton";
+import userModel from "../userModel";
 
 const classes = {
   paper: {
@@ -23,6 +25,19 @@ const classes = {
   eduText: {
     marginBottom: "5px",
     fontWeight: "bold",
+  },
+  eduTitle: {
+    position: "absolute",
+    fontWeight: "bold",
+    right: '50%',
+    transform: 'translate(50%,-50%)'
+  },
+  eduButton: {
+    position: "absolute",
+    width: 420,
+  },
+  eduHeader: {
+    position: "relative",
   }
 }
 
@@ -31,6 +46,7 @@ const ProfileEducation = () => {
 
   const [user, setUser] = useState({});
   const token = sessionStorage.getItem("token");
+  const [usert] = useContext(UserContext);
 
 
   useEffect(() => {
@@ -54,32 +70,33 @@ const ProfileEducation = () => {
     <>
       <Paper elevation={3} style={classes.paper}>
         <Grid container spacing={3} direction="column">
-          <Grid item xs>
-            <Typography variant="h2" color="primary" align="center">Education</Typography>
+          <Grid style={classes.eduHeader} container item xs>
+            <Typography style={classes.eduTitle} variant="h2" color="primary" align="center">Education</Typography>
+            <AddEducationButton style={classes.eduButton}/>
           </Grid>
-          {
-            user.length === 0 ? <ProfileEditDeleteButton/> : null
-          }
-          {/*<Grid item xs container justify="center">*/}
-          {/*  {user.education.map((edu, i) => (*/}
-          {/*    <Grid item xs={10} key={i}>*/}
-          {/*      <Paper elevation={2} style={classes.paperEdu}>*/}
-          {/*        <Grid container alignItems="center">*/}
-          {/*          <Grid item xs={10}>*/}
-          {/*            <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>*/}
-          {/*            <Typography variant="body1" color="primary"*/}
-          {/*                        style={classes.eduText}>{edu.degree} {edu.level}</Typography>*/}
-          {/*            <Typography variant="body2" color="primary"*/}
-          {/*                        style={classes.eduText}>Graduated: {edu.to}</Typography>*/}
-          {/*          </Grid>*/}
-          {/*          <Grid item xs={2}>*/}
-          {/*            <ProfileEditDeleteButton/>*/}
-          {/*          </Grid>*/}
-          {/*        </Grid>*/}
-          {/*      </Paper>*/}
-          {/*    </Grid>*/}
-          {/*  ))}*/}
-          {/*</Grid>*/}
+
+
+
+          <Grid item xs container justify="center">
+            {usert.education.map((edu, i) => (
+              <Grid item xs={10} key={i}>
+                <Paper elevation={2} style={classes.paperEdu}>
+                  <Grid container alignItems="center">
+                    <Grid item xs={10}>
+                      <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
+                      <Typography variant="body1" color="primary"
+                                  style={classes.eduText}>{edu.degree} {edu.level}</Typography>
+                      <Typography variant="body2" color="primary"
+                                  style={classes.eduText}>Graduated: {edu.to}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ProfileEditDeleteButton/>
+                    </Grid>
+                  </Grid>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
       </Paper>
     </>
