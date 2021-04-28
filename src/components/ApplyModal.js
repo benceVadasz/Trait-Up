@@ -122,8 +122,8 @@ const ApplyModal = (jobId) => {
         type : jobId.type,
         location : jobId.location,
         company : jobId.company,
-        description : jobId.description,
-        created_at : jobId.created_at
+        created_at : jobId.created_at,
+        company_logo : jobId.company_logo
 
       }
 
