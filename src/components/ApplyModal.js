@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {BASE_URL} from "../constants";
 import axios from 'axios';
-
+import ModalBody from "./ModalBody";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -92,15 +92,21 @@ const ApplyModal = (jobId ,type, company, location, title, createdAt, descriptio
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Right. Let's get started</h2>
       {/*<p id="simple-modal-description">*/}
       {/*  Upload your CV*/}
       {/*</p>*/}
+      <ModalBody></ModalBody>
       <div>
         <input accept="application/pdf" className={uploadClasses.input} id="contained-button-file" multiple type="file"/>
       </div>
-
-      <Button variant="contained"  color="primary" className={classes.margin} onClick={applyForJob}>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        className={classes.submit}
+        onClick={applyForJob}
+      >
         Apply
       </Button>
 
