@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const JobCard = ({props, jobId, jobs}) => {
+const JobCard = ({props, jobId, jobs, isApplied}) => {
   const classes = useStyles();
   const {history} = props;
   const [job, setJob] = useContext(JobContext);
@@ -157,8 +157,11 @@ const JobCard = ({props, jobId, jobs}) => {
         <IconButton className={liked ? classes.liked : ''} onClick={handleFavouriteEvent} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
-        <ApplyModal jobId={job_id} title={title} type={type} location={location} description={description}
-                    created_at={created_at} company={company} url={url} how_to_apply={how_to_apply} company_logo={company_logo}></ApplyModal>
+        {!isApplied ?
+          <ApplyModal jobId={job_id} title={title} type={type} location={location} description={description}
+                                 created_at={created_at} company={company} url={url} how_to_apply={how_to_apply} company_logo={company_logo}></ApplyModal> : <></>
+        }
+
       </CardActions>
     </Card>
   )
