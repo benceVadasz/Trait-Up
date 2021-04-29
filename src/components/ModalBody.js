@@ -41,7 +41,6 @@ export default function ModalBody({applyForJob}) {
   const [isFilled, setFill] = useState(false);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data);
 
 
 
@@ -74,14 +73,13 @@ export default function ModalBody({applyForJob}) {
         <Typography component="h1" variant="h5">
           Let's start the application
         </Typography>
-        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={classes.form}>
           {!isFilled ?
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
                   name="fullName"
-                  {...register('fullName', { required: true })}
                   required
                   variant="outlined"
                   fullWidth
@@ -89,14 +87,12 @@ export default function ModalBody({applyForJob}) {
                   label="Full name"
                   autoFocus
                 />
-                {errors.fullName && <span>This field is required</span>}
               </Grid>
 
               <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
-                  {...register('email', { required: true })}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -108,7 +104,6 @@ export default function ModalBody({applyForJob}) {
                 <TextField
                   variant="outlined"
                   required
-                  {...register('address', { required: true })}
                   fullWidth
                   id="address"
                   label="Address"
@@ -120,7 +115,6 @@ export default function ModalBody({applyForJob}) {
                 <TextField
                   variant="outlined"
                   required
-                  {...register('phone', { required: true })}
                   fullWidth
                   name="phone"
                   label="Phone number"

@@ -55,10 +55,9 @@ const ProfilePersonalInfo = () => {
   const [userState, setUserState] = useState({});
   const [name, setName] = useState(userState.name);
   const [email, setEmail] = useState(userState.email);
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState(userState['phone number']);
-  // const [password, setPassword] = useState(userState.password);
-  const [birthday, setBirthday] = useState("");
+  const [phone_number, setPhone] = useState(userState.phone_number);
+  const [address, setAddress] = useState(userState.address);
+  const [birth_date, setBirthday] = useState("");
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
@@ -67,6 +66,7 @@ const ProfilePersonalInfo = () => {
         `${BASE_URL}/Trait-Up-Backend/public/api/getUser`,
         {headers: {Authorization: "Bearer " + token}}
       ).then((res) => {
+      console.log(res.data)
       setUserState(res.data)
     })
       .catch(function (error) {
@@ -79,9 +79,9 @@ const ProfilePersonalInfo = () => {
     console.log(userState);
     setName(userState.name);
     setEmail(userState.email);
-    setPhone(userState['phone number']);
+    setPhone(userState.phone_number);
     setAddress(userState.address);
-    setBirthday(userState['birth date']);
+    setBirthday(userState.birth_date);
   }, [userState])
 
   const toggleEditable = (e) => {
@@ -132,7 +132,7 @@ const ProfilePersonalInfo = () => {
 
   const changePhone = (e) => {
     setPhone(e.target.value);
-    setUserState({...userState, 'phone number': e.target.value});
+    setUserState({...userState, phone_number: e.target.value});
   }
 
   const changeAddress = (e) => {
@@ -142,7 +142,7 @@ const ProfilePersonalInfo = () => {
 
   const changeBirthday = (e) => {
     setBirthday(e.target.value);
-    setUserState({...userState, birthday: e.target.value});
+    setUserState({...userState, birth_date: e.target.value});
   }
 
   return (
@@ -210,7 +210,7 @@ const ProfilePersonalInfo = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField disabled={!editable}
-                             variant="standard" value={phone ? phone : "enter phone number.."} align="left"
+                             variant="standard" value={phone_number ? phone_number : "enter phone_number number.."} align="left"
                              onChange={changePhone}/>
                 </Grid>
                 <Grid item xs={12}>
@@ -219,17 +219,13 @@ const ProfilePersonalInfo = () => {
                              onChange={changeAddress}/>
                 </Grid>
                 <Grid item xs={12}>
-                  {/*<TextField disabled={!editable} type="password"*/}
-                  {/*           variant="standard" value={password ? password : "enter password.."} align="left"*/}
-                  {/*           onChange={changePassword}/>*/}
                   <TextField
                     id="date"
                     label="Birthday"
                     type="date"
                     disabled={!editable}
                     onChange={changeBirthday}
-                    value={birthday ? birthday : "add your birthday.."}
-                    // className={classes.textField}
+                    value={birth_date ? birth_date : "add your birth_date.."}
                     InputLabelProps={{
                       shrink: true,
                     }}
