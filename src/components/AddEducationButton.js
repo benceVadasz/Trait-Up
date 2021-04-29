@@ -3,6 +3,8 @@ import {Avatar, Button, Grid, Paper, TextField, Typography} from '@material-ui/c
 import 'fontsource-roboto';
 import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
+import axios from "axios";
+import {BASE_URL} from "../constants";
 
 const classes = {
   button: {
@@ -65,6 +67,12 @@ const classes = {
 const ProfileEditDeleteButton = () => {
 
   const [open, setOpen] = useState(false);
+  const [school, setSchool] = useState("");
+  const [faculty, setFaculty] = useState("");
+  const [degree, setDegree] = useState("");
+  const [level, setLevel] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
   const handleOpen = () => {
     setOpen(true);
@@ -73,28 +81,74 @@ const ProfileEditDeleteButton = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const changeSchool = (e) => {
+    setSchool(e.target.value);
+    // setUserState({...userState, name: e.target.value});
+  }
+
+  const changeFaculty = (e) => {
+    setFaculty(e.target.value);
+    // setUserState({...userState, email: e.target.value});
+  }
+
+  const changeDegree = (e) => {
+    setDegree(e.target.value);
+    // setUserState({...userState, 'phone number': e.target.value});
+  }
+
+  const changeLevel = (e) => {
+    setLevel(e.target.value);
+    // setUserState({...userState, address: e.target.value});
+  }
+
+  const changeFrom = (e) => {
+    setFrom(e.target.value);
+    // setUserState({...userState, birthday: e.target.value});
+  }
+
+  const changeTo = (e) => {
+    setTo(e.target.value);
+    // setUserState({...userState, birthday: e.target.value});
+  }
+
+  const submit = (e) => {
+    // setLoading(true);
+    e.preventDefault();
+    axios
+      .post(`${BASE_URL}/Trait-Up-Backend/public/api/addEducation`, {
+        headers: {
+          "Content-Type": "application/json",
+        }, school, degree, faculty, level, from, to
+      })
+      .then((response) => {
+        // setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
 
   const modalBody = (
     <Paper elevation={20} alignItems="center"
            justify="center" style={classes.paperStyle}>
       <Grid align="center">
         <Typography variant="caption" gutterBottom>
-          Please fill this form to create an account !
+          Please enter details about your education!
         </Typography>
       </Grid>
-      <form style={classes.root} noValidate autoComplete="off">
+      <form style={classes.root} onSubmit={submit} noValidate autoComplete="off">
         <div style={classes.container}>
           <div style={classes.flexGroup}>
-            <TextField label="School"/>
-            <TextField style={classes.rightText} label="Faculty"/>
+            <TextField onChange={changeSchool} label="School"/>
+            <TextField onChange={changeFaculty} style={classes.rightText} label="Faculty"/>
           </div>
           <div style={classes.flexGroup}>
-            <TextField label="Degree"/>
-            <TextField style={classes.rightText} label="Level"/>
+            <TextField onChange={changeDegree} label="Degree"/>
+            <TextField onChange={changeLevel} style={classes.rightText} label="Level"/>
           </div>
           <div style={classes.flexGroup}>
-            <TextField label="From"/>
-            <TextField style={classes.rightText} label="To"/>
+            <TextField onChange={changeFrom} label="From"/>
+            <TextField onChange={changeTo} style={classes.rightText} label="To"/>
           </div>
           <Button type="submit" variant="contained" style={classes.modalButton}>
             Add
