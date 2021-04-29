@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ApplyModal = (jobId) => {
+const ApplyModal = (job) => {
 
 
   const classes = useStyles();
@@ -89,42 +89,21 @@ const ApplyModal = (jobId) => {
   };
 
 
-  // const applyForJob = () => {
-  //
-  //   axios
-  //     .post(`${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`, {
-  //       headers: {
-  //         'Authorization': 'Bearer ' + sessionStorage.getItem('token')
-  //       },
-  //       params: {
-  //         jobId : job.jobId,
-  //         type: job.type,
-  //         company: job.company,
-  //         location: job.location,
-  //         title: job.title,
-  //         description: job.description
-  //       }
-  //     })
-  //     .then((response) => {
-  //       window.location.href = '/';
-  //     })
-  // };
-
-  const applyForJob = () => {
-
+  const applyForJob = (event) => {
+    event.preventDefault();
     axios({
       method: "post",
       url:
         `${BASE_URL}/Trait-Up-Backend/public/api/applyForJob`,
       headers: {Authorization: "Bearer " + sessionStorage.getItem('token')},
       params: {
-        jobId : jobId.jobId,
-        title : jobId.title,
-        type : jobId.type,
-        location : jobId.location,
-        company : jobId.company,
-        created_at : jobId.created_at,
-        company_logo : jobId.company_logo
+        jobId : job.jobId,
+        title : job.title,
+        type : job.type,
+        location : job.location,
+        company : job.company,
+        created_at : job.created_at,
+        company_logo : job.company_logo
 
       }
 
@@ -139,30 +118,8 @@ const ApplyModal = (jobId) => {
   const body = (
     <div style={modalStyle} className={classes.paper}>
 
-      <ModalBody></ModalBody>
-      <Button
-        variant="contained"
-        component="label"
-        color="primary"
-        fullWidth
-        className={classes.submit}
-      >
-        Upload CV
-        <input
-          type="file"
-          hidden
-        />
-      </Button>
-      <Button
-        type="submit"
-        fullWidth
-        variant="contained"
-        color="primary"
-        className={classes.submit}
-        onClick={applyForJob}
-      >
-        Apply
-      </Button>
+      <ModalBody applyForJob={applyForJob}></ModalBody>
+
       <Box mt={5}>
         <Copyright />
       </Box>
