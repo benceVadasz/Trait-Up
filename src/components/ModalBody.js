@@ -11,6 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import { useForm } from "react-hook-form";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ModalBody() {
+export default function ModalBody({applyForJob}) {
   const classes = useStyles();
   const [personalData, setPersonalData] = useState();
   const token = sessionStorage.getItem("token");
@@ -187,7 +188,31 @@ export default function ModalBody() {
               label="Fill in automatically"
             />
           </Grid>
-          <input type="submit" />
+
+          <Button
+            variant="contained"
+            component="label"
+            color="primary"
+            fullWidth
+            className={classes.submit}
+          >
+            Upload CV
+            <input
+              type="file"
+              hidden
+            />
+          </Button>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={applyForJob}
+          >
+            Apply
+          </Button>
 
         </form>
       </div>
