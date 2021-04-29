@@ -62,12 +62,12 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
   const token = sessionStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [school, setSchool] = useState("");
-  const [faculty, setFaculty] = useState("");
-  const [degree, setDegree] = useState("");
-  const [level, setLevel] = useState("");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [school, setSchool] = useState('');
+  const [faculty, setFaculty] = useState('');
+  const [degree, setDegree] = useState('');
+  const [level, setLevel] = useState('');
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
 
   const changeSchool = (e) => {
     setSchool(e.target.value);
@@ -122,12 +122,13 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
     setLoading(true);
     e.preventDefault();
     axios({
-      method: "post",
-      url: `${BASE_URL}/Trait-Up-Backend/public/api/addEducation`,
+      method: "put",
+      url: `${BASE_URL}/Trait-Up-Backend/public/api/updateEducation`,
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
-      },params: {school, degree, faculty, level, from, to}
+      },params: {school, degree: degree ? degree : fullEdu.degree, faculty: faculty ? faculty : fullEdu.type,
+                level: level ? level : fullEdu.level, from: from ? from : fullEdu.from, to: to? to : fullEdu.to, eduId}
     })
       .then((response) => {
         setOpen(false);

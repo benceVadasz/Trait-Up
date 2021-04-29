@@ -66,7 +66,7 @@ const classes = {
 }
 
 
-const ProfileEditDeleteButton = () => {
+const ProfileAddEduButton = () => {
 
   const token = sessionStorage.getItem('token');
   const [open, setOpen] = useState(false);
@@ -189,4 +189,4 @@ const ProfileEditDeleteButton = () => {
   )
 }
 
-export default ProfileEditDeleteButton
+export default ProfileAddEduButton

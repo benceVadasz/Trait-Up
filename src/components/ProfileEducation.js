@@ -59,6 +59,7 @@ const ProfileEducation = () => {
       });
   }, [userEdu])
 
+
   return (
     <>
       <Paper elevation={3} style={classes.paper}>
