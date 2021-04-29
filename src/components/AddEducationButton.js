@@ -3,14 +3,20 @@ import {Avatar, Button, Grid, Paper, TextField, Typography} from '@material-ui/c
 import 'fontsource-roboto';
 import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
-import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 
 const classes = {
   button: {
-    display: 'flex',
+    // display: 'flex',
     width: "35%",
     fontSize: "15px",
     color: "white",
+    alignItems: 'center'
+  },
+  root: {
+    display: 'flex',
+    // padding: '1em',
+    width: 400,
+    margin: '0 auto',
   },
   paper: {
     padding: "30px",
@@ -27,6 +33,20 @@ const classes = {
   },
   paperStyle: {
     padding: "30px 20px",
+  },
+  container: {
+    display: "flex",
+    flexFlow: 'column',
+    alignItems: "center"
+  },
+  rightText: {
+    marginLeft: 40,
+  },
+  flexGroup: {
+    display: "flex",
+    flexFlow: 'row',
+    alignItems: "center",
+    justifyContent: 'space-around'
   },
   formStyle: {
     height: 350,
@@ -51,42 +71,28 @@ const ProfileEditDeleteButton = () => {
   };
 
   const modalBody = (
-    <Paper elevation={20} style={classes.paperStyle}>
+    <Paper elevation={20} alignItems="center"
+           justify="center" style={classes.paperStyle}>
       <Grid align="center">
         <Typography variant="caption" gutterBottom>
           Please fill this form to create an account !
         </Typography>
       </Grid>
-      <form style={classes.formStyle}>
-        <TextField
-          // onChange={(e) => setName(e.target.value)}
-          fullWidth
-          label="Name"
-          placeholder="Enter your name"
-        />
-        <TextField
-          // onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-          label="Email"
-          placeholder="Enter your email"
-        />
-        <TextField
-          // onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-        />
-        <TextField
-          // onChange={(e) => setConfirmPassword(e.target.value)}
-          fullWidth
-          label="Confirm Password"
-          type="password"
-          placeholder="Confirm your password"
-        />
-        <Button type="submit" variant="contained" style={classes.modalButton}>
-          Sign up
-        </Button>
+      <form style={classes.root} noValidate autoComplete="off">
+        <div style={classes.container}>
+          <div style={classes.flexGroup}>
+            <TextField label="School"/>
+            <TextField style={classes.rightText} label="Faculty"/>
+          </div>
+          <div style={classes.flexGroup}>
+            <TextField label="Degree"/>
+            <TextField style={classes.rightText} label="Level"/>
+          </div>
+          <div style={classes.flexGroup}>
+            <TextField label="From"/>
+            <TextField style={classes.rightText} label="To"/>
+          </div>
+        </div>
       </form>
     </Paper>
   );

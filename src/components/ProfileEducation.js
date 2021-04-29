@@ -87,7 +87,7 @@ const ProfileEducation = () => {
                       <Typography variant="body1" color="primary"
                                   style={classes.eduText}>{edu.degree} {edu.level}</Typography>
                       <Typography variant="body2" color="primary"
-                                  style={classes.eduText}>Graduated: {edu.to}</Typography>
+                                  style={classes.eduText}>{edu.from} - {edu.to}</Typography>
                     </Grid>
                     <Grid item xs={2}>
                       <ProfileEditDeleteButton/>
