@@ -22,19 +22,43 @@ const classes = {
     position: "absolute",
     top: "50px",
   },
+  root: {
+    display: 'flex',
+    width: 400,
+    margin: '0 auto',
+  },
   modal: {
     width: 600,
+    height: 600,
     padding: "30px",
-    border: "none",
-    position: "fixed",
-    top: "300px",
-    left: "600px",
+    top: "30%",
+    left: "30%",
+  },
+  paperStyle: {
+    padding: "30px 20px",
+  },
+  container: {
+    display: "flex",
+    flexFlow: 'column',
+    alignItems: "center"
+  },
+  rightText: {
+    marginLeft: 40,
+  },
+  flexGroup: {
+    display: "flex",
+    flexFlow: 'row',
+    alignItems: "center",
+    justifyContent: 'space-around'
+  },
+  modalButton: {
+    backgroundColor: "#859DF4",
+    marginTop: 20
   }
 }
 
 
 const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
-  console.log(fullEdu)
   const token = sessionStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -94,7 +118,7 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
         return false;
       });
   };
-  const submit = (e) => {
+  const update = (e) => {
     setLoading(true);
     e.preventDefault();
     axios({
@@ -121,33 +145,34 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
 
 
   const modalBody = (
-    <Paper elevation={20} alignItems="center"
-           justify="center" style={classes.paperStyle}>
-      <Grid align="center">
-        <Typography variant="caption" gutterBottom>
-          Please enter details about your education!
-        </Typography>
-      </Grid>
-      <form style={classes.root} onSubmit={submit} noValidate autoComplete="off">
-        <div style={classes.container}>
-          <div style={classes.flexGroup}>
-            <TextField  onChange={changeSchool} label="School"/>
-            <TextField onChange={changeFaculty} style={classes.rightText} label="Faculty"/>
-          </div>
-          <div style={classes.flexGroup}>
-            <TextField onChange={changeDegree} label="Degree"/>
-            <TextField onChange={changeLevel} style={classes.rightText} label="Level"/>
-          </div>
-          <div style={classes.flexGroup}>
-            <TextField onChange={changeFrom} label="From"/>
-            <TextField onChange={changeTo} style={classes.rightText} label="To"/>
-          </div>
-          <Button type="submit" variant="contained" style={classes.modalButton}>
-            Add
-          </Button>
+    (fullEdu) ?
+  <Paper elevation={20} alignItems="center"
+         justify="center" style={classes.paperStyle}>
+    <Grid align="center">
+      <Typography variant="caption" gutterBottom>
+        Please enter details about your education!
+      </Typography>
+    </Grid>
+    <form style={classes.root} onSubmit={update} noValidate autoComplete="off">
+      <div style={classes.container}>
+        <div style={classes.flexGroup}>
+          <TextField defaultValue={fullEdu.school} onChange={changeSchool} label="School"/>
+          <TextField defaultValue={fullEdu.type} onChange={changeFaculty} style={classes.rightText} label="Faculty"/>
         </div>
-      </form>
-    </Paper>
+        <div style={classes.flexGroup}>
+          <TextField defaultValue={fullEdu.degree} onChange={changeDegree} label="Degree"/>
+          <TextField defaultValue={fullEdu.level} onChange={changeLevel} style={classes.rightText} label="Level"/>
+        </div>
+        <div style={classes.flexGroup}>
+          <TextField defaultValue={fullEdu.from} onChange={changeFrom} label="From"/>
+          <TextField defaultValue={fullEdu.to} onChange={changeTo} style={classes.rightText} label="To"/>
+        </div>
+        <Button type="submit" variant="contained" style={classes.modalButton}>
+          Save
+        </Button>
+      </div>
+    </form>
+  </Paper> : null
   );
 
   if (loading)
