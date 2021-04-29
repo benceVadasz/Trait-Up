@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,7 +37,12 @@ export default function ModalBody() {
   const classes = useStyles();
   const [personalData, setPersonalData] = useState();
   const token = sessionStorage.getItem("token");
-  const [isFill, setFill] = useState(false);
+  const [isFilled, setFill] = useState(false);
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => alert(JSON.stringify(data));
+
+
 
   const fetchUserData = () => {
     axios
@@ -54,7 +59,7 @@ export default function ModalBody() {
   }, [setPersonalData])
 
   const fillAutomatically = () => {
-    setFill(true);
+    {isFilled ? setFill(false) : setFill(true)};
   }
 
 
@@ -68,25 +73,28 @@ export default function ModalBody() {
         <Typography component="h1" variant="h5">
           Let's start the application
         </Typography>
-        <form className={classes.form} noValidate>
-          {!isFill ?
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+          {!isFilled ?
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
                   name="firstName"
+                  {...register("firstName")}
+                  required={true}
                   variant="outlined"
-                  required
                   fullWidth
                   id="firstName"
                   label="Full name"
                   autoFocus
                 />
+
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
+                  {...register("email")}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -98,6 +106,7 @@ export default function ModalBody() {
                 <TextField
                   variant="outlined"
                   required
+                  {...register("address")}
                   fullWidth
                   id="address"
                   label="Address"
@@ -109,6 +118,7 @@ export default function ModalBody() {
                 <TextField
                   variant="outlined"
                   required
+                  {...register("phone")}
                   fullWidth
                   name="phone"
                   label="Phone number"
@@ -177,6 +187,7 @@ export default function ModalBody() {
               label="Fill in automatically"
             />
           </Grid>
+          <input type="submit" />
 
         </form>
       </div>
