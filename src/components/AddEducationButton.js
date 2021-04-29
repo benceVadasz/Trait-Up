@@ -27,6 +27,7 @@ const classes = {
   },
   modal: {
     width: 600,
+    height: 600,
     padding: "30px",
     top: "30%",
     left: "30%",
@@ -49,12 +50,15 @@ const classes = {
     justifyContent: 'space-around'
   },
   formStyle: {
-    height: 350,
+    height: 550,
     display: "flex",
     flexFlow: "column wrap",
     justifyContent: "space-between",
   },
-  modalButton: {backgroundColor: "#859DF4"}
+  modalButton: {
+    backgroundColor: "#859DF4",
+    marginTop: 20
+  }
 }
 
 
@@ -92,6 +96,9 @@ const ProfileEditDeleteButton = () => {
             <TextField label="From"/>
             <TextField style={classes.rightText} label="To"/>
           </div>
+          <Button type="submit" variant="contained" style={classes.modalButton}>
+            Add
+          </Button>
         </div>
       </form>
     </Paper>
