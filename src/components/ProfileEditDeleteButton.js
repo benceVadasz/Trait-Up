@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Grid, Paper} from '@material-ui/core';
+import {Button, Grid, Paper, TextField, Typography} from '@material-ui/core';
 import 'fontsource-roboto';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -33,10 +33,41 @@ const classes = {
 }
 
 
-const ProfileEditDeleteButton = ({eduId}) => {
-
+const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
+  console.log(fullEdu)
+  const token = sessionStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [school, setSchool] = useState("");
+  const [faculty, setFaculty] = useState("");
+  const [degree, setDegree] = useState("");
+  const [level, setLevel] = useState("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+
+  const changeSchool = (e) => {
+    setSchool(e.target.value);
+  }
+
+  const changeFaculty = (e) => {
+    setFaculty(e.target.value);
+  }
+
+  const changeDegree = (e) => {
+    setDegree(e.target.value);
+  }
+
+  const changeLevel = (e) => {
+    setLevel(e.target.value);
+  }
+
+  const changeFrom = (e) => {
+    setFrom(e.target.value);
+  }
+
+  const changeTo = (e) => {
+    setTo(e.target.value);
+  }
 
   const handleOpen = () => {
     setOpen(true);
@@ -63,6 +94,25 @@ const ProfileEditDeleteButton = ({eduId}) => {
         return false;
       });
   };
+  const submit = (e) => {
+    setLoading(true);
+    e.preventDefault();
+    axios({
+      method: "post",
+      url: `${BASE_URL}/Trait-Up-Backend/public/api/addEducation`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },params: {school, degree, faculty, level, from, to}
+    })
+      .then((response) => {
+        setOpen(false);
+        setLoading(false);
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+  };
 
   useEffect(() => {
 
@@ -71,9 +121,32 @@ const ProfileEditDeleteButton = ({eduId}) => {
 
 
   const modalBody = (
-    <Paper elevation={3} className={classes.paper}>
-      <h2>Edit modal</h2>
-      <p>Modal for testing.</p>
+    <Paper elevation={20} alignItems="center"
+           justify="center" style={classes.paperStyle}>
+      <Grid align="center">
+        <Typography variant="caption" gutterBottom>
+          Please enter details about your education!
+        </Typography>
+      </Grid>
+      <form style={classes.root} onSubmit={submit} noValidate autoComplete="off">
+        <div style={classes.container}>
+          <div style={classes.flexGroup}>
+            <TextField  onChange={changeSchool} label="School"/>
+            <TextField onChange={changeFaculty} style={classes.rightText} label="Faculty"/>
+          </div>
+          <div style={classes.flexGroup}>
+            <TextField onChange={changeDegree} label="Degree"/>
+            <TextField onChange={changeLevel} style={classes.rightText} label="Level"/>
+          </div>
+          <div style={classes.flexGroup}>
+            <TextField onChange={changeFrom} label="From"/>
+            <TextField onChange={changeTo} style={classes.rightText} label="To"/>
+          </div>
+          <Button type="submit" variant="contained" style={classes.modalButton}>
+            Add
+          </Button>
+        </div>
+      </form>
     </Paper>
   );
 

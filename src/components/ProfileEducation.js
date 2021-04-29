@@ -70,27 +70,25 @@ const ProfileEducation = () => {
 
 
           <Grid item xs container justify="center">
-            {
-              (userEdu) ?
-                userEdu.map((edu, i) => (
-                  <Grid item xs={10} key={i}>
-                    <Paper elevation={2} style={classes.paperEdu}>
-                      <Grid container alignItems="center">
-                        <Grid item xs={10}>
-                          <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
-                          <Typography variant="body1" color="primary"
-                                      style={classes.eduText}>{edu.degree} {edu.level}</Typography>
-                          <Typography variant="body2" color="primary"
-                                      style={classes.eduText}>{edu.from} - {edu.to}</Typography>
-                        </Grid>
-                        <Grid item xs={2}>
-                          <ProfileEditDeleteButton eduId={edu.id}/>
-                        </Grid>
-                      </Grid>
-                    </Paper>
+
+            {userEdu.map((edu, i) => (
+              <Grid item xs={10} key={i}>
+                <Paper elevation={2} style={classes.paperEdu}>
+                  <Grid container alignItems="center">
+                    <Grid item xs={10}>
+                      <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
+                      <Typography variant="body1" color="primary"
+                                  style={classes.eduText}>{edu.degree} {edu.level}</Typography>
+                      <Typography variant="body2" color="primary"
+                                  style={classes.eduText}>{edu.from} - {edu.to}</Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <ProfileEditDeleteButton fullEdu={edu} eduId={edu.id}/>
+                    </Grid>
                   </Grid>
-                )) : null
-            }
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
         </Grid>
       </Paper>
