@@ -107,7 +107,7 @@ const ProfilePage = () => {
                 path="/profile/applications"
                 render={(props) => (
                   <>
-                    <ProfileApplications/>
+                    <ProfileApplications {...props}/>
                   </>
                 )}
               />

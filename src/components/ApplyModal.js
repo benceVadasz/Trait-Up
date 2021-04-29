@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ApplyModal = (jobId) => {
-  console.log(jobId)
 
 
   const classes = useStyles();

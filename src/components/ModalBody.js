@@ -38,8 +38,6 @@ export default function ModalBody() {
   const [personalData, setPersonalData] = useState();
   const token = sessionStorage.getItem("token");
   const [isFill, setFill] = useState(false);
-  console.log(personalData)
-  console.log(isFill)
 
   const fetchUserData = () => {
     axios

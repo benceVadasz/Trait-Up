@@ -53,6 +53,7 @@ const JobCard = ({props, jobId, jobs, isApplied}) => {
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
+
   const {
     id: job_id,
     type,
@@ -68,12 +69,11 @@ const JobCard = ({props, jobId, jobs, isApplied}) => {
 
 
 
-
   const viewJob = (id, type, created_at, company, location, title, description, url, how_to_apply) => {
     const currentJob = {job_id, type, created_at, company, location, title, description, url, how_to_apply};
 
     setJob(currentJob);
-    history.push(`/jobs/${id}`)
+    {!isApplied ? history.push(`/jobs/${id}`) : history.push(`/jobs/${jobId}`)}
   }
 
 
