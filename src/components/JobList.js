@@ -10,6 +10,7 @@ import axios from "axios";
 import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -45,6 +46,28 @@ const JobList = (props) => {
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
   const [isBottom, setIsBottom] = useState(false);
+  const [applications, setApplications] = useState([]);
+
+  useEffect( () => {
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
+        {headers: {Authorization: "Bearer " + token}})
+      .then((response) => {
+        let result = response.data.application;
+        const applicationIds = [];
+        result.forEach((job) => {
+          applicationIds.push(job.job_id)
+        })
+        console.log(applicationIds)
+
+        setApplications(applicationIds);
+      });
+  }, []);
+  //
+  // useEffect(() => {
+  //   fetchApplications();
+  // }, [setApplications])
+
 
   function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
@@ -203,9 +226,10 @@ const JobList = (props) => {
             spacing={6}
             justify="center"
           >
-            {Object.keys(jobs).map((jobId, index) => (
+            {Object.keys(jobs).map((jobId) => (
               <Grid key={jobId} item xs={5}>
-                <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>
+                {applications.includes(jobs[jobId].id) ? <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props} isApplied={true}/> :
+                  <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>}
               </Grid>
             ))}
           </Grid>
