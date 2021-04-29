@@ -57,5 +57,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@hookform/devtools": "^3.0.0-rc.2",
+    "react-hook-form": "^7.3.5"
   }
 }
