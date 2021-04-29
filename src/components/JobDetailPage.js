@@ -18,6 +18,7 @@ import axios from "axios";
 import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
+import {useParams} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,9 @@ const JobDetailPage = ({job, props}) => {
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
+  const idJob = useParams();
+
+
   const classes = useStyles();
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -75,7 +79,7 @@ const JobDetailPage = ({job, props}) => {
           `${BASE_URL}/Trait-Up-Backend/public/api/getJobDescriptionById`,
           {
             params: {
-              id: job.job_id,
+              id: idJob['jobId'],
               // user_id: JSON.parse(sessionStorage.getItem("user")).id
             },
           }
