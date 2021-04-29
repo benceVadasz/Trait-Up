@@ -6,6 +6,7 @@ import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import favouriteModel from "../favouriteModel";
+import Spinner from "react-spinner-material";
 
 const classes = {
   button: {
@@ -75,6 +76,7 @@ const ProfileEditDeleteButton = () => {
   const [level, setLevel] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -85,36 +87,30 @@ const ProfileEditDeleteButton = () => {
   };
   const changeSchool = (e) => {
     setSchool(e.target.value);
-    // setUserState({...userState, name: e.target.value});
   }
 
   const changeFaculty = (e) => {
     setFaculty(e.target.value);
-    // setUserState({...userState, email: e.target.value});
   }
 
   const changeDegree = (e) => {
     setDegree(e.target.value);
-    // setUserState({...userState, 'phone number': e.target.value});
   }
 
   const changeLevel = (e) => {
     setLevel(e.target.value);
-    // setUserState({...userState, address: e.target.value});
   }
 
   const changeFrom = (e) => {
     setFrom(e.target.value);
-    // setUserState({...userState, birthday: e.target.value});
   }
 
   const changeTo = (e) => {
     setTo(e.target.value);
-    // setUserState({...userState, birthday: e.target.value});
   }
 
   const submit = (e) => {
-    // setLoading(true);
+    setLoading(true);
     e.preventDefault();
     axios({
       method: "post",
@@ -126,6 +122,7 @@ const ProfileEditDeleteButton = () => {
     })
       .then((response) => {
         setOpen(false);
+        setLoading(false);
       })
       .catch(function (error) {
         alert(error);
@@ -161,6 +158,18 @@ const ProfileEditDeleteButton = () => {
       </form>
     </Paper>
   );
+
+  if (loading)
+    return (
+      <div className={classes.load}>
+        <Spinner
+          size={120}
+          spinnerColor={"green"}
+          spinnerWidth={2}
+          visible={true}
+        />
+      </div>
+    );
 
   return (
     <>

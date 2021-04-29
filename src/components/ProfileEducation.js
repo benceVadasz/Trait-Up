@@ -1,13 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import 'fontsource-roboto';
-import {UserContext} from '../contexts/UserContext';
 import ProfileEditDeleteButton from './ProfileEditDeleteButton';
-import useState from "react-hook-use-state";
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import AddEducationButton from "./AddEducationButton";
-import userModel from "../userModel";
 
 const classes = {
   paper: {
@@ -44,10 +41,8 @@ const classes = {
 
 const ProfileEducation = () => {
 
-  const [user, setUser] = useState({});
+  const [userEdu, setUserEdu] = useState([]);
   const token = sessionStorage.getItem("token");
-  const [usert] = useContext(UserContext);
-
 
   useEffect(() => {
     axios
@@ -55,16 +50,14 @@ const ProfileEducation = () => {
         `${BASE_URL}/Trait-Up-Backend/public/api/getUserEducation`,
         {headers: {Authorization: "Bearer " + token}}
       ).then((res) => {
-      setUser(res.data)
+      if (res.data) {
+        setUserEdu(res.data)
+      }
     })
       .catch(function (error) {
-        alert('Could not load user data');
+        console.log(error)
       });
-  }, [])
-
-  if (user) {
-    console.log(user)
-  }
+  }, [userEdu])
 
   return (
     <>
@@ -76,26 +69,28 @@ const ProfileEducation = () => {
           </Grid>
 
 
-
           <Grid item xs container justify="center">
-            {user.map((edu, i) => (
-              <Grid item xs={10} key={i}>
-                <Paper elevation={2} style={classes.paperEdu}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={10}>
-                      <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
-                      <Typography variant="body1" color="primary"
-                                  style={classes.eduText}>{edu.degree} {edu.level}</Typography>
-                      <Typography variant="body2" color="primary"
-                                  style={classes.eduText}>{edu.from} - {edu.to}</Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <ProfileEditDeleteButton/>
-                    </Grid>
+            {
+              (userEdu) ?
+                userEdu.map((edu, i) => (
+                  <Grid item xs={10} key={i}>
+                    <Paper elevation={2} style={classes.paperEdu}>
+                      <Grid container alignItems="center">
+                        <Grid item xs={10}>
+                          <Typography variant="h4" color="primary" style={classes.eduText}>{edu.school}</Typography>
+                          <Typography variant="body1" color="primary"
+                                      style={classes.eduText}>{edu.degree} {edu.level}</Typography>
+                          <Typography variant="body2" color="primary"
+                                      style={classes.eduText}>{edu.from} - {edu.to}</Typography>
+                        </Grid>
+                        <Grid item xs={2}>
+                          <ProfileEditDeleteButton eduId={edu.id}/>
+                        </Grid>
+                      </Grid>
+                    </Paper>
                   </Grid>
-                </Paper>
-              </Grid>
-            ))}
+                )) : null
+            }
           </Grid>
         </Grid>
       </Paper>
