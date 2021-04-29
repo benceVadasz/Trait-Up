@@ -128,15 +128,12 @@ const JobList = (props) => {
     return filteredJobs;
   }
 
-  const loadNextJobs = () => {
-    if (isBottom) {
-      setPage(prevOffset => prevOffset + 1)
-    }
-    setlengthOfJobs(length => length + 50);
+  const setBottomFalse = () => {
     setIsBottom(false)
   }
 
   useEffect(() => {
+    console.log('in useEffect...')
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
         {
@@ -159,8 +156,10 @@ const JobList = (props) => {
     console.log(allJobs.length)
     if (e.target.scrollingElement.scrollHeight -
       e.target.scrollingElement.scrollTop === e.target.scrollingElement.clientHeight) {
-      console.log('setting it true')
       setIsBottom(true)
+      if (hasMore) {
+        setPage(prevOffset => prevOffset + 1)
+      }
     }
   }
 
@@ -211,7 +210,7 @@ const JobList = (props) => {
       <InfiniteScroll
         onScroll={handleScroll}
         dataLength={lengthOfJobs} //This is important field to render the next data
-        next={loadNextJobs}
+        next={setBottomFalse}
         hasMore={hasMore}
         loader={<h4 style={{textAlign: 'center'}}>Loading...</h4>}
         endMessage={

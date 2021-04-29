@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -56,9 +56,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 const JobDetailPage = ({job, props}) => {
-  const [expanded, setExpanded] = React.useState(false);
-  const [liked, setLiked] = React.useState(false);
-  const [description, setDescription] = React.useState("");
+  const [expanded, setExpanded] = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [description, setDescription] = useState("");
   const user = JSON.parse(sessionStorage.getItem("user"));
   const favouriteJobs = useStoreState((state) => state.favourites);
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
@@ -113,8 +113,8 @@ const JobDetailPage = ({job, props}) => {
     if (user) {
       console.log(job)
       if (liked) {
-        setLiked(false)
         removeFromFavourites(job.job_id)
+        setLiked(false)
       } else {
         if (addToFavourites(job)) {
           setLiked(!liked);
