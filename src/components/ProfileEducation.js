@@ -78,7 +78,7 @@ const ProfileEducation = () => {
 
 
           <Grid item xs container justify="center">
-            {usert.education.map((edu, i) => (
+            {user.map((edu, i) => (
               <Grid item xs={10} key={i}>
                 <Paper elevation={2} style={classes.paperEdu}>
                   <Grid container alignItems="center">

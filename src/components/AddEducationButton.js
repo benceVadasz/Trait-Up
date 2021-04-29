@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import {BASE_URL} from "../constants";
+import favouriteModel from "../favouriteModel";
 
 const classes = {
   button: {
@@ -66,6 +67,7 @@ const classes = {
 
 const ProfileEditDeleteButton = () => {
 
+  const token = sessionStorage.getItem('token');
   const [open, setOpen] = useState(false);
   const [school, setSchool] = useState("");
   const [faculty, setFaculty] = useState("");
@@ -114,14 +116,16 @@ const ProfileEditDeleteButton = () => {
   const submit = (e) => {
     // setLoading(true);
     e.preventDefault();
-    axios
-      .post(`${BASE_URL}/Trait-Up-Backend/public/api/addEducation`, {
-        headers: {
-          "Content-Type": "application/json",
-        }, school, degree, faculty, level, from, to
-      })
+    axios({
+      method: "post",
+      url: `${BASE_URL}/Trait-Up-Backend/public/api/addEducation`,
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },params: {school, degree, faculty, level, from, to}
+    })
       .then((response) => {
-        // setLoading(false);
+        setOpen(false);
       })
       .catch(function (error) {
         alert(error);
