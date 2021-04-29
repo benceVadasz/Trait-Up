@@ -40,8 +40,8 @@ export default function ModalBody({applyForJob}) {
   const token = sessionStorage.getItem("token");
   const [isFilled, setFill] = useState(false);
 
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => alert(JSON.stringify(data));
+  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const onSubmit = data => console.log(data);
 
 
 
@@ -80,22 +80,23 @@ export default function ModalBody({applyForJob}) {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
-                  {...register("firstName")}
-                  required={true}
+                  name="fullName"
+                  {...register('fullName', { required: true })}
+                  required
                   variant="outlined"
                   fullWidth
-                  id="firstName"
+                  id="fullName"
                   label="Full name"
                   autoFocus
                 />
-
+                {errors.fullName && <span>This field is required</span>}
               </Grid>
+
               <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
-                  {...register("email")}
+                  {...register('email', { required: true })}
                   fullWidth
                   id="email"
                   label="Email Address"
@@ -107,7 +108,7 @@ export default function ModalBody({applyForJob}) {
                 <TextField
                   variant="outlined"
                   required
-                  {...register("address")}
+                  {...register('address', { required: true })}
                   fullWidth
                   id="address"
                   label="Address"
@@ -119,7 +120,7 @@ export default function ModalBody({applyForJob}) {
                 <TextField
                   variant="outlined"
                   required
-                  {...register("phone")}
+                  {...register('phone', { required: true })}
                   fullWidth
                   name="phone"
                   label="Phone number"
@@ -188,33 +189,31 @@ export default function ModalBody({applyForJob}) {
               label="Fill in automatically"
             />
           </Grid>
-
-          <Button
-            variant="contained"
-            component="label"
-            color="primary"
-            fullWidth
-            className={classes.submit}
-          >
-            Upload CV
-            <input
-              type="file"
-              hidden
-            />
-          </Button>
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={applyForJob}
-          >
-            Apply
-          </Button>
-
         </form>
+        <Button
+          variant="contained"
+          component="label"
+          color="primary"
+          fullWidth
+          className={classes.submit}
+        >
+          Upload CV
+          <input
+            type="file"
+            hidden
+          />
+        </Button>
+
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={applyForJob}
+        >
+          Apply
+        </Button>
       </div>
     </Container>
   );
