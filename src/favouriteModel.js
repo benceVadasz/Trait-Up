@@ -26,7 +26,7 @@ const saveAsFavourite = (job) => {
     return false;
   } else {
     const {
-      job_id, type, created_at, company, location, title, company_logo
+      id, type, created_at, company, location, title, company_logo
     } = job;
     axios({
       method: "post",
@@ -34,7 +34,7 @@ const saveAsFavourite = (job) => {
         `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
       headers: {Authorization: "Bearer " + favouriteModel.token},
       params: {
-        job_id, type, created_at, company, location, title, company_logo,
+        id, type, created_at, company, location, title, company_logo,
       }
     }).then((res) => {
       return true;

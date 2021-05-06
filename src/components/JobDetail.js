@@ -2,6 +2,7 @@ import React from 'react';
 import JobDetailPage from '../components/JobDetailPage';
 import { Grid } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import {useParams} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   gridContainer: {
@@ -10,15 +11,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const JobDetail = props => {
+const JobDetail = () => {
     const classes = useStyles();
     const currentJob = JSON.parse(localStorage.getItem("job"))
+    const id = useParams();
   
     return (
         <>
         <Grid container className={classes.gridContainer}>
             <Grid item xs={12}>
-                <JobDetailPage key={currentJob.id} job={currentJob} props={props}/>
+                <JobDetailPage key={id} id={id}/>
             </Grid>
         </Grid>
         </>

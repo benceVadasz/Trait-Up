@@ -19,6 +19,7 @@ import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
 import {useParams} from "react-router";
+import Spinner from "react-spinner-material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,20 +52,20 @@ const useStyles = makeStyles((theme) => ({
   },
   liked: {
     color: 'red'
-  }
+  },
+  load: {position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}
 }));
 
 
-const JobDetailPage = ({job, props}) => {
+const JobDetailPage = ({id}) => {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [job, setJob] = useState({});
   const user = JSON.parse(sessionStorage.getItem("user"));
   const favouriteJobs = useStoreState((state) => state.favourites);
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
-
-  const idJob = useParams();
 
 
   const classes = useStyles();
@@ -73,58 +74,71 @@ const JobDetailPage = ({job, props}) => {
   };
 
   useEffect(() => {
-    if (job) {
+    if (id) {
+      setLoading(true)
       axios
         .get(
-          `${BASE_URL}/Trait-Up-Backend/public/api/getJobDescriptionById`,
+          `${BASE_URL}/Trait-Up-Backend/public/api/getJobById`,
           {
             params: {
-              id: idJob['jobId'],
-              // user_id: JSON.parse(sessionStorage.getItem("user")).id
+              id: id['id']
             },
           }
         ).then((res) => {
-        setDescription(JSON.parse(res.data['job']).description)
+        setJob(JSON.parse(res.data['job']))
+        setLoading(false)
       })
         .catch(function (error) {
-          alert('Could not load job description');
+          alert('Could not load job details');
         });
     }
-  }, [job]);
+  }, []);
 
-  useEffect(() => {
-    if (user && favouriteJobs) {
-      if (isLiked()) {
-        setLiked(true);
-      }
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if (user && favouriteJobs) {
+  //     if (isLiked()) {
+  //       setLiked(true);
+  //     }
+  //   }
+  // }, [user])
 
-  const isLiked = () => {
-    for (let iterJob of favouriteJobs) {
-      if (job.job_id === iterJob.job_id) {
-        return true;
-      }
-    }
-    return false;
-  }
+  // const isLiked = () => {
+  //   for (let iterJob of favouriteJobs) {
+  //     if (job.job_id === iterJob.job_id) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
+  //
+  // const handleFavouriteEvent = () => {
+  //   if (user) {
+  //     console.log(job)
+  //     if (liked) {
+  //       removeFromFavourites(job.job_id)
+  //       setLiked(false)
+  //     } else {
+  //       if (addToFavourites(job)) {
+  //         setLiked(!liked);
+  //       }
+  //     }
+  //   } else {
+  //     alert('You have to log in to like jobs')
+  //   }
+  // }
 
-  const handleFavouriteEvent = () => {
-    if (user) {
-      console.log(job)
-      if (liked) {
-        removeFromFavourites(job.job_id)
-        setLiked(false)
-      } else {
-        if (addToFavourites(job)) {
-          setLiked(!liked);
-        }
-      }
-    } else {
-      alert('You have to log in to like jobs')
-    }
-  }
 
+  if (loading)
+    return (
+      <div className={classes.load}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+          color={'black'}/>
+      </div>
+    );
 
   return (
     <Card className={classes.root}>
@@ -151,7 +165,7 @@ const JobDetailPage = ({job, props}) => {
       </CardContent>
       <CardContent>
         <Typography className={classes.text} variant="body2">
-          {parse(`<div>${description}</div>`)}
+          {parse(`<div>${job.description}</div>`)}
         </Typography>
       </CardContent>
       <CardContent>
@@ -164,8 +178,10 @@ const JobDetailPage = ({job, props}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton onClick={handleFavouriteEvent} className={liked ? classes.liked : ''}  aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton
+          // onClick={handleFavouriteEvent}
+          className={liked ? classes.liked : ''} aria-label="add to favorites">
+          <FavoriteIcon/>
         </IconButton>
         <ApplyModal></ApplyModal>
         <IconButton

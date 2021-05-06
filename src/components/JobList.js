@@ -48,20 +48,22 @@ const JobList = (props) => {
   const [isBottom, setIsBottom] = useState(false);
   const [applications, setApplications] = useState([]);
 
-  useEffect( () => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        let result = response.data.application;
-        const applicationIds = [];
-        result.forEach((job) => {
-          applicationIds.push(job.job_id)
-        })
-        console.log(applicationIds)
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
+          {headers: {Authorization: "Bearer " + token}})
+        .then((response) => {
+          let result = response.data.application;
+          const applicationIds = [];
+          result.forEach((job) => {
+            applicationIds.push(job.job_id)
+          })
+          console.log(applicationIds)
 
-        setApplications(applicationIds);
-      });
+          setApplications(applicationIds);
+        });
+    }
   }, []);
   //
   // useEffect(() => {
@@ -133,7 +135,6 @@ const JobList = (props) => {
   }
 
   useEffect(() => {
-    console.log('in useEffect...')
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
         {
@@ -228,8 +229,8 @@ const JobList = (props) => {
           >
             {jobs.map((job) => (
               <Grid key={job.id} item xs={5}>
-                {applications.includes(job.id) ? <JobCard key={job.id} job={job} isApplied={true}/> :
-                  <JobCard key={job.id} job={job} />}
+                {applications.includes(job.id) ? <JobCard job={job} key={job.id} isApplied={true}/> :
+                  <JobCard job={job} key={job.id}/>}
               </Grid>
             ))}
           </Grid>
