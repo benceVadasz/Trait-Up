@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {BASE_URL} from "../constants";
 import {JobContext} from "../contexts/JobDetailContext";
+import {Link} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
   },
   liked: {
     color: 'red'
+  },
+  link: {
+    textDecoration: 'none',
+    color: "black"
   }
 
 }));
@@ -71,25 +76,14 @@ const FavouriteCard = ({props, job}) => {
       });
   }
 
-
-  const viewJob = () => {
-    setJob(job);
-    history.push(`/jobs/${job.job_id}`)
-  }
-
   return (
     <Card className={classes.root}>
+      <Link className={classes.link + ' link'} to={"/jobs/" + job.job_id}>
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
             TUp
           </Avatar>
-        }
-        action={
-          <IconButton aria-label="detail"
-                      onClick={() => viewJob()}>
-            <DetailsIcon/>
-          </IconButton>
         }
         title={`${job.title}`}
         subheader={`${job.company}`}
@@ -98,6 +92,7 @@ const FavouriteCard = ({props, job}) => {
                  className={classes.media}
                  image={`${job.company_logo}`}
       />
+      </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           Job type: {`${job.type}`}

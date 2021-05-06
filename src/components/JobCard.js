@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, { useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
@@ -73,17 +73,17 @@ const JobCard = ({job, isApplied}) => {
     }
   }
 
-  // const favouriteJobs = useStoreState((state) => state.favourites);
-  // useEffect(() => {
-  //   if (favouriteJobs.length > 0) {
-  //     for (let fav of favouriteJobs) {
-  //       if (fav.job_id === job_id) {
-  //         setLiked(true);
-  //       }
-  //     }
-  //   }
-  //   // eslint-disable-next-line
-  // }, [favouriteJobs]);
+  const favouriteJobs = useStoreState((state) => state.favourites);
+  useEffect(() => {
+    if (favouriteJobs.length > 0) {
+      for (let fav of favouriteJobs) {
+        if (fav.job_id === job.id) {
+          setLiked(true);
+        }
+      }
+    }
+    // eslint-disable-next-line
+  }, []);
 
 
   return (
