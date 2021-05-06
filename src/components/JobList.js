@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JobList = (props) => {
+const JobList = () => {
 
   let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
   const classes = useStyles();
@@ -42,7 +42,7 @@ const JobList = (props) => {
   const [locationFilter, setLocationFilter] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [lengthOfJobs, setlengthOfJobs] = useState(50);
+  const [lengthOfJobs, setLengthOfJobs] = useState(50);
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
   const [isBottom, setIsBottom] = useState(false);
