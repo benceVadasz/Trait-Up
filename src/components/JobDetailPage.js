@@ -16,6 +16,7 @@ import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
+import {getFavourites} from "../getFavourites";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
 import {useParams} from "react-router";
@@ -63,7 +64,8 @@ const JobDetailPage = ({id}) => {
   const [loading, setLoading] = useState(false);
   const [job, setJob] = useState({});
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const favouriteJobs = useStoreState((state) => state.favourites);
+  const [favourites, setFavourites] = useState([]);
+
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
@@ -74,58 +76,58 @@ const JobDetailPage = ({id}) => {
   };
 
   useEffect(() => {
-    if (id) {
-      setLoading(true)
-      axios
-        .get(
-          `${BASE_URL}/Trait-Up-Backend/public/api/getJobById`,
-          {
-            params: {
-              id: id['id']
-            },
-          }
-        ).then((res) => {
-        setJob(JSON.parse(res.data['job']))
-        setLoading(false)
-      })
-        .catch(function (error) {
-          alert('Could not load job details');
-        });
-    }
+    setLoading(true)
+    axios
+      .get(
+        `${BASE_URL}/Trait-Up-Backend/public/api/getJobById`,
+        {
+          params: {
+            id: id['id']
+          },
+        }
+      ).then((res) => {
+      setJob(JSON.parse(res.data['job']))
+      setLoading(false)
+    })
+      .catch(function (error) {
+        alert('Could not load job details');
+      });
+
   }, []);
 
-  // useEffect(() => {
-  //   if (user && favouriteJobs) {
-  //     if (isLiked()) {
-  //       setLiked(true);
-  //     }
-  //   }
-  // }, [user])
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+        {headers: {Authorization: "Bearer " + sessionStorage.getItem("token")}})
+      .then((response) => {
+        console.log(response.data.jobs)
+        console.log(id)
+        if (response.data.jobs.length > 0) {
+          for (let fav of response.data.jobs) {
+            if (fav.job_id === id.id) {
+              setLiked(true);
+            }
+          }
+        }
+      });
+  }, []);
 
-  // const isLiked = () => {
-  //   for (let iterJob of favouriteJobs) {
-  //     if (job.job_id === iterJob.job_id) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-  //
-  // const handleFavouriteEvent = () => {
-  //   if (user) {
-  //     console.log(job)
-  //     if (liked) {
-  //       removeFromFavourites(job.job_id)
-  //       setLiked(false)
-  //     } else {
-  //       if (addToFavourites(job)) {
-  //         setLiked(!liked);
-  //       }
-  //     }
-  //   } else {
-  //     alert('You have to log in to like jobs')
-  //   }
-  // }
+
+  const handleFavouriteEvent = () => {
+    if (user) {
+      console.log(job)
+      if (liked) {
+        removeFromFavourites(job.job_id)
+        setLiked(false)
+      } else {
+        if (addToFavourites(job)) {
+          setLiked(!liked);
+        }
+      }
+    } else {
+      alert('You have to log in to like jobs')
+    }
+  }
 
 
   if (loading)
@@ -179,7 +181,7 @@ const JobDetailPage = ({id}) => {
       </CardContent>
       <CardActions disableSpacing>
         <IconButton
-          // onClick={handleFavouriteEvent}
+          onClick={handleFavouriteEvent}
           className={liked ? classes.liked : ''} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
