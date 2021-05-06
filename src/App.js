@@ -32,8 +32,9 @@ const App = (props) => {
             />
             <Route
               exact
-              path="/jobs/:jobId"
-              render={(props) => <JobDetail {...props} />}
+              path="/jobs/:id"
+              children={<JobDetail/>}
+              // render={(props) => <JobDetail {...props} />}
             />
 
             <UserProvider>
