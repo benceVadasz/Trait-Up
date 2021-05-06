@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const JobList = (props) => {
+const JobList = () => {
 
   let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
   const classes = useStyles();
@@ -42,26 +42,28 @@ const JobList = (props) => {
   const [locationFilter, setLocationFilter] = useState("");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const [lengthOfJobs, setlengthOfJobs] = useState(50);
+  const [lengthOfJobs, setLengthOfJobs] = useState(50);
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const favouriteJobs = useStoreState((state) => state.favourites);
   const [isBottom, setIsBottom] = useState(false);
   const [applications, setApplications] = useState([]);
 
-  useEffect( () => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        let result = response.data.application;
-        const applicationIds = [];
-        result.forEach((job) => {
-          applicationIds.push(job.job_id)
-        })
-        console.log(applicationIds)
+  useEffect(() => {
+    if (token) {
+      axios
+        .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
+          {headers: {Authorization: "Bearer " + token}})
+        .then((response) => {
+          let result = response.data.application;
+          const applicationIds = [];
+          result.forEach((job) => {
+            applicationIds.push(job.job_id)
+          })
+          console.log(applicationIds)
 
-        setApplications(applicationIds);
-      });
+          setApplications(applicationIds);
+        });
+    }
   }, []);
   //
   // useEffect(() => {
@@ -133,7 +135,6 @@ const JobList = (props) => {
   }
 
   useEffect(() => {
-    console.log('in useEffect...')
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
         {
@@ -226,10 +227,10 @@ const JobList = (props) => {
             spacing={6}
             justify="center"
           >
-            {Object.keys(jobs).map((jobId) => (
-              <Grid key={jobId} item xs={5}>
-                {applications.includes(jobs[jobId].id) ? <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props} isApplied={true}/> :
-                  <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>}
+            {jobs.map((job) => (
+              <Grid key={job.id} item xs={5}>
+                {applications.includes(job.id) ? <JobCard job={job} key={job.id} isApplied={true}/> :
+                  <JobCard job={job} key={job.id}/>}
               </Grid>
             ))}
           </Grid>

@@ -3,10 +3,19 @@ import axios from "axios";
 import {BASE_URL} from "./constants";
 import {forEach} from "react-bootstrap/ElementChildren";
 
+const getFavs = () => {
+  console.log('inFavs')
+  axios
+    .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+      {headers: {Authorization: "Bearer " + sessionStorage.getItem("token")}})
+    .then((response) => {
+      return response.data.jobs;
+    });
+}
 
 const favouriteModel = {
   token: sessionStorage.getItem("token"),
-  favourites: [],
+  favourites: getFavs(),
   addToFavourites: action((state, job) => {
     state.favourites = [...state.favourites, job];
     saveAsFavourite(job);
@@ -26,7 +35,7 @@ const saveAsFavourite = (job) => {
     return false;
   } else {
     const {
-      job_id, type, created_at, company, location, title, company_logo
+      id, type, created_at, company, location, title, company_logo
     } = job;
     axios({
       method: "post",
@@ -34,7 +43,7 @@ const saveAsFavourite = (job) => {
         `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
       headers: {Authorization: "Bearer " + favouriteModel.token},
       params: {
-        job_id, type, created_at, company, location, title, company_logo,
+        id, type, created_at, company, location, title, company_logo,
       }
     }).then((res) => {
       return true;
@@ -62,5 +71,7 @@ const removeFromSavedJobs = (id) => {
       return false;
     });
 }
+
+
 
 export default favouriteModel;
