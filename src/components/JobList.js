@@ -226,10 +226,10 @@ const JobList = (props) => {
             spacing={6}
             justify="center"
           >
-            {Object.keys(jobs).map((jobId) => (
-              <Grid key={jobId} item xs={5}>
-                {applications.includes(jobs[jobId].id) ? <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props} isApplied={true}/> :
-                  <JobCard key={jobId} jobs={jobs} jobId={jobId} props={props}/>}
+            {jobs.map((job) => (
+              <Grid key={job.id} item xs={5}>
+                {applications.includes(job.id) ? <JobCard key={job.id} job={job} isApplied={true}/> :
+                  <JobCard key={job.id} job={job} />}
               </Grid>
             ))}
           </Grid>
