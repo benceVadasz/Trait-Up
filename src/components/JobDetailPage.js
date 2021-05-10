@@ -13,13 +13,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Link from '@material-ui/core/Link';
 import parse from 'html-react-parser';
-import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {getFavourites} from "../getFavourites";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
-import {useParams} from "react-router";
 import Spinner from "react-spinner-material";
 
 const useStyles = makeStyles((theme) => ({

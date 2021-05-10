@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Button from '@material-ui/core/Button';
+import {Button} from '@material-ui/core';
 import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +38,8 @@ export default function MenuAppBar() {
     window.location.href = '/';
 
   }
+
+
 
   return (
     <div className={classes.root}>
