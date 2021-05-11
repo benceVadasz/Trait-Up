@@ -38,23 +38,27 @@ const useStyles = makeStyles((theme) => ({
     left: '7%',
   },
   joinBtn: {
-    position: 'absolute',
     fontFamily: 'Fugaz One, cursive',
-    top: '59%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
   },
   singIn: {
-    position: 'absolute',
     fontFamily: 'Fugaz One, cursive',
-    top: '83%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+  },
+  btnContainer: {
+    marginLeft: 84,
+    width: 220,
+    display: 'flex',
+    paddingTop: '110%',
+    justifyContent: 'space-around'
   }
 }));
 
 export default function LandingPage() {
   const classes = useStyles();
+  const token = sessionStorage.getItem('token');
+
+  if (token) {
+    window.location.href = 'http://localhost:3000/feed'
+  }
 
   return (
     <div className={classes.root}>
@@ -64,6 +68,7 @@ export default function LandingPage() {
       <Typography className={classes.welcomeText} variant="body2" gutterBottom>
         Your ultimate job hunt tool to find a job tailored perfectly to your unique personality archetype
       </Typography>
+      <div className={classes.btnContainer}>
       <Button
         color="primary"
         variant="contained"
@@ -73,9 +78,6 @@ export default function LandingPage() {
       >
         Sign up
       </Button>
-      <Typography className={classes.haveAccount} variant="body2" gutterBottom>
-        Already have an account?
-      </Typography>
       <Button
         color="primary"
         variant="contained"
@@ -85,6 +87,7 @@ export default function LandingPage() {
       >
         Sign in
       </Button>
+      </div>
     </div>
   );
 }
