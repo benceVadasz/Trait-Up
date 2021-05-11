@@ -17,6 +17,7 @@ import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import MobileNav from './components/MobileNav'
 import LandingPage from "./components/LandingPage";
+import Feed from "./components/Feed";
 
 const App = (props) => {
   const store = createStore(favouriteModel);
@@ -37,6 +38,7 @@ const App = (props) => {
             <JobProvider>
               <Router>
                 <StoreProvider store={store}>
+                  <Route exact path="/welcome" children={<Feed/>}/>
                   <Route exact path="/" children={<LandingPage/>}/>
                   <Route exact path="/register" children={<Register/>}/>
                   <Route exact path="/login" children={<Login/>}/>
