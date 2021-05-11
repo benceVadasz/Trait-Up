@@ -33,20 +33,16 @@ const App = (props) => {
     <>
       {isMobile ?
         <>
-          {isMobileNavNeeded ? <MobileNav/> : null}
           <JobsProvider>
             <JobProvider>
               <Router>
+                {isMobileNavNeeded ? <MobileNav/> : null}
                 <StoreProvider store={store}>
-                  <Route exact path="/welcome" children={<Feed/>}/>
+                  <Route exact path="/feed" children={<Feed/>}/>
                   <Route exact path="/" children={<LandingPage/>}/>
                   <Route exact path="/register" children={<Register/>}/>
                   <Route exact path="/login" children={<Login/>}/>
-                  <Route
-                    exact
-                    path="/jobs"
-                    render={(props) => <JobList {...props} />}
-                  />
+                  <Route exact path="/jobs" children={<JobList/>}/>
                   <Route
                     exact
                     path="/jobs/:id"

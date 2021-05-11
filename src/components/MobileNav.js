@@ -5,11 +5,12 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import Paper from '@material-ui/core/Paper';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import SearchIcon from '@material-ui/icons/Search';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
+import {Link} from "react-router-dom";
+import {Button} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,38 +69,46 @@ export default function BottomAppBar() {
       <CssBaseline/>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
-          <div className={classes.iconButton}>
-            <IconButton className={classes.icon}>
-              <SearchIcon/>
-            </IconButton>
-            <Typography className={classes.buttonLabel} variant="body2">
-              Jobs
-            </Typography>
-          </div>
-          <div className={classes.iconButton}>
-            <IconButton className={classes.icon}>
-              <StarBorderIcon/>
-            </IconButton>
-            <Typography className={classes.buttonLabel} variant="body2">
-              Favourites
-            </Typography>
-          </div>
-          <div className={classes.iconButton}>
-            <IconButton className={classes.icon}>
-              <DescriptionOutlinedIcon/>
-            </IconButton>
-            <Typography className={classes.buttonLabel} variant="body2">
-              Applications
-            </Typography>
-          </div>
-          <div className={classes.iconButton}>
-            <IconButton className={classes.icon}>
-              <PersonOutlineOutlinedIcon/>
-            </IconButton>
-            <Typography className={classes.buttonLabel} variant="body2">
-              Profile
-            </Typography>
-          </div>
+          <Button className="paper-button" component={Link} to="/jobs">
+            <div className={classes.iconButton}>
+              <IconButton className={classes.icon}>
+                <SearchIcon/>
+              </IconButton>
+              <Typography className={classes.buttonLabel} variant="body2">
+                Jobs
+              </Typography>
+            </div>
+          </Button>
+          <Button className="paper-button" component={Link} to="/profile/favourites" color="inherit">
+            <div className={classes.iconButton}>
+              <IconButton className={classes.icon}>
+                <StarBorderIcon/>
+              </IconButton>
+              <Typography className={classes.buttonLabel} variant="body2">
+                Favourites
+              </Typography>
+            </div>
+          </Button>
+          <Button className="paper-button" component={Link} to="/profile/applications" color="inherit">
+            <div className={classes.iconButton}>
+              <IconButton className={classes.icon}>
+                <DescriptionOutlinedIcon/>
+              </IconButton>
+              <Typography className={classes.buttonLabel} variant="body2">
+                Applications
+              </Typography>
+            </div>
+          </Button>
+          <Button className="paper-button" component={Link} to="/profile" color="inherit">
+            <div className={classes.iconButton}>
+              <IconButton className={classes.icon}>
+                <PersonOutlineOutlinedIcon/>
+              </IconButton>
+              <Typography className={classes.buttonLabel} variant="body2">
+                Profile
+              </Typography>
+            </div>
+          </Button>
 
         </Toolbar>
       </AppBar>

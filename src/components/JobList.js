@@ -10,7 +10,8 @@ import axios from "axios";
 import {BASE_URL} from "../constants";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import {forEach} from "react-bootstrap/ElementChildren";
+import {useTheme} from '@material-ui/core/styles';
+import {useMediaQuery} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -34,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobList = () => {
-
   let {jobs, setJobs, allJobs, allLocations, loading} = useContext(JobsContext);
   const classes = useStyles();
   const token = sessionStorage.getItem("token");
@@ -47,6 +47,8 @@ const JobList = () => {
   const favouriteJobs = useStoreState((state) => state.favourites);
   const [isBottom, setIsBottom] = useState(false);
   const [applications, setApplications] = useState([]);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (token) {
@@ -227,12 +229,17 @@ const JobList = () => {
             spacing={6}
             justify="center"
           >
-            {jobs.map((job) => (
-              <Grid key={job.id} item xs={5}>
-                {applications.includes(job.id) ? <JobCard job={job} key={job.id} isApplied={true}/> :
-                  <JobCard job={job} key={job.id}/>}
-              </Grid>
-            ))}
+            {!isMobile ?
+              jobs.map((job) => (
+                <Grid key={job.id} item xs={5}>
+                  {applications.includes(job.id) ? <JobCard job={job} key={job.id} isApplied={true}/> :
+                    <JobCard job={job} key={job.id}/>}
+                </Grid>
+              ))
+             :
+              jobs.map((job) => (
+                    <JobCard job={job} key={job.id}/>
+              ))}
           </Grid>
         </div>
       </InfiniteScroll>

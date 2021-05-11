@@ -69,7 +69,7 @@ function Login() {
         setLoading(false);
         sessionStorage.setItem("user", JSON.stringify(response.data.user));
         sessionStorage.setItem("token", response.data.token);
-        !isMobile ? window.location.href = '/' : window.location.href = '/welcome';
+        !isMobile ? window.location.href = '/' : window.location.href = '/feed';
       })
       .catch(function (error) {
         alert("Invalid credentials");
