@@ -9,15 +9,15 @@ import JobCard from "./JobCard";
 import Typography from "@material-ui/core/Typography";
 import Spinner from "react-spinner-material";
 
+
 function Features() {
   const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      // flexGrow: 1,
       borderBottom: 'none',
     },
     load: {position: 'fixed', top: "50%", left: "50%", transform: "translate(-50%, -50%)"},
     paper: {
-      padding: theme.spacing(10),
       margin: 'auto',
       width: '100%',
       minHeight: '100vh',
@@ -40,12 +40,16 @@ function Features() {
       maxWidth: '100%',
       maxHeight: '100%',
     },
-    np: {}
+    np: {
+      marginTop: 10
+    }
   }));
 
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [newJobs, setNewJobs] = useState([]);
+
+
 
   useEffect(() => {
     setLoading(true)
@@ -85,9 +89,7 @@ function Features() {
           New positions for you
         </Typography>
         {newJobs.map((job) => (
-          <Grid key={job.id} item xs={5}>
             <JobCard job={job} key={job.id}/>
-          </Grid>
         ))}
       </Paper>
     </div>
