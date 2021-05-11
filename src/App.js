@@ -16,12 +16,20 @@ import favouriteModel from "./favouriteModel";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import MobileNav from './components/MobileNav'
+import LandingPage from "./components/LandingPage";
 
 const App = (props) => {
   const store = createStore(favouriteModel);
+  const token = sessionStorage.getItem('token');
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  if (!token && isMobile) {
+    return (
+      <LandingPage/>
+    )
+  }
 
   return (
     <>
