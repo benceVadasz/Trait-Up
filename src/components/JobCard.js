@@ -75,7 +75,7 @@ const JobCard = ({job, isApplied}) => {
 
   const favouriteJobs = useStoreState((state) => state.favourites);
   useEffect(() => {
-    if (favouriteJobs.length > 0) {
+    if (favouriteJobs && favouriteJobs.length > 0) {
       for (let fav of favouriteJobs) {
         if (fav.job_id === job.id) {
           setLiked(true);
