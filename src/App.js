@@ -24,54 +24,84 @@ const App = (props) => {
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  if (!token && isMobile) {
-    return (
-      <LandingPage/>
-    )
-  }
+  const isMobileNavNeeded = window.location.href !== 'http://localhost:3000/login' &&
+                            window.location.href !== 'http://localhost:3000/register' &&
+                            window.location.href !== 'http://localhost:3000/';
 
   return (
     <>
-      {isMobile ? <MobileNav/> :
-        <JobsProvider>
-          <JobProvider>
-            <Router>
-              <StoreProvider store={store}>
-                <Navbar/>
-                <Route exact path="/" children={<HomeBody/>}/>
-                <Route exact path="/register" children={<Register/>}/>
-                <Route exact path="/login" children={<Login/>}/>
-                <Route
-                  exact
-                  path="/jobs"
-                  render={(props) => <JobList {...props} />}
-                />
-                <Route
-                  exact
-                  path="/jobs/:id"
-                  children={<JobDetail/>}
-                  // render={(props) => <JobDetail {...props} />}
-                />
-
-                <UserProvider>
+      {isMobile ?
+        <>
+          {isMobileNavNeeded ? <MobileNav/> : null}
+          <JobsProvider>
+            <JobProvider>
+              <Router>
+                <StoreProvider store={store}>
+                  <Route exact path="/" children={<LandingPage/>}/>
+                  <Route exact path="/register" children={<Register/>}/>
+                  <Route exact path="/login" children={<Login/>}/>
                   <Route
-                    path="/profile"
-                    render={(props) => (
-                      <>
-                        <ProfilePage/>
-                      </>
-                    )}
+                    exact
+                    path="/jobs"
+                    render={(props) => <JobList {...props} />}
                   />
-                </UserProvider>
-              </StoreProvider>
-            </Router>
-          </JobProvider>
-        </JobsProvider>
+                  <Route
+                    exact
+                    path="/jobs/:id"
+                    children={<JobDetail/>}
+                  />
 
+                  <UserProvider>
+                    <Route
+                      path="/profile"
+                      render={(props) => (
+                          <ProfilePage/>
+                      )}
+                    />
+                  </UserProvider>
+                </StoreProvider>
+              </Router>
+            </JobProvider>
+          </JobsProvider>
+        </> :
+        <>
+          <JobsProvider>
+            <JobProvider>
+              <Router>
+                <StoreProvider store={store}>
+                  <Navbar/>
+                  <Route exact path="/" children={<HomeBody/>}/>
+                  <Route exact path="/register" children={<Register/>}/>
+                  <Route exact path="/login" children={<Login/>}/>
+                  <Route
+                    exact
+                    path="/jobs"
+                    render={(props) => <JobList {...props} />}
+                  />
+                  <Route
+                    exact
+                    path="/jobs/:id"
+                    children={<JobDetail/>}
+                  />
+
+                  <UserProvider>
+                    <Route
+                      path="/profile"
+                      render={(props) => (
+                        <>
+                          <ProfilePage/>
+                        </>
+                      )}
+                    />
+                  </UserProvider>
+                </StoreProvider>
+              </Router>
+            </JobProvider>
+          </JobsProvider>
+        </>
       }
     </>
   );
-};
+}
 
 export default App;

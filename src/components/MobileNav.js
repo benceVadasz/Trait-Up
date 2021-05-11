@@ -66,8 +66,6 @@ export default function BottomAppBar() {
   return (
     <React.Fragment>
       <CssBaseline/>
-      <Paper square className={classes.paper}>
-      </Paper>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <div className={classes.iconButton}>
