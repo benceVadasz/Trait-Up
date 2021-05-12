@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
 import {Button, Grid} from "@material-ui/core";
@@ -12,8 +12,14 @@ import {useStoreActions, useStoreState} from "easy-peasy";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
-import DeleteIcon from "@material-ui/icons/Delete";
 import ClearIcon from '@material-ui/icons/Clear';
+import {
+  List,
+  AutoSizer,
+  CellMeasurer,
+  CellMeasurerCache,
+} from "react-virtualized";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -75,6 +81,13 @@ const JobList = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const cache = useRef(
+    new CellMeasurerCache({
+      fixedWidth: true,
+      defaultHeight: 100,
+    })
+  );
+
   useEffect(() => {
     if (token) {
       axios
@@ -131,22 +144,22 @@ const JobList = () => {
     setJobs(allJobs)
     let filteredJobs = [];
     if (allJobs.length > 0) {
-      for (let i in allJobs) {
+       for (let job of allJobs) {
         if (filterType === 'both') {
           let splitType = value.split(/[ ,]+/);
           let queryKeyWord = splitType[0];
-          if (allJobs[i].description.includes(queryKeyWord) && allJobs[i].location.includes(value)) {
-            filteredJobs.push(allJobs[i])
+          if (job.description.includes(queryKeyWord) && job.location.includes(value)) {
+            filteredJobs.push(job)
           }
         } else if (filterType === "jobType") {
           let splitType = value.split(/[ ,]+/);
           let queryKeyWord = splitType[0];
-          if (allJobs[i].description.includes(queryKeyWord)) {
-            filteredJobs.push(allJobs[i])
+          if (job.description.includes(queryKeyWord)) {
+            filteredJobs.push(job)
           }
         } else {
-          if (allJobs[i].location.includes(value)) {
-            filteredJobs.push(allJobs[i])
+          if (job.location.includes(value)) {
+            filteredJobs.push(job)
           }
         }
       }
@@ -221,8 +234,8 @@ const JobList = () => {
         >
           <Grid className={isMobile ? classes.typeSearch : ''} item lg={4}>
             <div className={isMobile ? classes.search : ''}>
-            <SearchForm  onFilter={handleOnTypeFilter}
-                        jobs={allJobs} clear={clearJob}/>
+              <SearchForm onFilter={handleOnTypeFilter}
+                          jobs={allJobs} clear={clearJob}/>
             </div>
             {isMobile ? <Button
               variant="contained"
@@ -268,10 +281,42 @@ const JobList = () => {
                 </Grid>
               ))
               :
-              jobs.map((job, index) => (
-                <JobCard job={job} key={index}/>
-              ))}
+              <div style={{width: "100%", height: "120vh"}}>
+                <AutoSizer>
+                  {({width, height}) => (
+                    <List
+                      width={width}
+                      height={height}
+                      rowHeight={cache.current.rowHeight}
+                      deferredMeasurementCache={cache.current}
+                      rowCount={jobs.length}
+                      rowRenderer={({key, index, style, parent}) => {
+                        const job = jobs[index];
+
+                        return (
+                          <CellMeasurer
+                            key={key}
+                            cache={cache.current}
+                            parent={parent}
+                            columnIndex={0}
+                            rowIndex={index}
+                          >
+                            <div style={style}>
+                              <JobCard job={job} key={index}/>
+                            </div>
+                          </CellMeasurer>
+                        );
+                      }}
+                    />
+                  )}
+                </AutoSizer>
+              </div>
+            }
+            {/*  // jobs.map((job, index) => (*/}
+            {/*//   <JobCard job={job} key={index}/>*/}
+            {/*// ))*/}
           </Grid>
+
         </div>
       </InfiniteScroll>
 

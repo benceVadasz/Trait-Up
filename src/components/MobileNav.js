@@ -79,7 +79,7 @@ export default function BottomAppBar() {
               </Typography>
             </div>
           </Button>
-          <Button className="paper-button" component={Link} to="/profile/favourites" color="inherit">
+          <Button className="paper-button" component={Link} to="/profile/favorites" color="inherit">
             <div className={classes.iconButton}>
               <IconButton className={classes.icon}>
                 <StarBorderIcon/>
