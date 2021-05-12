@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from "react";
 import {JobsContext} from "../contexts/JobsContext";
 import JobCard from "./JobCard";
-import {Grid} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchForm from "./SearchForm";
 import SearchForm2 from "./SearchForm2";
@@ -12,6 +12,8 @@ import {useStoreActions, useStoreState} from "easy-peasy";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
+import DeleteIcon from "@material-ui/icons/Delete";
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -32,6 +34,30 @@ const useStyles = makeStyles((theme) => ({
       width: 600,
     },
   },
+  mobileDemo: {
+    height: 80,
+    marginBottom: 120,
+    marginRight: 160,
+  },
+  typeSearch: {
+    display: 'flex',
+    width: '100%',
+    marginLeft: 100,
+  },
+  button: {
+    width: 120,
+    height: 30,
+    fontSize: "15px",
+    color: "white",
+    alignSelf: 'flex-end',
+    marginLeft: 50,
+    marginTop: 10,
+  },
+  search: {
+    alignSelf: 'flex-start',
+    left: 10,
+    marginLeft: 62,
+  }
 }));
 
 const JobList = () => {
@@ -44,7 +70,6 @@ const JobList = () => {
   const [hasMore, setHasMore] = useState(true);
   const [lengthOfJobs, setLengthOfJobs] = useState(50);
   const setFaves = useStoreActions((actions) => actions.setFavourites);
-  const favouriteJobs = useStoreState((state) => state.favourites);
   const [isBottom, setIsBottom] = useState(false);
   const [applications, setApplications] = useState([]);
   const theme = useTheme();
@@ -67,10 +92,6 @@ const JobList = () => {
         });
     }
   }, []);
-  //
-  // useEffect(() => {
-  //   fetchApplications();
-  // }, [setApplications])
 
 
   function handleOnTypeFilter(e) {
@@ -105,6 +126,7 @@ const JobList = () => {
   }
 
   function filterJobs(filterType, value) {
+    console.log(filterType, value)
     setHasMore(false);
     setJobs(allJobs)
     let filteredJobs = [];
@@ -156,7 +178,6 @@ const JobList = () => {
   }, [page]);
 
   const handleScroll = (e) => {
-    console.log(allJobs.length)
     if (e.target.scrollingElement.scrollHeight -
       e.target.scrollingElement.scrollTop === e.target.scrollingElement.clientHeight) {
       setIsBottom(true)
@@ -182,8 +203,6 @@ const JobList = () => {
       <div className={classes.load}>
         <Spinner
           size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
           visible={true}
         />
       </div>
@@ -195,13 +214,25 @@ const JobList = () => {
       <Grid container justify="center">
         <Grid
           container
-          className={classes.demo}
+          className={!isMobile ? classes.demo : classes.mobileDemo}
           alignItems="center"
           justify="center"
           style={{borderRadius: 20}}
         >
-          <Grid item lg={4}>
-            <SearchForm onFilter={handleOnTypeFilter} jobs={allJobs} clear={clearJob}/>
+          <Grid className={isMobile ? classes.typeSearch : ''} item lg={4}>
+            <div className={isMobile ? classes.search : ''}>
+            <SearchForm  onFilter={handleOnTypeFilter}
+                        jobs={allJobs} clear={clearJob}/>
+            </div>
+            {isMobile ? <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              className={classes.button}
+              endIcon={<ClearIcon/>}
+              onClick={setJobs(allJobs)}>
+              Clear
+            </Button> : null}
           </Grid>
 
           <Grid item lg={4}>
@@ -230,15 +261,15 @@ const JobList = () => {
             justify="center"
           >
             {!isMobile ?
-              jobs.map((job) => (
-                <Grid key={job.id} item xs={5}>
-                  {applications.includes(job.id) ? <JobCard job={job} key={job.id} isApplied={true}/> :
-                    <JobCard job={job} key={job.id}/>}
+              jobs.map((job, index) => (
+                <Grid key={index} item xs={5}>
+                  {applications.includes(job.id) ? <JobCard job={job} key={index} isApplied={true}/> :
+                    <JobCard job={job} key={index}/>}
                 </Grid>
               ))
-             :
-              jobs.map((job) => (
-                    <JobCard job={job} key={job.id}/>
+              :
+              jobs.map((job, index) => (
+                <JobCard job={job} key={index}/>
               ))}
           </Grid>
         </div>
