@@ -11,8 +11,9 @@ import { Route} from 'react-router-dom';
 import ProfileFavorites from './ProfileFavorites';
 import ProfileApplications from './ProfileApplications';
 import ProfileAssessments from './ProfileAssessments';
-const theme = useTheme();
-const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+
 
 const classes = {
   container: {
@@ -57,9 +58,12 @@ const theme = createMuiTheme({
 });
 
 const ProfilePage = () => {
+  const theme2 = useTheme();
+  const isMobile = useMediaQuery(theme2.breakpoints.down('sm'));
+
   return (
     <>
-      {<ThemeProvider theme={theme}>
+      {!isMobile ? <ThemeProvider theme={theme}>
         <Container maxWidth="lg" style={classes.container}>
           <Grid container spacing={3} direction="row">
             {/* Profile menu */}
@@ -122,7 +126,7 @@ const ProfilePage = () => {
             </Grid>
           </Grid>
         </Container>
-      </ThemeProvider>}
+      </ThemeProvider> : <ProfilePersonalInfo/>}
     </>
   );
 };

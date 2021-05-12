@@ -8,23 +8,18 @@ import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import favouriteModel from "../favouriteModel";
-// import { KeyboardDatePicker } from "@material-ui/pickers";
+import {useTheme} from '@material-ui/core/styles';
+import {useMediaQuery} from '@material-ui/core';
+import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
     },
+    height: '100vh'
   },
-  input: {
-    display: 'none',
-  },
-}));
-
-const classes = {
   paper: {
-    padding: "30px",
-    margin: "20px",
     alignItems: "center",
     display: "flex",
     flexFlow: "column"
@@ -44,11 +39,25 @@ const classes = {
     color: "white",
     padding: "5px 0"
   },
-}
+  mobilePaper: {
+    width: '100%',
+    height: '100vh',
+  },
+  fields: {
+    marginLeft: 20,
+  },
+  button: {
+    marginTop: 50,
+    marginLeft: 50,
+  },
+  input: {
+    width: 200
+  }
+}));
+
 
 const ProfilePersonalInfo = () => {
-  const uploadClasses = useStyles();
-
+  const classes = useStyles();
   // const [user, setUser] = useContext(UserContext);
 
   const [editable, setEditable] = useState(false);
@@ -59,6 +68,8 @@ const ProfilePersonalInfo = () => {
   const [address, setAddress] = useState(userState.address);
   const [birth_date, setBirthday] = useState("");
   const token = sessionStorage.getItem("token");
+  const theme2 = useTheme();
+  const isMobile = useMediaQuery(theme2.breakpoints.down('sm'));
 
   useEffect(() => {
     axios
@@ -66,7 +77,6 @@ const ProfilePersonalInfo = () => {
         `${BASE_URL}/Trait-Up-Backend/public/api/getUser`,
         {headers: {Authorization: "Bearer " + token}}
       ).then((res) => {
-      console.log(res.data)
       setUserState(res.data)
     })
       .catch(function (error) {
@@ -120,6 +130,11 @@ const ProfilePersonalInfo = () => {
       });
   }
 
+  const logout = () => {
+    sessionStorage.clear();
+    window.location.href = '/';
+  }
+
   const changeName = (e) => {
     setName(e.target.value, console.log(name));
     setUserState({...userState, name: e.target.value});
@@ -147,7 +162,7 @@ const ProfilePersonalInfo = () => {
 
   return (
     <>
-      <Paper elevation={3} style={classes.paper}>
+      <Paper elevation={3} className={!isMobile ? classes.paper : classes.mobilePaper}>
         <Grid container spacing={3} direction="column">
           <Grid item xs container>
             <Grid item xs={10}>
@@ -162,20 +177,20 @@ const ProfilePersonalInfo = () => {
             </Grid>
           </Grid>
           <Grid item container spacing={3} direction="row">
-            <Grid item xs={5} style={classes.avatarGrid}>
-              <Avatar src={userState.photo} alt="pic" variant="square" style={classes.avatar}/>
-              <div className={uploadClasses.root}>
-                <input accept="image/*" className={uploadClasses.input} id="contained-button-file" multiple
+            {!isMobile ? <Grid item xs={5} className={classes.avatarGrid}>
+              <Avatar src={userState.photo} alt="pic" variant="square" className={classes.avatar}/>
+              <div className={classes.root}>
+                <input accept="image/*" className={classes.input} id="contained-button-file" multiple
                        type="file"/>
                 <label htmlFor="contained-button-file">
-                  <Button color="primary" variant="contained" size="small" style={classes.uploadButton}
+                  <Button color="primary" variant="contained" size="small" className={classes.uploadButton}
                           component="span"><PublishIcon fontSize="large"/></Button>
                 </label>
               </div>
-            </Grid>
+            </Grid> : null}
 
-            <Grid item xs={7} container direction="row" spacing={2} align="center" style={{padding: "30px 5px"}}>
-              <Grid item xs={5} container spacing={2}>
+            <Grid item xs={7} container direction="row" spacing={2} align="center" className={{width: '80%', padding: "30px 5px", marginTop: 90}}>
+              <Grid item xs={5} className={isMobile ? classes.fields : ''} container spacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="h4" color="primary" align="right">Name:</Typography>
                 </Grid>
@@ -198,7 +213,7 @@ const ProfilePersonalInfo = () => {
               </Grid>
 
               <Grid item xs={6} container spacing={2}>
-                <Grid item xs={12}>
+                <Grid className={isMobile? classes.input : ''} item xs={12}>
                   <TextField disabled={!editable}
                              variant="standard" value={name ? name : "enter name.."} align="left"
                              onChange={changeName}/>
@@ -210,7 +225,8 @@ const ProfilePersonalInfo = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField disabled={!editable}
-                             variant="standard" value={phone_number ? phone_number : "enter phone_number number.."} align="left"
+                             variant="standard" value={phone_number ? phone_number : "enter phone_number number.."}
+                             align="left"
                              onChange={changePhone}/>
                 </Grid>
                 <Grid item xs={12}>
@@ -238,6 +254,18 @@ const ProfilePersonalInfo = () => {
 
           </Grid>
         </Grid>
+        {isMobile ?
+          <div className={classes.button}>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              endIcon={<ClearIcon/>}
+              onClick={logout}>
+              Logout
+            </Button>
+          </div> : <></>
+        }
       </Paper>
     </>
   )
