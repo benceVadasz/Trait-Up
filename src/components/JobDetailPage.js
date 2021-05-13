@@ -16,7 +16,6 @@ import parse from 'html-react-parser';
 import Button from '@material-ui/core/Button';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {getFavourites} from "../getFavourites";
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
 import {useParams} from "react-router";
