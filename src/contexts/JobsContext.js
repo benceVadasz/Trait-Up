@@ -25,30 +25,14 @@ export const JobsProvider = props => {
         setLoading(false);
         const {data} = response;
         let result = JSON.parse(data["jobs"])
-      //   result.forEach(job => {
-      //     if (!uniqueLocations.includes(job.location)) {
-      //       uniqueLocations.push(job.location);
-      //     }
-      //   })
-      //   setHasMore(result.length > 0)
-      //   setAllLocations(uniqueLocations);
-      //   setAllJobs(result);
-      //   const newJobsData = {};
-      //
-      //   result.forEach((job) => {
-      //     newJobsData[job.id] = {
-      //       id: job.id,
-      //       type: job.type,
-      //       url: job.url,
-      //       created_at: job.created_at,
-      //       company: job.company,
-      //       location: job.location,
-      //       title: job.title,
-      //       description: job.description,
-      //       how_to_apply: job.how_to_apply,
-      //       company_logo: job.company_logo
-      //     }
-      //   });
+        result.forEach(job => {
+          if (!uniqueLocations.includes(job.location)) {
+            uniqueLocations.push(job.location);
+          }
+        })
+        setHasMore(result.length > 0)
+        setAllLocations(uniqueLocations);
+        setAllJobs(result);
         setJobs(result);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps

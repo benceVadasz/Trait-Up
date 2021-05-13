@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import 'fontsource-roboto';
 import FavouriteCard from "./FavouriteCard";
@@ -6,6 +6,7 @@ import {useStoreActions, useStoreState} from "easy-peasy";
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import Spinner from "react-spinner-material";
+import {JobContext} from "../contexts/JobDetailContext";
 
 const classes = {
   paper: {
@@ -13,7 +14,8 @@ const classes = {
     margin: "20px",
     alignItems: "center",
     background: "#eceef7",
-    height: "100%"
+    height: "100%",
+    marginBottom: 77
   },
   favBox: {
     display: "flex",
@@ -28,7 +30,7 @@ const classes = {
 const ProfileFavorites = (props) => {
   const token = sessionStorage.getItem("token");
   const setFaves = useStoreActions((actions) => actions.setFavourites);
-  const favouriteJobs = useStoreState((state) => state.favourites);
+  const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(false);
 
 
@@ -39,6 +41,18 @@ const ProfileFavorites = (props) => {
         {headers: {Authorization: "Bearer " + token}})
       .then((response) => {
         setFaves(response.data.jobs);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    setLoading(true)
+    axios
+      .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
+      )
+      .then((response) => {
+        let firstTen = JSON.parse(response.data.jobs).slice(0, 4);
+        setFavourites(firstTen);
         setLoading(false);
       });
   }, []);
@@ -57,12 +71,10 @@ const ProfileFavorites = (props) => {
 
   return (
       <Paper elevation={3} style={classes.paper}>
-        <Typography variant="h2" color="primary" align="center">Favorites</Typography>
+        <Typography variant="h4" color="primary" align="center">Favorites</Typography>
         <Grid style={classes.favBox} container spacing={3} direction="row">
-          {favouriteJobs.map((job) => (
-            <Grid key={job['job_id']} item xs={5}>
+          {favourites.map((job) => (
               <FavouriteCard props={props} key={job['job_id']} job={job}/>
-            </Grid>
           ))}
         </Grid>
       </Paper>

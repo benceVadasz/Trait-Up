@@ -14,3 +14,11 @@ body {
 .link:visited {
   color: black;
 }
+
+.link {
+  text-decoration: none;
+}
+
+.paper-button {
+  text-transform: unset !important;
+}

@@ -11,6 +11,9 @@ import {
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { BASE_URL } from "../constants";
 import Spinner from "react-spinner-material";
+import {useTheme} from '@material-ui/core/styles';
+import {useMediaQuery} from '@material-ui/core';
+
 
 function Login() {
   const paperStyle = {
@@ -19,7 +22,19 @@ function Login() {
     width: 500,
     margin: "70px auto",
   };
+  const mobilePaperStyle = {
+    padding: "30px 20px",
+    height: 300,
+    width: '90%',
+    margin: "170px auto",
+  };
   const formStyle = {
+    height: 220,
+    display: "flex",
+    flexFlow: "column wrap",
+    justifyContent: "space-between",
+  };
+  const mobileFormStyle = {
     height: 220,
     display: "flex",
     flexFlow: "column wrap",
@@ -34,6 +49,9 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const submit = (e) => {
     setLoading(true);
@@ -51,10 +69,10 @@ function Login() {
         setLoading(false);
         sessionStorage.setItem("user", JSON.stringify(response.data.user));
         sessionStorage.setItem("token", response.data.token);
-        window.location.href = '/';
+        !isMobile ? window.location.href = '/' : window.location.href = '/feed';
       })
       .catch(function (error) {
-        alert("Invalid credentials");
+        alert(error);
       });
   };
 
@@ -73,7 +91,7 @@ function Login() {
   return (
     <div>
       <Grid>
-        <Paper elevation={20} style={paperStyle}>
+        <Paper elevation={20} style={!isMobile? paperStyle : mobilePaperStyle}>
           <Grid align="center">
             <Avatar style={avatarStyle}>
               <AddCircleOutlineOutlinedIcon />
@@ -83,7 +101,7 @@ function Login() {
               Please fill this form to log in!
             </Typography>
           </Grid>
-          <form onSubmit={submit} style={formStyle}>
+          <form onSubmit={submit} style={!isMobile? formStyle : mobileFormStyle}>
             <TextField
               fullWidth
               label="Email"

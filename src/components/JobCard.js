@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,11 +12,16 @@ import React, {useEffect, useState} from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
+import {useMediaQuery} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 200,
 
+  },
+  mobileRoot: {
+    width: '95%',
+    marginTop: 10,
   },
   media: {
 
@@ -54,6 +59,9 @@ const JobCard = ({job, isApplied}) => {
   const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const likeSetter = () => {
     setLiked(!liked)
   }
@@ -73,22 +81,21 @@ const JobCard = ({job, isApplied}) => {
     }
   }
 
-  const favouriteJobs = useStoreState((state) => state.favourites);
-  useEffect(() => {
-    if (favouriteJobs.length > 0) {
-      for (let fav of favouriteJobs) {
-        if (fav.job_id === job.id) {
-          setLiked(true);
-        }
-      }
-    }
-    // eslint-disable-next-line
-  }, []);
+  // const favouriteJobs = useStoreState((state) => state.favourites);
+  // useEffect(() => {
+  //   if (favouriteJobs && favouriteJobs.length > 0) {
+  //     for (let fav of favouriteJobs) {
+  //       if (fav.job_id === job.id) {
+  //         setLiked(true);
+  //       }
+  //     }
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
 
   return (
-
-      <Card  className={classes.root}>
+      <Card  className={!isMobile ? classes.root : classes.mobileRoot}>
         <Link className={classes.link + ' link'} to={"/jobs/" + job.id}>
         <CardHeader
           avatar={
@@ -99,10 +106,10 @@ const JobCard = ({job, isApplied}) => {
           title={`${job.title}`}
           subheader={`${job.company}`}
         />
-        <CardMedia height="140"
-                   className={classes.media}
-                   image={`${job.company_logo}`}
-        />
+          {!isMobile ? <CardMedia height="140"
+                      className={classes.media}
+                      image={`${job.company_logo}`}
+          /> : null}
         </Link>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -133,7 +140,6 @@ const JobCard = ({job, isApplied}) => {
 
         </CardActions>
       </Card>
-
   )
 }
 
