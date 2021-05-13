@@ -72,7 +72,7 @@ function Login() {
         !isMobile ? window.location.href = '/' : window.location.href = '/feed';
       })
       .catch(function (error) {
-        alert("Invalid credentials");
+        alert(error);
       });
   };
 

@@ -18,6 +18,8 @@ import {useMediaQuery} from '@material-ui/core';
 import MobileNav from './components/MobileNav'
 import LandingPage from "./components/LandingPage";
 import Feed from "./components/Feed";
+import ProfileFavorites from "./components/ProfileFavorites";
+import ProfileApplications from "./components/ProfileApplications";
 
 const App = (props) => {
   const store = createStore(favouriteModel);
@@ -47,6 +49,24 @@ const App = (props) => {
                     exact
                     path="/jobs/:id"
                     children={<JobDetail/>}
+                  />
+                  <Route
+                    exact
+                    path="/profiles/favourites"
+                    render={(props) => (
+                      <>
+                        <ProfileFavorites {...props}/>
+                      </>
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/profiles/applications"
+                    render={(props) => (
+                      <>
+                        <ProfileApplications {...props}/>
+                      </>
+                    )}
                   />
 
                   <UserProvider>

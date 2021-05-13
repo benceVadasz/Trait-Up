@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     alignItems: "center",
     display: "flex",
-    flexFlow: "column"
+    flexFlow: "column",
   },
   avatar: {
     margin: "10px",
@@ -40,8 +40,10 @@ const useStyles = makeStyles((theme) => ({
     padding: "5px 0"
   },
   mobilePaper: {
-    width: '100%',
-    height: '100vh',
+    padding: "20px",
+    margin: "15px",
+    // alignItems: "center",
+    height: '100vh'
   },
   fields: {
     marginLeft: 20,
@@ -51,7 +53,11 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 50,
   },
   input: {
-    width: 200
+    marginLeft: 40,
+    marginTop: 5,
+    width: 280,
+    display: 'flex',
+    flexFlow: 'column'
   }
 }));
 
@@ -208,12 +214,13 @@ const ProfilePersonalInfo = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={1} align="center">
+              {!isMobile ? <Grid item xs={1} align="center">
                 <Divider orientation="vertical"/>
-              </Grid>
+              </Grid> : null}
 
               <Grid item xs={6} container spacing={2}>
-                <Grid className={isMobile? classes.input : ''} item xs={12}>
+                <div className={isMobile? classes.input : ''}>
+                <Grid item xs={12}>
                   <TextField disabled={!editable}
                              variant="standard" value={name ? name : "enter name.."} align="left"
                              onChange={changeName}/>
@@ -225,7 +232,7 @@ const ProfilePersonalInfo = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField disabled={!editable}
-                             variant="standard" value={phone_number ? phone_number : "enter phone_number number.."}
+                             variant="standard" value={phone_number ? phone_number : "enter phone number.."}
                              align="left"
                              onChange={changePhone}/>
                 </Grid>
@@ -237,7 +244,6 @@ const ProfilePersonalInfo = () => {
                 <Grid item xs={12}>
                   <TextField
                     id="date"
-                    label="Birthday"
                     type="date"
                     disabled={!editable}
                     onChange={changeBirthday}
@@ -247,7 +253,9 @@ const ProfilePersonalInfo = () => {
                     }}
                   />
 
+
                 </Grid>
+                </div>
               </Grid>
 
             </Grid>

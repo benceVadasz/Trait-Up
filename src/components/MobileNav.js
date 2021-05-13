@@ -79,7 +79,7 @@ export default function BottomAppBar() {
               </Typography>
             </div>
           </Button>
-          <Button className="paper-button" component={Link} to="/profile/favorites" color="inherit">
+          <Button className="paper-button" component={Link} to="/profiles/favourites" color="inherit">
             <div className={classes.iconButton}>
               <IconButton className={classes.icon}>
                 <StarBorderIcon/>
@@ -89,7 +89,7 @@ export default function BottomAppBar() {
               </Typography>
             </div>
           </Button>
-          <Button className="paper-button" component={Link} to="/profile/applications" color="inherit">
+          <Button className="paper-button" component={Link} to="/profiles/applications" color="inherit">
             <div className={classes.iconButton}>
               <IconButton className={classes.icon}>
                 <DescriptionOutlinedIcon/>

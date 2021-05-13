@@ -29,6 +29,7 @@ function Features() {
       alignSelf: 'stretch',
       alignItems: 'center',
       justifyContent: 'space-between',
+      marginBottom: 77
     },
     image: {
       width: 128,
