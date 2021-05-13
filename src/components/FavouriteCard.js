@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,12 +15,16 @@ import axios from 'axios';
 import {BASE_URL} from "../constants";
 import {JobContext} from "../contexts/JobDetailContext";
 import {Link} from "react-router-dom";
+import {useMediaQuery} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 200,
-
+  },
+  mobileRoot: {
+    width: '95%',
+    marginTop: 10,
   },
   media: {
 
@@ -58,6 +62,9 @@ const FavouriteCard = ({props, job}) => {
   const {history} = props;
   const [currJob, setJob] = useContext(JobContext);
   const [liked, setLiked] = useState(true);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   const removeFromFavourites = () => {
     axios({
@@ -77,7 +84,7 @@ const FavouriteCard = ({props, job}) => {
   }
 
   return (
-    <Card className={classes.root}>
+    <Card className={!isMobile ? classes.root : classes.mobileRoot}>
       <Link className={classes.link + ' link'} to={"/jobs/" + job.job_id}>
       <CardHeader
         avatar={
@@ -88,10 +95,10 @@ const FavouriteCard = ({props, job}) => {
         title={`${job.title}`}
         subheader={`${job.company}`}
       />
-      <CardMedia height="140"
-                 className={classes.media}
-                 image={`${job.company_logo}`}
-      />
+        {!isMobile ? <CardMedia height="140"
+                    className={classes.media}
+                    image={`${job.company_logo}`}
+        /> : null}
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">

@@ -7,13 +7,8 @@ import {BASE_URL} from "../constants";
 import {makeStyles} from "@material-ui/core/styles";
 import JobCard from "./JobCard";
 
-const classess = {
-    paper: {
-        padding: "20px",
-        margin: "20px",
-        alignItems: "center",
-        background: "#eceef7",
-    },
+const classes = {
+
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
+  },
+  paper: {
+    padding: "20px",
+    margin: "20px",
+    alignItems: "center",
+    background: "#eceef7",
+    height: '100vh'
   },
   gridContainer: {
     paddingLeft: "40px",
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileApplications = (props) => {
 
-    const [applications, setApplications] = useState({});
+    const [applications, setApplications] = useState([]);
     const token = sessionStorage.getItem("token");
     const classes = useStyles();
 
@@ -51,32 +53,33 @@ const ProfileApplications = (props) => {
         {headers: {Authorization: "Bearer " + token}})
       .then((response) => {
         let result = response.data.application;
-        const applicationsWithJobId = {};
-        result.forEach((job) => {
-          applicationsWithJobId[job.job_id] = {
-            id: job.id,
-            type: job.type,
-            company: job.company,
-            location: job.location,
-            title: job.title,
-            company_logo: job.company_logo,
-            created_at: job.created_at
-          }
-        });
-        setApplications(applicationsWithJobId);
+        console.log(result)
+        // const applicationsWithJobId = {};
+        // result.forEach((job) => {
+        //   applicationsWithJobId[job.job_id] = {
+        //     id: job.id,
+        //     type: job.type,
+        //     company: job.company,
+        //     location: job.location,
+        //     title: job.title,
+        //     company_logo: job.company_logo,
+        //     created_at: job.created_at
+        //   }
+        // });
+        setApplications(result);
       });
   };
 
     useEffect(() => {
       fetchApplications();
-    }, [setApplications])
+    }, [])
 
     return (
         <>
-            <Paper elevation={3} style={classess.paper}>
+            <Paper elevation={3} className={classes.paper}>
                 <Grid container spacing={3} direction="column">
                     <Grid item xs>
-                        <Typography variant="h2" color="primary" align="center">Applications</Typography>  
+                        <Typography variant="h4" color="primary" align="center">Applications</Typography>
                     </Grid>
                     <Grid item xs container justify="center">
 
@@ -87,10 +90,8 @@ const ProfileApplications = (props) => {
                     spacing={6}
                     justify="center"
                   >
-                    {Object.keys(applications).map((jobId, index) => (
-                      <Grid key={jobId} item xs={5}>
-                        <JobCard key={jobId} jobs={applications} jobId={jobId} props={props} isApplied={true}/>
-                      </Grid>
+                    {applications.map((job, index) => (
+                        <JobCard key={index} job={job} props={props} isApplied={true}/>
                     ))}
                   </Grid>
                 </Grid>

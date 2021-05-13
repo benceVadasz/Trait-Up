@@ -1,6 +1,6 @@
 import React from 'react';
-import {Container, Grid} from '@material-ui/core';
-import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles';
+import {Container, Grid, useMediaQuery} from '@material-ui/core';
+import {ThemeProvider, createMuiTheme, useTheme} from '@material-ui/core/styles';
 import {orange} from '@material-ui/core/colors';
 import 'fontsource-roboto';
 import ProfileMenu from './ProfileMenu';
@@ -11,9 +11,9 @@ import { Route} from 'react-router-dom';
 import ProfileFavorites from './ProfileFavorites';
 import ProfileApplications from './ProfileApplications';
 import ProfileAssessments from './ProfileAssessments';
-// import ProfileMiniDrawer from './ProfileMiniDrawer';
-// import TemporaryDrawer from './TemporaryProfileDrawer';
-// import ProfileDropDownMenu from './ProfileDropDownMenu';
+
+
+
 
 const classes = {
   container: {
@@ -58,9 +58,12 @@ const theme = createMuiTheme({
 });
 
 const ProfilePage = () => {
+  const theme2 = useTheme();
+  const isMobile = useMediaQuery(theme2.breakpoints.down('sm'));
+
   return (
     <>
-      <ThemeProvider theme={theme}>
+      {!isMobile ? <ThemeProvider theme={theme}>
         <Container maxWidth="lg" style={classes.container}>
           <Grid container spacing={3} direction="row">
             {/* Profile menu */}
@@ -123,7 +126,7 @@ const ProfilePage = () => {
             </Grid>
           </Grid>
         </Container>
-      </ThemeProvider>
+      </ThemeProvider> : <ProfilePersonalInfo/>}
     </>
   );
 };
