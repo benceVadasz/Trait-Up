@@ -36,6 +36,7 @@ const ProfileFavorites = (props) => {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const favouriteJobs = useStoreState((state) => state.favourites);
 
 
   useEffect(() => {
@@ -77,7 +78,7 @@ const ProfileFavorites = (props) => {
       <Paper elevation={3} style={classes.paper}>
         <Typography variant="h4" color="primary" align="center">Favorites</Typography>
         <Grid style={classes.favBox} container spacing={3} direction="row">
-          {favourites.map((job) => (
+          {favouriteJobs.map((job) => (
               <FavouriteCard props={props} key={job['job_id']} job={job}/>
           ))}
         </Grid>

@@ -12,20 +12,22 @@ function HomeBody() {
   const setFaves = useStoreActions((actions) => actions.setFavourites);
 
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        setFaves(response.data.jobs);
-      });
+    if (token) {
+      axios
+        .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+          {headers: {Authorization: "Bearer " + token}})
+        .then((response) => {
+          setFaves(response.data.jobs);
+        });
+    }
   }, []);
-    return (
-        <div>
-            <Welcome/>
-            <Features/>
-            <Join/>
-        </div>
-    )
+  return (
+    <div>
+      <Welcome/>
+      <Features/>
+      <Join/>
+    </div>
+  )
 }
 
 export default HomeBody;
