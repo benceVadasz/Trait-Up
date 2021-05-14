@@ -1,15 +1,14 @@
 import React from 'react';
-import  {useEffect, useState } from 'react';
-import { Typography, Paper, Grid } from '@material-ui/core';
+import {useEffect, useState} from 'react';
+import {Typography, Paper, Grid, useMediaQuery} from '@material-ui/core';
 import 'fontsource-roboto';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {makeStyles} from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import JobCard from "./JobCard";
+import Spinner from "react-spinner-material";
 
-const classes = {
-
-}
+const classes = {}
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -18,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     left: "50%",
     transform: "translate(-50%, -50%)",
   },
+  mobileLoad: {position: 'fixed', top: "50%", left: "50%", transform: "translate(-50%, -50%)"},
   paper: {
     padding: "20px",
     margin: "20px",
@@ -42,12 +42,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileApplications = (props) => {
 
-    const [applications, setApplications] = useState([]);
-    const token = sessionStorage.getItem("token");
-    const classes = useStyles();
+  const [applications, setApplications] = useState([]);
+  const token = sessionStorage.getItem("token");
+  const classes = useStyles();
+  const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
-    const fetchApplications = () => {
+  const fetchApplications = () => {
+    setLoading(true)
     axios
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
         {headers: {Authorization: "Bearer " + token}})
@@ -70,34 +74,47 @@ const ProfileApplications = (props) => {
       });
   };
 
-    useEffect(() => {
-      fetchApplications();
-    }, [])
+  useEffect(() => {
+    fetchApplications();
+    setLoading(false)
+  }, [])
 
+  if (loading)
     return (
-        <>
-            <Paper elevation={3} className={classes.paper}>
-                <Grid container spacing={3} direction="column">
-                    <Grid item xs>
-                        <Typography variant="h4" color="primary" align="center">Applications</Typography>
-                    </Grid>
-                    <Grid item xs container justify="center">
+      <div style={!isMobile ? classes.load : classes.mobileLoad}>
+        <Spinner
+          size={120}
+          spinnerColor={"#333"}
+          spinnerWidth={2}
+          visible={true}
+          color={'black'}/>
+      </div>
+    );
 
-                    </Grid>
-                  <Grid
-                    container
-                    className={classes.gridContainer}
-                    spacing={6}
-                    justify="center"
-                  >
-                    {applications.map((job, index) => (
-                        <JobCard key={index} job={job} props={props} isApplied={true}/>
-                    ))}
-                  </Grid>
-                </Grid>
-            </Paper>
-        </>
-    )
+  return (
+    <>
+      <Paper elevation={3} className={classes.paper}>
+        <Grid container spacing={3} direction="column">
+          <Grid item xs>
+            <Typography variant="h4" color="primary" align="center">Applications</Typography>
+          </Grid>
+          <Grid item xs container justify="center">
+
+          </Grid>
+          <Grid
+            container
+            className={classes.gridContainer}
+            spacing={6}
+            justify="center"
+          >
+            {applications.map((job, index) => (
+              <JobCard key={index} job={job} props={props} isApplied={true}/>
+            ))}
+          </Grid>
+        </Grid>
+      </Paper>
+    </>
+  )
 }
 
 export default ProfileApplications

@@ -6,7 +6,8 @@ import {useStoreActions, useStoreState} from "easy-peasy";
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import Spinner from "react-spinner-material";
-import {JobContext} from "../contexts/JobDetailContext";
+import {useTheme} from '@material-ui/core/styles';
+import {useMediaQuery} from '@material-ui/core';
 
 const classes = {
   paper: {
@@ -23,7 +24,8 @@ const classes = {
     justifyContent: "space-around",
     background: "#eceef7",
   },
-  load: {position: 'fixed', top: "50%", left: "60%", transform: "translate(-50%, -50%)"}
+  load: {position: 'fixed', top: "50%", left: "60%", transform: "translate(-50%, -50%)"},
+  mobileLoad: {position: 'fixed', top: "50%", left: "50%", transform: "translate(-50%, -50%)"}
 }
 
 
@@ -32,6 +34,8 @@ const ProfileFavorites = (props) => {
   const setFaves = useStoreActions((actions) => actions.setFavourites);
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const ProfileFavorites = (props) => {
 
   if (loading)
     return (
-      <div style={classes.load}>
+      <div style={!isMobile ? classes.load : classes.mobileLoad}>
         <Spinner
           size={120}
           spinnerColor={"#333"}
