@@ -8,8 +8,6 @@ import ModalBody from "./ModalBody";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import Box from "@material-ui/core/Box";
-import PublishIcon from "@material-ui/icons/Publish";
-import {Grid} from "@material-ui/core";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -118,7 +116,7 @@ const ApplyModal = (job) => {
   const body = (
     <div style={modalStyle} className={classes.paper}>
 
-      <ModalBody applyForJob={applyForJob}></ModalBody>
+      <ModalBody applyForJob={applyForJob}/>
 
       <Box mt={5}>
         <Copyright />

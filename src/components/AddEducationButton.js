@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import favouriteModel from "../favouriteModel";
+import favouriteModel from "../models/favouriteModel";
 import Spinner from "react-spinner-material";
 
 const classes = {

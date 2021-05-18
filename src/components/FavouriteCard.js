@@ -7,20 +7,19 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, {useContext, useState} from 'react';
-import DetailsIcon from '@material-ui/icons/Details';
+import React, {useState} from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import {BASE_URL} from "../constants";
-import {JobContext} from "../contexts/JobDetailContext";
 import {Link} from "react-router-dom";
 import {useMediaQuery} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 200,
+    width: 400,
+    marginBottom: 20,
   },
   mobileRoot: {
     width: '95%',
@@ -59,8 +58,6 @@ const useStyles = makeStyles((theme) => ({
 const FavouriteCard = ({props, job}) => {
   const token = sessionStorage.getItem("token");
   const classes = useStyles();
-  const {history} = props;
-  const [currJob, setJob] = useContext(JobContext);
   const [liked, setLiked] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

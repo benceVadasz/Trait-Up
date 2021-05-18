@@ -10,9 +10,9 @@ import {Link} from "react-router-dom";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import React, {useEffect, useState} from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
-import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
 import {useMediaQuery} from '@material-ui/core';
+import favouriteModel from "../models/favouriteModel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
 const JobCard = ({job, isApplied}) => {
   const classes = useStyles();
   const [liked, setLiked] = useState(false);
-  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
-  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
+  const addToFavourites = favouriteModel.useStoreActions((actions) => actions.addToFavourites);
+  const removeFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -81,7 +81,7 @@ const JobCard = ({job, isApplied}) => {
     }
   }
 
-  const favouriteJobs = useStoreState((state) => state.favourites);
+  const favouriteJobs = favouriteModel.useStoreState((state) => state.favourites);
   useEffect(() => {
     if (favouriteJobs && favouriteJobs.length > 0) {
       for (let fav of favouriteJobs) {
