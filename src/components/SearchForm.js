@@ -5,11 +5,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-const SearchForm = ({ jobs, onFilter, clear }) => {
+const SearchForm = ({ jobs, onTypeFilter, clear }) => {
   return (
     <div style={{ width: 200, marginRight: 10 }}>
       <Autocomplete
-        onChange={onFilter}
+        onChange={onTypeFilter}
         freeSolo
         name={'job'}
         onClose={clear}
