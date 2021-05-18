@@ -1,11 +1,9 @@
-import {action} from "easy-peasy";
+import {action, createContextStore, thunk} from "easy-peasy";
 import axios from "axios";
-import {BASE_URL} from "./constants";
-import {forEach} from "react-bootstrap/ElementChildren";
+import {BASE_URL} from "../constants";
 
 
-const favouriteModel = {
-  token: sessionStorage.getItem("token"),
+const favouriteModel = createContextStore({
   favourites: [],
   addToFavourites: action((state, job) => {
     state.favourites = [...state.favourites, job];
@@ -16,14 +14,22 @@ const favouriteModel = {
   }),
   removeFromFavourites: action((state, id) => {
     removeFromSavedJobs(id);
+  }),
+  saveAsFavourite: thunk((state, job) => {
+    saveAsFavourite(job);
+  }),
+  getFavourites: thunk(async actions => {
+    const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
+      {headers: {Authorization: "Bearer " + sessionStorage.getItem("token")}, params: {limit: 50}})
+    const favourites = await result.data.jobs;
+    actions.setFavourites(favourites)
   })
-};
+});
 
 const saveAsFavourite = (job) => {
 
   if (!favouriteModel.token) {
-    alert("Please log in to like jobs");
-    return false;
+    return Promise.resolve(false)
   } else {
     const {
       id, type, created_at, company, location, title, company_logo
