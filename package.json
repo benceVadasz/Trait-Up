@@ -8,7 +8,6 @@
     "@material-ui/icons": "^4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.58",
     "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
@@ -38,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -61,6 +60,8 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^3.0.0-rc.2",
+    "@testing-library/react": "^11.2.7",
+    "jest": "^26.6.0",
     "react-hook-form": "^7.3.5"
   }
 }
