@@ -7,7 +7,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import favouriteModel from "../favouriteModel";
+import favouriteModel from "../models/favouriteModel";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import ClearIcon from "@material-ui/icons/Clear";
@@ -195,7 +195,7 @@ const ProfilePersonalInfo = () => {
               </div>
             </Grid> : null}
 
-            <Grid item xs={7} container direction="row" spacing={2} align="center" className={{width: '80%', padding: "30px 5px", marginTop: 90}}>
+            <Grid item xs={7} container direction="row" spacing={2} align="center" style={{width: '80%', padding: "30px 5px", marginTop: 90}}>
               <Grid item xs={5} className={isMobile ? classes.fields : ''} container spacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="h4" color="primary" align="right">Name:</Typography>

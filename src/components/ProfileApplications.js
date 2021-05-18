@@ -2,11 +2,10 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import {Typography, Paper, Grid, useMediaQuery} from '@material-ui/core';
 import 'fontsource-roboto';
-import axios from "axios";
-import {BASE_URL} from "../constants";
 import {makeStyles, useTheme} from "@material-ui/core/styles";
 import JobCard from "./JobCard";
 import Spinner from "react-spinner-material";
+import applicationModel from "../models/applicationModel";
 
 const classes = {}
 
@@ -42,40 +41,17 @@ const useStyles = makeStyles((theme) => ({
 
 const ProfileApplications = (props) => {
 
-  const [applications, setApplications] = useState([]);
-  const token = sessionStorage.getItem("token");
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const getApplications = applicationModel.useStoreActions(actions => actions.getApplications);
+  const applications = applicationModel.useStoreState(state => state.applications);
 
-
-  const fetchApplications = () => {
-    setLoading(true)
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/readUsersApplications`,
-        {headers: {Authorization: "Bearer " + token}})
-      .then((response) => {
-        let result = response.data.application;
-        console.log(result)
-        // const applicationsWithJobId = {};
-        // result.forEach((job) => {
-        //   applicationsWithJobId[job.job_id] = {
-        //     id: job.id,
-        //     type: job.type,
-        //     company: job.company,
-        //     location: job.location,
-        //     title: job.title,
-        //     company_logo: job.company_logo,
-        //     created_at: job.created_at
-        //   }
-        // });
-        setApplications(result);
-      });
-  };
 
   useEffect(() => {
-    fetchApplications();
+    setLoading(true)
+    getApplications()
     setLoading(false)
   }, [])
 
@@ -90,6 +66,8 @@ const ProfileApplications = (props) => {
           color={'black'}/>
       </div>
     );
+
+  console.log(applications)
 
   return (
     <>
