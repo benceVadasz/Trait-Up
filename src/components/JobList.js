@@ -66,50 +66,38 @@ const JobList = () => {
   const getFavouritesOfUser = favouriteModel.useStoreActions(actions => actions.getFavourites);
   const getApplications = applicationModel.useStoreActions(actions => actions.getApplications);
   const easyJobs = jobModel.useStoreState(state => state.jobs);
+  const loading = jobModel.useStoreState(state => state.loading);
   const filter = jobModel.useStoreActions(actions => actions.filter);
   const applications = applicationModel.useStoreState(state => state.applications);
-  const [loading, setLoading] = useState(false);
 
-  function handleOnTypeFilter(e) {
-    setLoading(true)
-    const value = e.target.innerHTML;
+  function filterJobType(e, value) {
     setTypeFilter(value);
     filter({'type': value, 'location': locationFilter})
-    setLoading(false)
   }
 
-  function handleOnLocationFilter(e) {
-    setLoading(true)
-    const value = e.target.innerHTML;
+  function filterLocation(e, value) {
     setLocationFilter(value);
     filter({'type': typeFilter, 'location': value})
-    setLoading(false)
   }
 
   function clearJob(e) {
     if (e.type === 'blur') {
-      setLoading(true)
       setTypeFilter("");
       filter({'type': '', 'location': locationFilter})
-      setLoading(false)
     }
   }
 
   function clearLocation(e) {
     if (e.type === 'blur') {
-      setLoading(true)
       setLocationFilter("");
       filter({'type': typeFilter, 'location': ''})
-      setLoading(false)
     }
   }
 
   useEffect(() => {
-    setLoading(true)
     fetchJobs()
     if (sessionStorage.getItem('token')) getFavouritesOfUser()
     if (sessionStorage.getItem('token')) getApplications()
-    setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -127,8 +115,9 @@ const JobList = () => {
   return (
     <>
 
-      <FilterArea handleOnTypeFilter={handleOnTypeFilter} clearJob={clearJob}
-                  handleOnLocationFilter={handleOnLocationFilter} clearLocation={clearLocation}/>
+      <FilterArea handleOnTypeFilter={filterJobType} clearJob={clearJob}
+                  handleOnLocationFilter={filterLocation} clearLocation={clearLocation}
+                  jobs={easyJobs}/>
       <div>
         <Grid
           container
