@@ -58,12 +58,10 @@ const FavouriteCard = ({job}) => {
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const removeEasilyFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
-  const removeFavouriteFromState = favouriteModel.useStoreActions((actions) => actions.removeFromFavouritesState);
+  const removeFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
 
   const removeFavourite = () => {
-    removeEasilyFromFavourites(job.job_id)
-    removeFavouriteFromState(job.job_id)
+    removeFromFavourites(job.job_id)
   }
   return (
     <Card className={!isMobile ? classes.root : classes.mobileRoot}>
