@@ -107,7 +107,7 @@ const JobCard = ({job, isApplied}) => {
           title={`${job.title}`}
           subheader={`${job.company}`}
         />
-          {!isMobile ? <CardMedia height="140"
+          {!isMobile && job.company_logo ? <CardMedia height="140"
                       className={classes.media}
                       image={`${job.company_logo}`}
           /> : null}
