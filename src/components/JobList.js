@@ -70,36 +70,36 @@ const JobList = () => {
   const applications = applicationModel.useStoreState(state => state.applications);
   const [loading, setLoading] = useState(false);
 
-  async function handleOnTypeFilter(e) {
+  function handleOnTypeFilter(e) {
     setLoading(true)
     const value = e.target.innerHTML;
     setTypeFilter(value);
-    await filter({'type': value, 'location': locationFilter})
+    filter({'type': value, 'location': locationFilter})
     setLoading(false)
   }
 
-  async function handleOnLocationFilter(e) {
+  function handleOnLocationFilter(e) {
     setLoading(true)
     const value = e.target.innerHTML;
     setLocationFilter(value);
-    await filter({'type': typeFilter, 'location': value})
+    filter({'type': typeFilter, 'location': value})
     setLoading(false)
   }
 
-  async function clearJob(e) {
+  function clearJob(e) {
     if (e.type === 'blur') {
       setLoading(true)
       setTypeFilter("");
-      await filter({'type': '', 'location': locationFilter})
+      filter({'type': '', 'location': locationFilter})
       setLoading(false)
     }
   }
 
-  async function clearLocation(e) {
+  function clearLocation(e) {
     if (e.type === 'blur') {
       setLoading(true)
       setLocationFilter("");
-      await filter({'type': typeFilter, 'location': ''})
+      filter({'type': typeFilter, 'location': ''})
       setLoading(false)
     }
   }
