@@ -8,12 +8,14 @@ const jobModel = createContextStore({
   jobs: [],
   uniqueLocations: [],
   loading: false,
-  setLoading: action((state) => {
+  toggleLoading: action((state) => {
     state.loading = !state.loading;
   }),
   fetchJobs: thunk(async actions => {
+    actions.toggleLoading()
     const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`, {params: {limit: 50}})
-    const jobs = await JSON.parse(result.data.jobs);
+    actions.toggleLoading()
+    const jobs = result.data;
     actions.filterUniqueLocations(jobs)
     actions.setJobs(jobs)
   }),
@@ -21,16 +23,20 @@ const jobModel = createContextStore({
     state.jobs = jobs;
   }),
   filterUniqueLocations: action((state, jobs) => {
+    const uniqueLocations = []
     jobs.forEach(job => {
-      if (!state.uniqueLocations.includes(job.location)) {
-        state.uniqueLocations.push(job.location);
+      if (!uniqueLocations.includes(job.location)) {
+        uniqueLocations.push(job.location);
       }
     })
+    state.uniqueLocations = uniqueLocations;
   }),
   filter: thunk(async (actions, payload) => {
+    actions.toggleLoading()
     const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/filter`,
       {params: {value: payload}});
-    actions.setJobs(JSON.parse(result.data.jobs))
+    actions.toggleLoading()
+    actions.setJobs(result.data)
   }),
 })
 
