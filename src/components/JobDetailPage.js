@@ -15,9 +15,9 @@ import Link from '@material-ui/core/Link';
 import parse from 'html-react-parser';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {useStoreActions, useStoreState} from "easy-peasy";
 import ApplyModal from "./ApplyModal";
 import Spinner from "react-spinner-material";
+import favouriteModel from "../models/favouriteModel";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,11 +61,11 @@ const JobDetailPage = ({id}) => {
   const [loading, setLoading] = useState(false);
   const [job, setJob] = useState({});
   const user = JSON.parse(sessionStorage.getItem("user"));
-  const [favourites, setFavourites] = useState([]);
 
-  const addToFavourites = useStoreActions((actions) => actions.addToFavourites);
-  const removeFromFavourites = useStoreActions((actions) => actions.removeFromFavourites);
-
+  const addToFavourites = favouriteModel.useStoreActions((actions) => actions.addToFavourites);
+  const removeFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
+  const getFavouritesOfUser = favouriteModel.useStoreActions((actions) => actions.getFavourites);
+  const favourites = favouriteModel.useStoreState((state) => state.favourites);
 
   const classes = useStyles();
   const handleExpandClick = () => {
@@ -74,6 +74,7 @@ const JobDetailPage = ({id}) => {
 
   useEffect(() => {
     setLoading(true)
+    getFavouritesOfUser()
     axios
       .get(
         `${BASE_URL}/Trait-Up-Backend/public/api/getJobById`,
@@ -89,30 +90,19 @@ const JobDetailPage = ({id}) => {
       .catch(function (error) {
         alert('Could not load job details');
       });
-
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
-        {headers: {Authorization: "Bearer " + sessionStorage.getItem("token")}})
-      .then((response) => {
-        console.log(response.data.jobs)
-        console.log(id)
-        if (response.data.jobs.length > 0) {
-          for (let fav of response.data.jobs) {
-            if (fav.job_id === id.id) {
-              setLiked(true);
-            }
-          }
+    if (favourites.length > 0) {
+      for (let fav of favourites) {
+        if (fav.job_id === id.id) {
+          setLiked(true);
         }
-      });
+      }
+    }
+
   }, []);
 
 
   const handleFavouriteEvent = () => {
     if (user) {
-      console.log(job)
       if (liked) {
         removeFromFavourites(job.job_id)
         setLiked(false)
@@ -152,13 +142,13 @@ const JobDetailPage = ({id}) => {
       />
       <CardContent>
 
-        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="span">
           Job type: {`${job.type}`}
         </Typography>
-        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="span">
           Location: {`${job.location}`}
         </Typography>
-        <Typography className={classes.text} variant="body2" color="textSecondary" component="p">
+        <Typography className={classes.text} variant="body2" color="textSecondary" component="span">
           Created at: {`${job.created_at}`}
         </Typography>
       </CardContent>
@@ -182,7 +172,7 @@ const JobDetailPage = ({id}) => {
           className={liked ? classes.liked : ''} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
-        <ApplyModal></ApplyModal>
+        <ApplyModal/>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,

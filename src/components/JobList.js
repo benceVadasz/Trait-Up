@@ -1,5 +1,4 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
-import {JobsContext} from "../contexts/JobsContext";
+import React, {useState, useEffect, useRef} from "react";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
@@ -16,6 +15,7 @@ import jobModel from "../models/jobModel";
 import favouriteModel from "../models/favouriteModel";
 import FilterArea from "./FilterArea";
 import applicationModel from "../models/applicationModel";
+import filterModel from "../models/filterModel";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -63,7 +63,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const JobList = () => {
-  // let {jobs, setJobs, allJobs} = useContext(JobsContext);
   const classes = useStyles();
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
@@ -74,6 +73,7 @@ const JobList = () => {
   const getFavouritesOfUser = favouriteModel.useStoreActions(actions => actions.getFavourites);
   const getApplications = applicationModel.useStoreActions(actions => actions.getApplications);
   const easyJobs = jobModel.useStoreState(state => state.jobs);
+  const filter = jobModel.useStoreActions(actions => actions.filter);
   const applications = applicationModel.useStoreState(state => state.applications);
   const [loading, setLoading] = useState(false);
   const cache = useRef(
@@ -84,33 +84,38 @@ const JobList = () => {
   );
 
 
-  function handleOnTypeFilter(e) {
-    console.log('hwew')
+  async function handleOnTypeFilter(e) {
     const value = e.target.innerHTML;
     setTypeFilter(value);
-    const type = locationFilter !== "" ? 'both' : 'jobType';
-    setJobs(filterJobs(type, value, easyJobs));
+    await filter({'type' : value, 'location': locationFilter})
+    // console.log(filteredArray)
+    // setJobs(filteredArray);
   }
 
   function handleOnLocationFilter(e) {
     const value = e.target.innerHTML;
     setLocationFilter(value);
+    filter({'type' : typeFilter, 'location': value})
     const type = typeFilter !== "" ? 'both' : 'location';
-    setJobs(filterJobs(type, value, easyJobs));
+    // setJobs(filteredArray);
   }
 
   async function clearJob(e) {
     if (e.type === 'blur') {
+      console.log('in type clear')
       setTypeFilter("");
-      const filteredJobs = await filterJobs("location", locationFilter, easyJobs);
-      setJobs(filteredJobs);
+      filter({'type' : '', 'location': locationFilter})
+      // console.log(filteredArray)
+      // setJobs(filteredArray);
     }
   }
 
-  function clearLocation(e) {
+  async function clearLocation(e) {
     if (e.type === 'blur') {
+      console.log('in location clear')
       setLocationFilter("");
-      setJobs(filterJobs("jobType", typeFilter, easyJobs));
+      filter({'type' : typeFilter, 'location': ''})
+      // setJobs(filteredArray);
     }
   }
 
@@ -146,8 +151,8 @@ const JobList = () => {
   useEffect(() => {
     setLoading(true)
     fetchJobs()
-    getFavouritesOfUser()
-    getApplications()
+    if (sessionStorage.getItem('token')) getFavouritesOfUser()
+    if (sessionStorage.getItem('token')) getApplications()
     setLoading(false)
   }, []);
 

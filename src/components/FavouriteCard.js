@@ -7,13 +7,12 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
-import {BASE_URL} from "../constants";
 import {Link} from "react-router-dom";
 import {useMediaQuery} from "@material-ui/core";
+import favouriteModel from "../models/favouriteModel";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,31 +54,17 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const FavouriteCard = ({props, job}) => {
-  const token = sessionStorage.getItem("token");
+const FavouriteCard = ({job}) => {
   const classes = useStyles();
-  const [liked, setLiked] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const removeEasilyFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
+  const removeFavouriteFromState = favouriteModel.useStoreActions((actions) => actions.removeFromFavouritesState);
 
-
-  const removeFromFavourites = () => {
-    axios({
-      method: "post",
-      url:
-        `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
-      headers: {Authorization: "Bearer " + token},
-      params: {
-        id : job.job_id
-      }
-    }).then(() => {
-      setLiked(true);
-    })
-      .catch(function (error) {
-        alert('You have to log in to add jobs to your favourites');
-      });
+  const removeFavourite = () => {
+    removeEasilyFromFavourites(job.job_id)
+    removeFavouriteFromState(job.job_id)
   }
-
   return (
     <Card className={!isMobile ? classes.root : classes.mobileRoot}>
       <Link className={classes.link + ' link'} to={"/jobs/" + job.job_id}>
@@ -109,7 +94,7 @@ const FavouriteCard = ({props, job}) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton className={liked ? classes.liked : ''} onClick={removeFromFavourites} aria-label="add to favorites">
+        <IconButton className={classes.liked} onClick={removeFavourite} aria-label="add to favorites">
           <FavoriteIcon/>
         </IconButton>
         <Button variant="outlined" size="small" color="primary" className={classes.margin}>

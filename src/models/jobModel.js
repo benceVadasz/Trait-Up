@@ -26,7 +26,12 @@ const jobModel = createContextStore({
         state.uniqueLocations.push(job.location);
       }
     })
-  })
+  }),
+  filter: thunk(async (actions, payload) => {
+    const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/filter`,
+      {params: {value: payload}});
+    actions.setJobs(JSON.parse(result.data.jobs))
+  }),
 })
 
 export default jobModel;

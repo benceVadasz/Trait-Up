@@ -15,7 +15,7 @@ ReactDOM.render(
       <jobModel.Provider>
         <favouriteModel.Provider>
           <applicationModel.Provider>
-            <App/>
+              <App/>
           </applicationModel.Provider>
         </favouriteModel.Provider>
       </jobModel.Provider>
