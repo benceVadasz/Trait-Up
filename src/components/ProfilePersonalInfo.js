@@ -88,6 +88,7 @@ const ProfilePersonalInfo = () => {
       .catch(function (error) {
         alert('Could not load user data');
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
 

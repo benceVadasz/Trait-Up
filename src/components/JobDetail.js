@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
 
 const JobDetail = () => {
     const classes = useStyles();
-    const currentJob = JSON.parse(localStorage.getItem("job"))
     const id = useParams();
   
     return (

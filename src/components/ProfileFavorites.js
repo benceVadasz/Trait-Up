@@ -1,14 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import 'fontsource-roboto';
 import FavouriteCard from "./FavouriteCard";
-import {useStoreActions, useStoreState} from "easy-peasy";
-import axios from "axios";
-import {BASE_URL} from "../constants";
 import Spinner from "react-spinner-material";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
-import applicationModel from "../models/applicationModel";
 import favouriteModel from "../models/favouriteModel";
 
 const classes = {

@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import {Grid} from "@material-ui/core";
 import JobCard from "./JobCard";
 import Typography from "@material-ui/core/Typography";
 import Spinner from "react-spinner-material";

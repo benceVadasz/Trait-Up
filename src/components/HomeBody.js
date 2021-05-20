@@ -9,7 +9,7 @@ function HomeBody() {
   const getFavouritesOfUser = favouriteModel.useStoreActions(actions => actions.getFavourites);
 
   useEffect(() => {
-    getFavouritesOfUser()
+    if (sessionStorage.getItem('token')) getFavouritesOfUser()
   }, []);
 
   return (
