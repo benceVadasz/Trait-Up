@@ -13,6 +13,7 @@ const favouriteModel = createContextStore({
     state.favourites = favourites;
   }),
   removeFromFavourites: action((state, id) => {
+    state.favourites = state.favourites.filter(job => job.job_id !== id)
     removeFromSavedJobs(id);
   }),
   saveAsFavourite: thunk((state, job) => {
@@ -21,7 +22,7 @@ const favouriteModel = createContextStore({
   getFavourites: thunk(async actions => {
     const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/getFavouritesOfUser`,
       {headers: {Authorization: "Bearer " + sessionStorage.getItem("token")}, params: {limit: 50}})
-    const favourites = await result.data.jobs;
+    const favourites = result.data.jobs;
     actions.setFavourites(favourites)
   })
 });
@@ -38,16 +39,15 @@ const saveAsFavourite = (job) => {
       method: "post",
       url:
         `${BASE_URL}/Trait-Up-Backend/public/api/addToFavourites`,
-      headers: {Authorization: "Bearer " + favouriteModel.token},
+      headers: {Authorization: "Bearer " + sessionStorage.getItem('token')},
       params: {
         id, type, created_at, company, location, title, company_logo,
       }
-    }).then((res) => {
-      return true;
+    }).then(() => {
+      return Promise.resolve();
     })
-      .catch(function (error) {
-        alert('You have to log in to add jobs to your favourites');
-        return false;
+      .catch(() => {
+        return Promise.reject();
       });
   }
 }
@@ -56,16 +56,15 @@ const removeFromSavedJobs = (id) => {
     method: "post",
     url:
       `${BASE_URL}/Trait-Up-Backend/public/api/removeFromFavourites`,
-    headers: {Authorization: "Bearer " + favouriteModel.token},
+    headers: {Authorization: "Bearer " + sessionStorage.getItem('token')},
     params: {
       id
     }
-  }).then((res) => {
-    return true;
+  }).then(() => {
+    return Promise.resolve();
   })
-    .catch(function (error) {
-      alert('You have to log in to add jobs to your favourites');
-      return false;
+    .catch(() => {
+      return Promise.reject();
     });
 }
 
