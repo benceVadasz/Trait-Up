@@ -38,6 +38,10 @@ const FilterArea = ({handleOnTypeFilter, clearJob, handleOnLocationFilter, clear
     fetchLocations(easyJobs)
   }, [])
 
+  const handleOnLocationFilte = () => {
+    console.log('in filter area')
+  }
+
 
   return (
     <Grid container justify="center">

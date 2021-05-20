@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {Avatar, Button, Grid, Paper, TextField, Typography} from '@material-ui/core';
+import {Button, Grid, Paper, TextField, Typography} from '@material-ui/core';
 import 'fontsource-roboto';
 import Modal from '@material-ui/core/Modal';
 import AddIcon from '@material-ui/icons/Add';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import favouriteModel from "../models/favouriteModel";
 import Spinner from "react-spinner-material";
 
 const classes = {

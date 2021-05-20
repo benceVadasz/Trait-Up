@@ -58,6 +58,7 @@ const JobCard = ({job, isApplied}) => {
   const [liked, setLiked] = useState(false);
   const addToFavourites = favouriteModel.useStoreActions((actions) => actions.addToFavourites);
   const removeFromFavourites = favouriteModel.useStoreActions((actions) => actions.removeFromFavourites);
+  const favouriteJobs = favouriteModel.useStoreState((state) => state.favourites);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -81,7 +82,7 @@ const JobCard = ({job, isApplied}) => {
     }
   }
 
-  const favouriteJobs = favouriteModel.useStoreState((state) => state.favourites);
+
   useEffect(() => {
     if (favouriteJobs && favouriteJobs.length > 0) {
       for (let fav of favouriteJobs) {

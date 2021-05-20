@@ -1,8 +1,6 @@
 import {Route, BrowserRouter as Router} from 'react-router-dom';
 import JobList from "./components/JobList";
 import JobDetail from "./components/JobDetail";
-import {JobsProvider} from "./contexts/JobsContext";
-import {JobProvider} from "./contexts/JobDetailContext";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import HomeBody from "./components/HomeBody";
@@ -31,83 +29,75 @@ const App = (props) => {
     <>
       {isMobile ?
         <>
-          <JobsProvider>
-            <JobProvider>
-              <Router>
-                {isMobileNavNeeded ? <MobileNav/> : null}
-                  <Route exact path="/feed" children={<Feed/>}/>
-                  <Route exact path="/" children={<LandingPage/>}/>
-                  <Route exact path="/register" children={<Register/>}/>
-                  <Route exact path="/login" children={<Login/>}/>
-                  <Route exact path="/jobs" children={<JobList/>}/>
-                  <Route
-                    exact
-                    path="/jobs/:id"
-                    children={<JobDetail/>}
-                  />
-                  <Route
-                    exact
-                    path="/profiles/favourites"
-                    render={(props) => (
-                      <>
-                        <ProfileFavorites {...props}/>
-                      </>
-                    )}
-                  />
-                  <Route
-                    exact
-                    path="/profiles/applications"
-                    render={(props) => (
-                      <>
-                        <ProfileApplications {...props}/>
-                      </>
-                    )}
-                  />
+          <Router>
+            {isMobileNavNeeded ? <MobileNav/> : null}
+            <Route exact path="/feed" children={<Feed/>}/>
+            <Route exact path="/" children={<LandingPage/>}/>
+            <Route exact path="/register" children={<Register/>}/>
+            <Route exact path="/login" children={<Login/>}/>
+            <Route exact path="/jobs" children={<JobList/>}/>
+            <Route
+              exact
+              path="/jobs/:id"
+              children={<JobDetail/>}
+            />
+            <Route
+              exact
+              path="/profiles/favourites"
+              render={(props) => (
+                <>
+                  <ProfileFavorites {...props}/>
+                </>
+              )}
+            />
+            <Route
+              exact
+              path="/profiles/applications"
+              render={(props) => (
+                <>
+                  <ProfileApplications {...props}/>
+                </>
+              )}
+            />
 
-                  <UserProvider>
-                    <Route
-                      path="/profile"
-                      render={(props) => (
-                        <ProfilePage/>
-                      )}
-                    />
-                  </UserProvider>
-              </Router>
-            </JobProvider>
-          </JobsProvider>
+            <UserProvider>
+              <Route
+                path="/profile"
+                render={(props) => (
+                  <ProfilePage/>
+                )}
+              />
+            </UserProvider>
+          </Router>
         </> :
         <>
-          <JobsProvider>
-            <JobProvider>
-              <Router>
-                  <Navbar/>
-                  <Route exact path="/" children={<HomeBody/>}/>
-                  <Route exact path="/register" children={<Register/>}/>
-                  <Route exact path="/login" children={<Login/>}/>
-                    <Route
-                      exact
-                      path="/jobs"
-                      render={(props) => <JobList {...props} />}
-                    />
-                  <Route
-                    exact
-                    path="/jobs/:id"
-                    children={<JobDetail/>}
-                  />
+          <Router>
+            <Navbar/>
+            <Route exact path="/" children={<HomeBody/>}/>
+            <Route exact path="/register" children={<Register/>}/>
+            <Route exact path="/login" children={<Login/>}/>
+            <Route
+              exact
+              path="/jobs"
+              render={(props) => <JobList {...props} />}
+            />
+            <Route
+              exact
+              path="/jobs/:id"
+              children={<JobDetail/>}
+            />
 
-                  <UserProvider>
-                    <Route
-                      path="/profile"
-                      render={(props) => (
-                        <>
-                          <ProfilePage/>
-                        </>
-                      )}
-                    />
-                  </UserProvider>
-              </Router>
-            </JobProvider>
-          </JobsProvider>
+            <UserProvider>
+              <Route
+                path="/profile"
+                render={(props) => (
+                  <>
+                    <ProfilePage/>
+                  </>
+                )}
+              />
+            </UserProvider>
+          </Router>
         </>
       }
     </>
