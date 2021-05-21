@@ -44,14 +44,21 @@ function Login() {
   const avatarStyle = { backgroundColor: "#859DF4",  };
   const button = { backgroundColor: "#859DF4" };
   const passwordStyle = { marginBottom: 30 };
+  const invalid = { color: 'red' };
   const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
 
-  const [email, setEmail] = useState("");
+  const [email, setEmailState] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [invalidCredentials, setInvalidCredentials] = useState(false);
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const setEmail = (e) => {
+    setInvalidCredentials(false)
+    setEmailState(e.target.value)
+  }
 
   const submit = (e) => {
     setLoading(true);
@@ -71,8 +78,11 @@ function Login() {
         sessionStorage.setItem("token", response.data.token);
         !isMobile ? window.location.href = '/' : window.location.href = '/feed';
       })
-      .catch(function (error) {
-        alert(error);
+      .catch((error) => {
+        if (error.response.status === 400 || error.response.status === 404) {
+          setInvalidCredentials(true)
+          setLoading(false)
+        }
       });
   };
 
@@ -97,18 +107,22 @@ function Login() {
               <AddCircleOutlineOutlinedIcon />
             </Avatar>
             <h2 style={headerStyle}>Log in</h2>
-            <Typography variant="caption" gutterBottom>
+            {!invalidCredentials ? <Typography variant="caption" gutterBottom>
               Please fill this form to log in!
-            </Typography>
+            </Typography> : <Typography style={invalid} variant="caption" gutterBottom>
+              Invalid credentials
+            </Typography>}
           </Grid>
           <form onSubmit={submit} style={!isMobile? formStyle : mobileFormStyle}>
             <TextField
+              error={invalidCredentials}
               fullWidth
               label="Email"
               placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={setEmail}
             />
             <TextField
+              error={invalidCredentials}
               fullWidth
               style={passwordStyle}
               label="Password"

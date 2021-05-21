@@ -42,18 +42,20 @@ function Register() {
   };
 
   const headerStyle = { margin: 0 };
+  const invalid = { color: 'red' };
   const avatarStyle = { backgroundColor: "#859DF4", marginBottom: 10 };
   const button = { backgroundColor: "#859DF4" };
   const mobileButton = { backgroundColor: "#859DF4", marginTop: 30 };
   const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
 
-  const [name, setName] = useState("");
+  const [name, setNameState] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const [invalidEmail, setInvalidEmail] = useState(false);
 
   const submit = (e) => {
     if (password !== confirmPassword) alert("Passwords do not match");
@@ -72,10 +74,18 @@ function Register() {
         setLoading(false);
         window.location.href = "/";
       })
-      .catch(function (error) {
-        alert(error);
+      .catch((error) => {
+        if (error.response.status === 400) {
+          setInvalidEmail(true)
+          setLoading(false)
+        }
       });
   };
+
+  const setName = (e) => {
+    setNameState(e.target.value)
+    setInvalidEmail(false)
+  }
 
   if (loading) 
     return (
@@ -98,20 +108,23 @@ function Register() {
               <AddCircleOutlineOutlinedIcon />
             </Avatar>
             <h2 style={headerStyle}>Trait Up</h2>
-            <Typography variant="caption" gutterBottom>
+            {!invalidEmail? <Typography variant="caption" gutterBottom>
               Please fill this form to create an account !
-            </Typography>
+            </Typography> : <Typography style={invalid} variant="caption" gutterBottom>
+              Email is invalid
+              </Typography>}
           </Grid>
           <form style={!isMobile? formStyle : mobileFormStyle} onSubmit={submit}>
             <TextField
-              onChange={(e) => setName(e.target.value)}
+              onChange={setName}
               fullWidth
               label="Name"
               placeholder="Enter your name"
             />
             <TextField
               onChange={(e) => setEmail(e.target.value)}
-              fullWidth 
+              fullWidth
+              error={invalidEmail}
               label="Email"
               placeholder="Enter your email"
             />
