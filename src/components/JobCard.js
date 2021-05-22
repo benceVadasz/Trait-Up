@@ -73,9 +73,8 @@ const JobCard = ({job, isApplied}) => {
         setLiked(false)
         removeFromFavourites(job.id)
       } else {
-        if (addToFavourites(job)) {
-          likeSetter();
-        }
+        addToFavourites(job)
+        likeSetter();
       }
     } else {
       alert('You have to log in to like jobs')
@@ -96,8 +95,8 @@ const JobCard = ({job, isApplied}) => {
 
 
   return (
-      <Card  className={!isMobile ? classes.root : classes.mobileRoot}>
-        <Link className={classes.link + ' link'} to={"/jobs/" + job.id}>
+    <Card className={!isMobile ? classes.root : classes.mobileRoot}>
+      <Link className={classes.link + ' link'} to={"/jobs/" + job.id}>
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
@@ -107,40 +106,40 @@ const JobCard = ({job, isApplied}) => {
           title={`${job.title}`}
           subheader={`${job.company}`}
         />
-          {!isMobile && job.company_logo ? <CardMedia height="140"
-                      className={classes.media}
-                      image={`${job.company_logo}`}
-          /> : null}
-        </Link>
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Job type: {`${job.type}`}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Location: {`${job.location}`}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Created at: {`${job.created_at}`}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton className={liked ? classes.liked : ''}
-            onClick={handleFavouriteEvent}
-                      aria-label="add to favorites">
-            <FavoriteIcon/>
-          </IconButton>
-          {!isApplied ?
-            <ApplyModal jobId={job.id} title={job.title} type={job.type}
-                        location={job.location} description={job.description}
-                        created_at={job.created_at} company={job.company}
-                        url={job.url} how_to_apply={job.how_to_apply}
-                        company_logo={job.company_logo}>
+        {!isMobile && job.company_logo ? <CardMedia height="140"
+                                                    className={classes.media}
+                                                    image={`${job.company_logo}`}
+        /> : null}
+      </Link>
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Job type: {`${job.type}`}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Location: {`${job.location}`}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          Created at: {`${job.created_at}`}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton className={liked ? classes.liked : ''}
+                    onClick={handleFavouriteEvent}
+                    aria-label="add to favorites">
+          <FavoriteIcon/>
+        </IconButton>
+        {!isApplied ?
+          <ApplyModal jobId={job.id} title={job.title} type={job.type}
+                      location={job.location} description={job.description}
+                      created_at={job.created_at} company={job.company}
+                      url={job.url} how_to_apply={job.how_to_apply}
+                      company_logo={job.company_logo}>
 
-            </ApplyModal> : null
-          }
+          </ApplyModal> : null
+        }
 
-        </CardActions>
-      </Card>
+      </CardActions>
+    </Card>
   )
 }
 

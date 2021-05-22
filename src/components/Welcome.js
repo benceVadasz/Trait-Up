@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import welcomeImg from "../assets/welcome.png";
+import CheckFavsCard from "./CheckFavsCard";
 
 function Welcome() {
   const useStyles = makeStyles((theme) => ({
@@ -77,6 +78,7 @@ function Welcome() {
           </Grid>
         </Grid>
       </Paper>
+      <CheckFavsCard/>
     </div>
   );
 }

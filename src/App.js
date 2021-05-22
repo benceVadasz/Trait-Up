@@ -16,7 +16,6 @@ import LandingPage from "./components/LandingPage";
 import Feed from "./components/Feed";
 import ProfileFavorites from "./components/ProfileFavorites";
 import ProfileApplications from "./components/ProfileApplications";
-import Tests from "./components/Tests";
 
 const App = (props) => {
 
@@ -77,7 +76,6 @@ const App = (props) => {
             <Route exact path="/" children={<HomeBody/>}/>
             <Route exact path="/register" children={<Register/>}/>
             <Route exact path="/login" children={<Login/>}/>
-            <Route exact path="/tests" children={<Tests/>}/>
             <Route
               exact
               path="/jobs"

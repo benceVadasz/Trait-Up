@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import JobCard from "./JobCard";
 import {Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Spinner from "react-spinner-material";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import jobModel from "../models/jobModel";
@@ -11,6 +10,7 @@ import FilterArea from "./FilterArea";
 import applicationModel from "../models/applicationModel";
 import MobileJobList from "./MobileJobList";
 import Loading from "./Loading";
+import {Pagination} from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'flex-start',
     left: 10,
     marginLeft: 62,
+  },
+  pagBox: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '30px 10px 30px 10px'
   }
 }));
 
@@ -61,6 +66,7 @@ const JobList = () => {
   const classes = useStyles();
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
+  const [page, setPage] = useState(1);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const fetchJobs = jobModel.useStoreActions(actions => actions.fetchJobs);
@@ -96,11 +102,16 @@ const JobList = () => {
   }
 
   useEffect(() => {
-    fetchJobs()
+    fetchJobs(page)
     if (sessionStorage.getItem('token')) getFavouritesOfUser()
     if (sessionStorage.getItem('token')) getApplications()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const paginate = (e, value) => {
+    setPage(value)
+    fetchJobs(value)
+  }
 
 
   if (loading)
@@ -135,6 +146,16 @@ const JobList = () => {
           }
         </Grid>
 
+      </div>
+      <div className={classes.pagBox}>
+        <Pagination
+
+          count={10}
+          color={"primary"}
+          variant={"outlined"}
+          defaultPage={page}
+          onChange={paginate}
+        />
       </div>
     </>
   );

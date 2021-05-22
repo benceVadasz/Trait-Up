@@ -11,9 +11,9 @@ const jobModel = createContextStore({
   toggleLoading: action((state) => {
     state.loading = !state.loading;
   }),
-  fetchJobs: thunk(async actions => {
+  fetchJobs: thunk(async (actions, page=1) => {
     actions.toggleLoading()
-    const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`, {params: {limit: 50}})
+    const result = await axios.get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`, {params: {limit: 50, page}})
     actions.toggleLoading()
     const jobs = result.data;
     actions.filterUniqueLocations(jobs)
