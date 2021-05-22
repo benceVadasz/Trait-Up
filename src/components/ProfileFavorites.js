@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Typography, Paper, Grid} from '@material-ui/core';
 import 'fontsource-roboto';
 import FavouriteCard from "./FavouriteCard";
-import Spinner from "react-spinner-material";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import favouriteModel from "../models/favouriteModel";
+import Loading from "./Loading";
 
 const classes = {
   paper: {
@@ -48,12 +48,7 @@ const ProfileFavorites = (props) => {
   if (loading)
     return (
       <div style={!isMobile ? classes.load : classes.mobileLoad}>
-        <Spinner
-          size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
-          visible={true}
-          color={'black'}/>
+        <Loading/>
       </div>
     );
 

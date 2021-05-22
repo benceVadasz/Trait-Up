@@ -16,8 +16,8 @@ import parse from 'html-react-parser';
 import axios from "axios";
 import {BASE_URL} from "../constants";
 import ApplyModal from "./ApplyModal";
-import Spinner from "react-spinner-material";
 import favouriteModel from "../models/favouriteModel";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -120,12 +120,7 @@ const JobDetailPage = ({id}) => {
   if (loading)
     return (
       <div className={classes.load}>
-        <Spinner
-          size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
-          visible={true}
-          color={'black'}/>
+        <Loading/>
       </div>
     );
 

@@ -10,9 +10,9 @@ import {
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { BASE_URL } from "../constants";
-import Spinner from "react-spinner-material";
 import {useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
+import Loading from "./Loading";
 
 function Register() {
   
@@ -90,12 +90,7 @@ function Register() {
   if (loading) 
     return (
       <div style={load}>
-        <Spinner
-          size={120}
-          spinnerColor={"#333"}
-          spinnerWidth={2}
-          visible={true}
-         color={'black'}/>
+        <Loading/>
       </div>
     );
 

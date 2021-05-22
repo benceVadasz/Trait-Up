@@ -10,6 +10,7 @@ import favouriteModel from "../models/favouriteModel";
 import FilterArea from "./FilterArea";
 import applicationModel from "../models/applicationModel";
 import MobileJobList from "./MobileJobList";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -105,10 +106,7 @@ const JobList = () => {
   if (loading)
     return (
       <div className={classes.load}>
-        <Spinner
-          size={120}
-          visible={true}
-        />
+        <Loading/>
       </div>
     );
 
