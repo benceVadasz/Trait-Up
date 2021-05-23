@@ -67,6 +67,7 @@ const JobList = () => {
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const fetchJobs = jobModel.useStoreActions(actions => actions.fetchJobs);
@@ -78,16 +79,22 @@ const JobList = () => {
   const applications = applicationModel.useStoreState(state => state.applications);
 
   function filterJobType(e, value) {
+    e.preventDefault()
+    setHasMore(false);
     setTypeFilter(value);
     filter({'type': value, 'location': locationFilter})
   }
 
   function filterLocation(e, value) {
+    e.preventDefault()
+    setHasMore(false);
     setLocationFilter(value);
     filter({'type': typeFilter, 'location': value})
   }
 
   function clearJob(e) {
+    e.preventDefault()
+    setHasMore(true);
     if (e.type === 'blur') {
       setTypeFilter("");
       filter({'type': '', 'location': locationFilter})
@@ -95,6 +102,8 @@ const JobList = () => {
   }
 
   function clearLocation(e) {
+    e.preventDefault()
+    setHasMore(true);
     if (e.type === 'blur') {
       setLocationFilter("");
       filter({'type': typeFilter, 'location': ''})
@@ -148,14 +157,14 @@ const JobList = () => {
 
       </div>
       <div className={classes.pagBox}>
-        <Pagination
+        {hasMore ? <Pagination
 
           count={3}
           color={"primary"}
           variant={"outlined"}
           defaultPage={page}
           onChange={paginate}
-        />
+        /> : null}
       </div>
     </>
   );
