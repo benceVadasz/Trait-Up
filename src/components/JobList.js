@@ -150,7 +150,7 @@ const JobList = () => {
       <div className={classes.pagBox}>
         <Pagination
 
-          count={10}
+          count={3}
           color={"primary"}
           variant={"outlined"}
           defaultPage={page}
