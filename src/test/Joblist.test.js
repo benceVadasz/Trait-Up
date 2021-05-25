@@ -1,8 +1,9 @@
-const jobList = require('../components/JobList')
+import {render, screen} from '@testing-library/react';
+import '@testing-library/jest-dom'
+import JobList from '../components/JobList'
 
-describe('AddToOrder component', () => {
-  it('should be handling checkboxChecked', () => {
-    const wrapper = shallow(<AddToOrder {...props.cart} />);
-    expect(wrapper.checkBoxChecked()).equals(true); //error appears here
-  });
-});
+test('renders link to jobs', () => {
+  render (<JobList/>);
+  const jobLink = screen.getByText(/job/i);
+  expect(jobLink).toBeInTheDocument();
+})
