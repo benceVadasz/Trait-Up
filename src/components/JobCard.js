@@ -77,7 +77,9 @@ const JobCard = ({job, isApplied}) => {
         likeSetter();
       }
     } else {
-      alert('You have to log in to like jobs')
+      if (window.confirm('You have to log in to like jobs. Do you want to log in?')) {
+        window.location.href = "/login"
+      }
     }
   }
 
