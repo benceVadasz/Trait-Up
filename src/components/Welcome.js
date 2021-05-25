@@ -5,7 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import welcomeImg from "../assets/welcome.png";
-import CheckFavsCard from "./CheckFavsCard";
+// import CheckFavsCard from "./CheckFavsCard";
 
 function Welcome() {
   const useStyles = makeStyles((theme) => ({
@@ -56,7 +56,7 @@ function Welcome() {
         <Grid container spacing={2}>
           <Grid item xs={12} sm container>
             <Grid item xs container direction="column" spacing={2}>
-              <Grid className={classes.welcomeBlock} item xs spacing={3}>
+              <Grid container className={classes.welcomeBlock} item xs spacing={3}>
                 <Typography className={classes.welcomeWord} gutterBottom variant="h3">
                   Welcome to <span className={classes.trait}>Trait up!</span>
                 </Typography>
@@ -78,7 +78,7 @@ function Welcome() {
           </Grid>
         </Grid>
       </Paper>
-      <CheckFavsCard/>
+      {/*<CheckFavsCard/>*/}
     </div>
   );
 }
