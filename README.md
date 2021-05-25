@@ -1,3 +1,9 @@
+# About the app
+
+This fullstack project aims to be a tool for jobhunters of the IT world. Users can browse and filter through hundreds of real positions that are fetched from the GitHub Jobs API. When logged in you users can save their favourites and the jobs they applied for. Add, update, delete personal data as well as education and experience information.
+
+The app serves educational purposes.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
