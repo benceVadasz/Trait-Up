@@ -36,12 +36,14 @@ function Welcome() {
        
     },
     welcomeWord: {
-      fontFamily: 'Fugaz One, cursive'
+      fontFamily: 'Fugaz One, cursive',
+      marginBottom: -250
     },
     trait: {
       color: "#859DF4",
     },
     welcomeText: {
+      width: 400,
       fontFamily: 'Lato, sans-serif',
       fontSize: 16
     },
@@ -61,10 +63,7 @@ function Welcome() {
                   Welcome to <span className={classes.trait}>Trait up!</span>
                 </Typography>
                 <Typography className={classes.welcomeText} variant="body2" gutterBottom>
-                  Your ultimate job hunt tool to find a job
-                </Typography>
-                <Typography className={classes.welcomeText} variant="body2">
-                  tailored perfectly to your unique personality archetype
+                  Your ultimate job hunt tool to find a job tailored perfectly to your unique personality archetype
                 </Typography>
               </Grid>
               <Grid item>

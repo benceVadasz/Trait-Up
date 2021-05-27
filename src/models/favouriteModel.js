@@ -29,7 +29,7 @@ const favouriteModel = createContextStore({
 
 const saveAsFavourite = (job) => {
 
-  if (!favouriteModel.token) {
+  if (!sessionStorage.getItem("token")) {
     return Promise.resolve(false)
   } else {
     const {

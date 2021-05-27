@@ -86,6 +86,7 @@ const JobCard = ({job, isApplied}) => {
 
   useEffect(() => {
     if (favouriteJobs && favouriteJobs.length > 0) {
+      console.log(favouriteJobs)
       for (let fav of favouriteJobs) {
         if (fav.job_id === job.id) {
           setLiked(true);

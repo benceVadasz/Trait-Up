@@ -125,6 +125,7 @@ const ProfileAddEduButton = () => {
       })
       .catch(function (error) {
         alert(error);
+        setLoading(false)
       });
   };
 

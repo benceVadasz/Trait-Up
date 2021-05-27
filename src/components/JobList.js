@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import JobCard from "./JobCard";
+import React, {useState, useEffect, Suspense, lazy} from "react";
+import loadable from '@loadable/component'
 import {Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {useTheme} from '@material-ui/core/styles';
@@ -11,6 +11,7 @@ import applicationModel from "../models/applicationModel";
 import MobileJobList from "./MobileJobList";
 import Loading from "./Loading";
 import {Pagination} from "@material-ui/lab";
+const JobCard = lazy(() => import("./JobCard"));
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -67,7 +68,6 @@ const JobList = () => {
   const [typeFilter, setTypeFilter] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const fetchJobs = jobModel.useStoreActions(actions => actions.fetchJobs);
@@ -79,22 +79,21 @@ const JobList = () => {
   const applications = applicationModel.useStoreState(state => state.applications);
 
   function filterJobType(e, value) {
+    if (sessionStorage.getItem('token')) getFavouritesOfUser()
     e.preventDefault()
-    setHasMore(false);
     setTypeFilter(value);
     filter({'type': value, 'location': locationFilter})
   }
 
   function filterLocation(e, value) {
+    if (sessionStorage.getItem('token')) getFavouritesOfUser()
     e.preventDefault()
-    setHasMore(false);
     setLocationFilter(value);
     filter({'type': typeFilter, 'location': value})
   }
 
   function clearJob(e) {
     e.preventDefault()
-    setHasMore(true);
     if (e.type === 'blur') {
       setTypeFilter("");
       filter({'type': '', 'location': locationFilter})
@@ -103,7 +102,6 @@ const JobList = () => {
 
   function clearLocation(e) {
     e.preventDefault()
-    setHasMore(true);
     if (e.type === 'blur') {
       setLocationFilter("");
       filter({'type': typeFilter, 'location': ''})
@@ -131,8 +129,7 @@ const JobList = () => {
     );
 
   return (
-    <>
-
+    <Suspense fallback={<Loading/>}>
       <FilterArea handleOnTypeFilter={filterJobType} clearJob={clearJob}
                   handleOnLocationFilter={filterLocation} clearLocation={clearLocation}
                   jobs={easyJobs}/>
@@ -157,7 +154,7 @@ const JobList = () => {
 
       </div>
       <div className={classes.pagBox}>
-        {hasMore ? <Pagination
+        {easyJobs.length >= 50 ? <Pagination
 
           count={3}
           color={"primary"}
@@ -166,7 +163,7 @@ const JobList = () => {
           onChange={paginate}
         /> : null}
       </div>
-    </>
+    </Suspense>
   );
 };
 

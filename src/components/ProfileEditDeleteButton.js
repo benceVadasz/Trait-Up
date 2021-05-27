@@ -106,7 +106,7 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
       method: "post",
       url:
         `${BASE_URL}/Trait-Up-Backend/public/api/deleteStudy`,
-      headers: {Authorization: "Bearer " + favouriteModel.token},
+      headers: {Authorization: "Bearer " + token},
       params: {
         eduId
       }
@@ -136,6 +136,7 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
       })
       .catch(function (error) {
         alert(error);
+        setLoading(false)
       });
   };
 
@@ -181,8 +182,6 @@ const ProfileEditDeleteButton = ({eduId, fullEdu}) => {
       <div className={classes.load}>
         <Spinner
           size={120}
-          spinnerColor={"red"}
-          spinnerWidth={2}
           visible={true}
         />
       </div>

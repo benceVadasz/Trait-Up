@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -6,11 +6,20 @@ import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 const SearchForm2 = ({ onLocationFilter , locations, clear  }) => {
+
+  const [value, setValue] = useState("");
+
+  const onSelect = (e, value) => {
+    onLocationFilter(e, value)
+    setValue(value)
+  }
+
   return (
     <div style={{ width: 200, marginLeft: 10 }}>
       <Autocomplete
-        onChange={onLocationFilter}
+        onChange={onSelect}
         onClose={clear}
+        value={value}
         freeSolo
         id="free-solo-2-demo"
         disableClearable

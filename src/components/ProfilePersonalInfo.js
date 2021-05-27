@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
   fields: {
     marginLeft: 20,
   },
+  desktopFields: {
+    height: 270
+  },
   button: {
     marginTop: 50,
     marginLeft: 50,
@@ -58,6 +61,12 @@ const useStyles = makeStyles((theme) => ({
     width: 280,
     display: 'flex',
     flexFlow: 'column'
+  },
+  desktopInput: {
+    height: 270,
+  },
+  container: {
+    height: 600
   }
 }));
 
@@ -124,7 +133,7 @@ const ProfilePersonalInfo = () => {
       method: "put",
       url:
         `${BASE_URL}/Trait-Up-Backend/public/api/updateUserInfo`,
-      headers: {Authorization: "Bearer " + favouriteModel.token},
+      headers: {Authorization: "Bearer " + token},
       params: {
         userState
       }
@@ -170,6 +179,7 @@ const ProfilePersonalInfo = () => {
   return (
     <>
       <Paper elevation={3} className={!isMobile ? classes.paper : classes.mobilePaper}>
+        <div className={isMobile ? '': classes.container}>
         <Grid container spacing={3} direction="column">
           <Grid item xs container>
             <Grid item xs={10}>
@@ -189,15 +199,15 @@ const ProfilePersonalInfo = () => {
               <div className={classes.root}>
                 <input accept="image/*" className={classes.input} id="contained-button-file" multiple
                        type="file"/>
-                <label htmlFor="contained-button-file">
-                  <Button color="primary" variant="contained" size="small" className={classes.uploadButton}
-                          component="span"><PublishIcon fontSize="large"/></Button>
-                </label>
+                {/*<label htmlFor="contained-button-file">*/}
+                {/*  <Button color="primary" variant="contained" size="small" className={classes.uploadButton}*/}
+                {/*          component="span"><PublishIcon fontSize="large"/></Button>*/}
+                {/*</label>*/}
               </div>
             </Grid> : null}
 
-            <Grid item xs={7} container direction="row" spacing={2} align="center" style={{width: '80%', padding: "30px 5px", marginTop: 90}}>
-              <Grid item xs={5} className={isMobile ? classes.fields : ''} container spacing={2}>
+            <Grid className={isMobile ? "" : classes.container} item xs={7} container direction="row" spacing={2} align="center">
+              <Grid item xs={5} className={isMobile ? classes.fields : classes.desktopFields} container spacing={2}>
                 <Grid item xs={12}>
                   <Typography variant="h4" color="primary" align="right">Name:</Typography>
                 </Grid>
@@ -215,12 +225,11 @@ const ProfilePersonalInfo = () => {
                 </Grid>
               </Grid>
 
-              {!isMobile ? <Grid item xs={1} align="center">
-                <Divider orientation="vertical"/>
-              </Grid> : null}
+              {/*{!isMobile ? <Grid item xs={1} align="center">*/}
+              {/*  /!*<Divider orientation="vertical"/>*!/*/}
+              {/*</Grid> : null}*/}
 
-              <Grid item xs={6} container spacing={2}>
-                <div className={isMobile? classes.input : ''}>
+              <Grid className={isMobile? "" : classes.desktopInput}  item xs={5} container spacing={2}>
                 <Grid item xs={12}>
                   <TextField disabled={!editable}
                              variant="standard" value={name ? name : "enter name.."} align="left"
@@ -253,10 +262,7 @@ const ProfilePersonalInfo = () => {
                       shrink: true,
                     }}
                   />
-
-
                 </Grid>
-                </div>
               </Grid>
 
             </Grid>
@@ -275,6 +281,7 @@ const ProfilePersonalInfo = () => {
             </Button>
           </div> : <></>
         }
+        </div>
       </Paper>
     </>
   )
