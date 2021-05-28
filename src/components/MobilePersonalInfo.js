@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh'
   },
   fields: {
-    marginLeft: 20,
   },
   desktopFields: {
     height: 270
@@ -216,7 +215,7 @@ const MobilePersonalInfo = () => {
                   </Grid>
                 </Grid>
 
-                <Grid className={classes.mobileInput}  item xs={5} container spacing={2}>
+                <Grid className={classes.mobileInput}  item xs={7} container spacing={2}>
                   <Grid item xs={12}>
                     <TextField disabled={!editable}
                                variant="standard" value={name ? name : "enter name.."} align="left"
