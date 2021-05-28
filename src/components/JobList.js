@@ -156,7 +156,7 @@ const JobList = () => {
       <div className={classes.pagBox}>
         {easyJobs.length >= 50 ? <Pagination
 
-          count={3}
+          count={2}
           color={"primary"}
           variant={"outlined"}
           defaultPage={page}
