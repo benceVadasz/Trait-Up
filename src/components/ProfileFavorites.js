@@ -54,8 +54,8 @@ const ProfileFavorites = (props) => {
 
   return (
       <Paper elevation={3} style={classes.paper}>
-        <Typography style={!isMobile ? classes.label : ''} variant={isMobile ? "h4" : "h2"} color="primary" align="center">Favorites</Typography>
-        <Grid style={classes.favBox} container spacing={3} direction="row">
+        <Typography className={!isMobile ? classes.label : ''} variant={isMobile ? "h4" : "h2"} color="primary" align="center">Favorites</Typography>
+        <Grid className={classes.favBox} container spacing={3} direction="row">
           {favouriteJobs.map((job) => (
               <FavouriteCard props={props} key={job['job_id']} job={job}/>
           ))}

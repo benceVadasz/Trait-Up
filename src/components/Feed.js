@@ -7,6 +7,7 @@ import {BASE_URL} from "../constants";
 import JobCard from "./JobCard";
 import Typography from "@material-ui/core/Typography";
 import Spinner from "react-spinner-material";
+import Loading from "./Loading";
 
 
 function Features() {
@@ -57,7 +58,7 @@ function Features() {
       .get(`${BASE_URL}/Trait-Up-Backend/public/api/jobs`,
       )
       .then((response) => {
-        let firstTen = JSON.parse(response.data.jobs).slice(0, 10);
+        let firstTen = response.data.slice(0, 10);
         setNewJobs(firstTen);
         setLoading(false);
       });
@@ -71,12 +72,7 @@ function Features() {
         </Typography>
         <div className={classes.load}>
 
-          <Spinner
-            size={120}
-            spinnerColor={"#333"}
-            spinnerWidth={2}
-            visible={true}
-            color={'black'}/>
+          <Loading/>
         </div>
       </Paper>
     );
