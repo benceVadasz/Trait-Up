@@ -18,7 +18,7 @@ const MobileJobList = ({jobs}) => {
   );
 
   return (
-    <div style={{width: "100%", height: "120vh"}}>
+    <div style={{width: "100%", height: "100vh"}}>
       <AutoSizer>
         {({width, height}) => (
           <List
@@ -38,7 +38,7 @@ const MobileJobList = ({jobs}) => {
                   columnIndex={0}
                   rowIndex={index}
                 >
-                  <div style={style}>
+                  <div>
                     <JobCard job={job} key={index}/>
                   </div>
                 </CellMeasurer>
