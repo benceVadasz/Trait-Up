@@ -57,6 +57,7 @@ const ProfileEducation = () => {
       .catch(function (error) {
         console.log(error)
       });
+    // eslint-disable-next-line
   }, [userEdu])
 
 

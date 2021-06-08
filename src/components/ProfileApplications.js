@@ -7,8 +7,6 @@ import JobCard from "./JobCard";
 import Spinner from "react-spinner-material";
 import applicationModel from "../models/applicationModel";
 
-const classes = {}
-
 const useStyles = makeStyles((theme) => ({
   load: {
     position: "fixed",
@@ -53,6 +51,7 @@ const ProfileApplications = (props) => {
     setLoading(true)
     getApplications()
     setLoading(false)
+    // eslint-disable-next-line
   }, [])
 
   if (loading)

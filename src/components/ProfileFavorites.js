@@ -43,6 +43,7 @@ const ProfileFavorites = (props) => {
     setLoading(true)
     getFavourites()
     setLoading(false)
+    // eslint-disable-next-line
   }, []);
 
   if (loading)

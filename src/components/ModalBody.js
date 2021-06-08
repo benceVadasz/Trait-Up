@@ -10,7 +10,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,8 +39,6 @@ export default function ModalBody({applyForJob}) {
   const token = sessionStorage.getItem("token");
   const [isFilled, setFill] = useState(false);
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
 
 
   const fetchUserData = () => {
@@ -56,10 +53,11 @@ export default function ModalBody({applyForJob}) {
 
   useEffect(() => {
     fetchUserData();
+    // eslint-disable-next-line
   }, [setPersonalData])
 
   const fillAutomatically = () => {
-    {isFilled ? setFill(false) : setFill(true)};
+    isFilled ? setFill(false) : setFill(true)
   }
 
 

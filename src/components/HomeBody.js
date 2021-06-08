@@ -10,6 +10,8 @@ function HomeBody() {
 
   useEffect(() => {
     if (sessionStorage.getItem('token')) getFavouritesOfUser()
+
+    // eslint-disable-next-line
   }, []);
 
   return (

@@ -97,7 +97,7 @@ const JobDetailPage = ({id}) => {
         }
       }
     }
-
+    // eslint-disable-next-line
   }, []);
 
 

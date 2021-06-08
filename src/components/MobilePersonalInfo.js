@@ -1,15 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {TextField, Typography, Paper, Grid, Avatar, Divider, Button, IconButton} from '@material-ui/core';
+import {TextField, Typography, Paper, Grid, Button, IconButton} from '@material-ui/core';
 import 'fontsource-roboto';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import PublishIcon from '@material-ui/icons/Publish';
 import {makeStyles} from '@material-ui/core/styles';
 import axios from "axios";
 import {BASE_URL} from "../constants";
-import favouriteModel from "../models/favouriteModel";
-import {useTheme} from '@material-ui/core/styles';
-import {useMediaQuery} from '@material-ui/core';
 import ClearIcon from "@material-ui/icons/Clear";
 
 const useStyles = makeStyles((theme) => ({

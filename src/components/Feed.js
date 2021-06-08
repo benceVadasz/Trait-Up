@@ -6,7 +6,6 @@ import axios from "axios";
 import {BASE_URL} from "../constants";
 import JobCard from "./JobCard";
 import Typography from "@material-ui/core/Typography";
-import Spinner from "react-spinner-material";
 import Loading from "./Loading";
 
 
