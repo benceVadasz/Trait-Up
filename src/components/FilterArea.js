@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTheme} from '@material-ui/core/styles';
 import {Grid, useMediaQuery} from '@material-ui/core';
-import SearchForm from "./SearchForm";
-import SearchForm2 from "./SearchForm2";
+import JobTypeFilter from "./JobTypeFilter";
+import LocationTypeFilter from "./LocationTypeFilter";
 import jobModel from "../models/jobModel";
 
 
@@ -16,6 +16,13 @@ const useStyles = makeStyles((theme) => ({
       width: 600,
     },
   },
+
+  mobileDemo: {
+    marginBottom: 30,
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'center'
+  }
 }));
 
 
@@ -41,13 +48,13 @@ const FilterArea = ({handleOnTypeFilter, clearJob, handleOnLocationFilter, clear
       >
         <Grid className={isMobile ? classes.typeSearch : ''} item lg={4}>
           <div className={isMobile ? classes.search : ''}>
-            <SearchForm onTypeFilter={handleOnTypeFilter}
-                        jobs={jobs} clear={clearJob}/>
+            <JobTypeFilter onTypeFilter={handleOnTypeFilter}
+                           jobs={jobs} clear={clearJob}/>
           </div>
         </Grid>
 
         <Grid item lg={4}>
-          <SearchForm2 onLocationFilter={handleOnLocationFilter} locations={locations} clear={clearLocation}/>
+          <LocationTypeFilter onLocationFilter={handleOnLocationFilter} locations={locations} clear={clearLocation}/>
         </Grid>
       </Grid>
     </Grid>
