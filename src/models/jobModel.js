@@ -7,6 +7,8 @@ const jobModel = createContextStore({
   token: sessionStorage.getItem("token"),
   jobs: [],
   uniqueLocations: [],
+  typeFilter: "",
+  locationFilter: "",
   loading: false,
   toggleLoading: action((state) => {
     state.loading = !state.loading;
@@ -21,6 +23,12 @@ const jobModel = createContextStore({
   }),
   setJobs: action((state, jobs) => {
     state.jobs = jobs;
+  }),
+  setTypeFilter: action((state, query) => {
+    state.typeFilter = query;
+  }),
+  setLocationFilter: action((state, query) => {
+    state.locationFilter = query;
   }),
   filterUniqueLocations: action((state, jobs) => {
     const uniqueLocations = []

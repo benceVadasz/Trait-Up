@@ -1,5 +1,4 @@
 import React, {useState, useEffect, Suspense, lazy} from "react";
-import loadable from '@loadable/component'
 import {Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {useTheme} from '@material-ui/core/styles';
@@ -11,7 +10,9 @@ import applicationModel from "../models/applicationModel";
 import MobileJobList from "./MobileJobList";
 import Loading from "./Loading";
 import {Pagination} from "@material-ui/lab";
-const JobCard = lazy(() => import("./JobCard"));
+const JobCard = lazy(() => {
+  return import("./JobCard");
+});
 
 const useStyles = makeStyles((theme) => ({
   load: {
@@ -23,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
   gridContainer: {
     paddingLeft: "40px",
     paddingRight: "40px",
+  },
+  mobileGrid: {
+    display: 'flex',
+    width: '100%',
+    margin: '0 auto'
   },
   demo: {
     height: 80,
@@ -71,17 +77,22 @@ const JobList = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const fetchJobs = jobModel.useStoreActions(actions => actions.fetchJobs);
+  const setType = jobModel.useStoreActions(actions => actions.setTypeFilter);
+  const setLocation = jobModel.useStoreActions(actions => actions.setLocationFilter);
   const getFavouritesOfUser = favouriteModel.useStoreActions(actions => actions.getFavourites);
   const getApplications = applicationModel.useStoreActions(actions => actions.getApplications);
   const easyJobs = jobModel.useStoreState(state => state.jobs);
   const loading = jobModel.useStoreState(state => state.loading);
   const filter = jobModel.useStoreActions(actions => actions.filter);
   const applications = applicationModel.useStoreState(state => state.applications);
+  const typeValue = jobModel.useStoreState(state => state.typeFilter);
+  const locationValue = jobModel.useStoreState(state => state.locationFilter);
 
   function filterJobType(e, value) {
     if (sessionStorage.getItem('token')) getFavouritesOfUser()
     e.preventDefault()
     setTypeFilter(value);
+    setType(value)
     filter({'type': value, 'location': locationFilter})
   }
 
@@ -89,21 +100,24 @@ const JobList = () => {
     if (sessionStorage.getItem('token')) getFavouritesOfUser()
     e.preventDefault()
     setLocationFilter(value);
+    setLocation(value);
     filter({'type': typeFilter, 'location': value})
   }
 
   function clearJob(e) {
     e.preventDefault()
-    if (e.type === 'blur') {
+    if (e.type === 'blur' && typeValue !== '') {
       setTypeFilter("");
+      setType("");
       filter({'type': '', 'location': locationFilter})
     }
   }
 
   function clearLocation(e) {
     e.preventDefault()
-    if (e.type === 'blur') {
+    if (e.type === 'blur' && locationValue !== '') {
       setLocationFilter("");
+      setLocation("");
       filter({'type': typeFilter, 'location': ''})
     }
   }
@@ -136,7 +150,7 @@ const JobList = () => {
       <div>
         <Grid
           container
-          className={classes.gridContainer}
+          className={!isMobile ? classes.gridContainer : classes.mobileGrid}
           spacing={6}
           justify="center"
         >
