@@ -13,15 +13,16 @@ import CardMedia from '@material-ui/core/CardMedia';
 import ApplyModal from "./ApplyModal";
 import {useMediaQuery} from '@material-ui/core';
 import favouriteModel from "../models/favouriteModel";
+import noImg from '../assets/no-img.png';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 200,
-
   },
   mobileRoot: {
-    width: '95%',
+    width: '100%',
     marginTop: 10,
+    marginBottom: 30
   },
   media: {
 
@@ -111,7 +112,10 @@ const JobCard = ({job, isApplied}) => {
         {!isMobile && job.company_logo ? <CardMedia height="140"
                                                     className={classes.media}
                                                     image={`${job.company_logo}`}
-        /> : null}
+        /> : !isMobile ? <CardMedia height="140"
+                        className={classes.media}
+                        image={noImg}
+        /> : null }
       </Link>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
