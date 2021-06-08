@@ -10,47 +10,65 @@ import {
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { BASE_URL } from "../constants";
-import {useTheme} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import Loading from "./Loading";
 
 
 function Login() {
-  const paperStyle = {
-    padding: "30px 20px",
-    height: 340,
-    width: 500,
-    margin: "70px auto",
-  };
-  const mobilePaperStyle = {
-    padding: "30px 20px",
-    height: 300,
-    width: '90%',
-    margin: "170px auto",
-  };
-  const formStyle = {
-    height: 220,
-    display: "flex",
-    flexFlow: "column wrap",
-    justifyContent: "space-between",
-  };
-  const mobileFormStyle = {
-    height: 220,
-    display: "flex",
-    flexFlow: "column wrap",
-    justifyContent: "space-between",
-  };
-  const headerStyle = { margin: 0 };
-  const avatarStyle = { backgroundColor: "#859DF4",  };
-  const button = { backgroundColor: "#859DF4" };
-  const passwordStyle = { marginBottom: 30 };
-  const invalid = { color: 'red' };
-  const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" };
+  const useStyles = makeStyles((theme) => ({
+    paperStyle: {
+      padding: "30px 20px",
+      height: 370,
+      width: 500,
+      margin: "70px auto",
+    },
+    mobilePaperStyle: {
+      padding: "30px 20px",
+      height: 300,
+      width: '90%',
+      margin: "170px auto",
+    },
+    formStyle: {
+      height: 220,
+      display: "flex",
+      flexFlow: "column wrap",
+      justifyContent: "space-between",
+    },
+    mobileFormStyle: {
+      height: 220,
+      display: "flex",
+      flexFlow: "column wrap",
+      justifyContent: "space-between",
+    },
+    headerStyle: {
+      margin: 0
+    },
+    avatarStyle: {
+      backgroundColor: "#859DF4",
+    },
+    button: {
+      backgroundColor: "#859DF4"
+    },
+    passwordStyle: {
+      marginBottom: 30
+    },
+    invalid: { color: 'red'
+    },
+    load: {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)"
+    }
+  }));
+
 
   const [email, setEmailState] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const classes = useStyles();
 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -88,7 +106,7 @@ function Login() {
 
   if (loading) 
     return (
-      <div style={load}>
+      <div className={classes.load}>
         <Loading/>
       </div>
     );
@@ -96,19 +114,19 @@ function Login() {
   return (
     <div>
       <Grid>
-        <Paper elevation={20} style={!isMobile? paperStyle : mobilePaperStyle}>
+        <Paper elevation={20} className={!isMobile? classes.paperStyle : classes.mobilePaperStyle}>
           <Grid align="center">
-            <Avatar style={avatarStyle}>
+            <Avatar className={classes.avatarStyle}>
               <AddCircleOutlineOutlinedIcon />
             </Avatar>
-            <h2 style={headerStyle}>Log in</h2>
+            <h2 className={classes.headerStyle}>Log in</h2>
             {!invalidCredentials ? <Typography variant="caption" gutterBottom>
               Please fill this form to log in!
-            </Typography> : <Typography style={invalid} variant="caption" gutterBottom>
+            </Typography> : <Typography className={classes.invalid} variant="caption" gutterBottom>
               Invalid credentials
             </Typography>}
           </Grid>
-          <form onSubmit={submit} style={!isMobile? formStyle : mobileFormStyle}>
+          <form onSubmit={submit} className={!isMobile? classes.formStyle : classes.mobileFormStyle}>
             <TextField
               error={invalidCredentials}
               fullWidth
@@ -119,13 +137,13 @@ function Login() {
             <TextField
               error={invalidCredentials}
               fullWidth
-              style={passwordStyle}
+              className={classes.passwordStyle}
               label="Password"
               type="password"
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" variant="contained" style={button}>
+            <Button type="submit" variant="contained" className={classes.button}>
               Log in
             </Button>
           </form>

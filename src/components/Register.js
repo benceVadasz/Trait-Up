@@ -10,44 +10,60 @@ import {
 } from "@material-ui/core";
 import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { BASE_URL } from "../constants";
-import {useTheme} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {useMediaQuery} from '@material-ui/core';
 import Loading from "./Loading";
 
 function Register() {
-  
-  const paperStyle = {
-    padding: "30px 20px",
-    height: 460,
-    width: 500,
-    margin: "70px auto",
-  };
-  const mobilePaperStyle = {
-    padding: "30px 20px 10px 20px",
-    height: 450,
-    width: '90%',
-    margin: "140px auto",
-  };
-  const formStyle = {
-    height: 350,
-    display: "flex",
-    flexFlow: "column wrap",
-    justifyContent: "space-between",
-  };
-  const mobileFormStyle = {
-    padding: "30px 20px",
-    display: "flex",
-    flexFlow: "column wrap",
-    justifyContent: "space-between",
-  };
-
-  const headerStyle = { margin: 0 };
-  const invalid = { color: 'red' };
-  const avatarStyle = { backgroundColor: "#859DF4", marginBottom: 10 };
-  const button = { backgroundColor: "#859DF4" };
-  const mobileButton = { backgroundColor: "#859DF4", marginTop: 30 };
-  const load = { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
-
+  const useStyles = makeStyles((theme) => ({
+    paperStyle: {
+      padding: "30px 20px",
+      height: 490,
+      width: 500,
+      margin: "70px auto",
+    },
+    mobilePaperStyle: {
+      padding: "30px 20px 10px 20px",
+      height: 450,
+      width: '90%',
+      margin: "140px auto",
+    },
+    formStyle: {
+      height: 350,
+      display: "flex",
+      flexFlow: "column wrap",
+      justifyContent: "space-between",
+    },
+    mobileFormStyle: {
+      padding: "30px 20px",
+      display: "flex",
+      flexFlow: "column wrap",
+      justifyContent: "space-between",
+    },
+    headerStyle: {
+      margin: 0
+    },
+    invalid: {
+      color: 'red'
+    },
+    avatarStyle: {
+      backgroundColor: "#859DF4",
+      marginBottom: 10
+    },
+    button: {
+      backgroundColor: "#859DF4"
+    },
+    mobileButton: {
+      backgroundColor: "#859DF4", marginTop: 30
+    },
+    load: {
+      position: "fixed",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)"
+    }
+  }));
+  const classes = useStyles();
   const [name, setNameState] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,11 +72,22 @@ function Register() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [invalidEmail, setInvalidEmail] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [cPasswordError, setCPasswordError] = useState(false);
 
   const submit = (e) => {
+    e.preventDefault();
+    if (name === '') setNameError(true);
+    if (email === '') setEmailError(true);
+    if (password === '') setPasswordError(true);
+    if (confirmPassword === '') {
+      setCPasswordError(true)
+      return
+    }
     if (password !== confirmPassword) alert("Passwords do not match");
     setLoading(true);
-    e.preventDefault();
     axios
       .post(`${BASE_URL}/Trait-Up-Backend/public/api/registration`, {
         headers: {
@@ -85,11 +112,15 @@ function Register() {
   const setName = (e) => {
     setNameState(e.target.value)
     setInvalidEmail(false)
+    setEmailError(false)
+    setNameError(false)
+    setPasswordError(false)
+    setCPasswordError(false)
   }
 
   if (loading) 
     return (
-      <div style={load}>
+      <div className={classes.load}>
         <Loading/>
       </div>
     );
@@ -97,36 +128,41 @@ function Register() {
   return (
     <div>
       <Grid>
-        <Paper elevation={20} style={!isMobile? paperStyle : mobilePaperStyle}>
+        <Paper elevation={20} className={!isMobile? classes.paperStyle : classes.mobilePaperStyle}>
           <Grid align="center">
-            <Avatar style={avatarStyle}>
+            <Avatar classname={classes.avatarStyle}>
               <AddCircleOutlineOutlinedIcon />
             </Avatar>
-            <h2 style={headerStyle}>Trait Up</h2>
+            <h2 className={classes.headerStyle}>Trait Up</h2>
             {!invalidEmail? <Typography variant="caption" gutterBottom>
               Please fill this form to create an account !
-            </Typography> : <Typography style={invalid} variant="caption" gutterBottom>
+            </Typography> : !emailError ? <Typography className={classes.invalid} variant="caption" gutterBottom>
               Email is invalid
-              </Typography>}
+              </Typography> : ""}
           </Grid>
-          <form style={!isMobile? formStyle : mobileFormStyle} onSubmit={submit}>
+          <form className={!isMobile? classes.formStyle : classes.mobileFormStyle} onSubmit={submit}>
             <TextField
               onChange={setName}
               fullWidth
               label="Name"
               placeholder="Enter your name"
+              error={nameError}
+              helperText={nameError? 'Name is required': ""}
             />
             <TextField
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
-              error={invalidEmail}
+              error={invalidEmail || emailError}
               label="Email"
-              placeholder="Enter your email"
+              placeholder={"Enter your email"}
+              helperText={emailError? "Email is required" : ""}
             />
             <TextField
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
               label="Password"
+              error={passwordError}
+              helperText={passwordError ?"password is required": ""}
               type="password"
               placeholder="Enter your password"
             />
@@ -136,8 +172,10 @@ function Register() {
               label="Confirm Password"
               type="password"
               placeholder="Confirm your password"
+              error={cPasswordError}
+              helperText={cPasswordError ?"confirm password is required": ""}
             />
-            <Button type="submit" variant="contained" style={!isMobile? button : mobileButton}>
+            <Button type="submit" variant="contained" className={!isMobile? classes.button : classes.mobileButton}>
               Sign up
             </Button>
           </form>
