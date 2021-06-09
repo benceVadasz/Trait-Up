@@ -25,7 +25,7 @@ const classes = {
   load: {position: 'fixed', top: "50%", left: "60%", transform: "translate(-50%, -50%)"},
   mobileLoad: {position: 'fixed', top: "50%", left: "50%", transform: "translate(-50%, -50%)"},
   label: {
-    marginBottom: 40
+    marginBottom: 50
   }
 }
 

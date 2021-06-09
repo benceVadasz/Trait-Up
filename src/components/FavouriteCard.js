@@ -19,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 400,
     marginBottom: 20,
+    marginLeft: 30,
+    marginTop: 20
   },
   mobileRoot: {
     width: '95%',
